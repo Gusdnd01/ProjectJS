@@ -3,5 +3,8 @@
 class TestObj :
     public Object
 {
+public:
+    void Update() override;
+
 };
 
