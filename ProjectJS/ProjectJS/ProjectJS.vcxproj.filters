@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="DEFAULT">
+      <UniqueIdentifier>{7d06e72d-b312-4c4e-993d-ac8ac7c5ec19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE">
+      <UniqueIdentifier>{166cb363-c71c-416f-9fc0-d8448c9ab553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\02.MANAGER">
+      <UniqueIdentifier>{39ae97bd-91f8-4099-a672-6650ca91ba24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\02.MANAGER\PATHMANAGER">
+      <UniqueIdentifier>{f753cc9f-aa70-467d-b736-1d248bf9b50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\02.MANAGER\SCENEMANAGER">
+      <UniqueIdentifier>{aa0fc4e9-d732-4424-9f37-f9f4c40a4789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\02.MANAGER\TIMEMANAGER">
+      <UniqueIdentifier>{6347995e-4070-4f13-a851-908c9a4d970a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\02.MANAGER\KEYMANAGER">
+      <UniqueIdentifier>{c9978e0e-a386-4f3a-8c86-47d03e91de92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\02.MANAGER\RESMANAGER">
+      <UniqueIdentifier>{faac1a05-21fe-46f1-91df-e81eb46fe946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\01.CORE">
+      <UniqueIdentifier>{07d571e5-b109-426a-a5d6-22650111643c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\01.CORE\BASEWINDOW">
+      <UniqueIdentifier>{a2b5f7b8-05c1-443f-b7d0-55d435e3b509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\01.CORE\CORE">
+      <UniqueIdentifier>{2584e62f-3d97-4cb9-a0a9-546583a755cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\00.HEADER">
+      <UniqueIdentifier>{b1bd2934-7b06-4cfe-9e19-d031dbd7ef5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\03.OBJECT">
+      <UniqueIdentifier>{14c17cea-fce2-4cde-8230-fedb1a447e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\04.RESOURCES">
+      <UniqueIdentifier>{2b037efb-6c84-4833-b4fc-a2187b0269c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\04.RESOURCES\BASE">
+      <UniqueIdentifier>{18fdb399-47ee-46e1-9eb1-d36cadffda40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\05.SCENE">
+      <UniqueIdentifier>{3325d8ae-d9a2-419f-a9d2-3711cf3d7e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\04.RESOURCES\TEXTURE">
+      <UniqueIdentifier>{f73a96ac-5cfb-474e-80bb-16c1f7522913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\05.SCENE\BASE">
+      <UniqueIdentifier>{d798f8c7-3b0f-4856-a8a1-68e097fb0316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\05.SCENE\TestScene">
+      <UniqueIdentifier>{8856e135-a85e-47c0-8af3-8d9713060fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\03.OBJECT\BASE">
+      <UniqueIdentifier>{adedc3d0-add6-4f35-bb2b-c2119c034e5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\03.OBJECT\Test">
+      <UniqueIdentifier>{f10d0c8f-dd56-458e-a274-bf76f0da355d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>DEFAULT</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectJS.h">
+      <Filter>DEFAULT</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>DEFAULT</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>DEFAULT</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>ENGINE\00.HEADER</Filter>
+    </ClInclude>
+    <ClInclude Include="enums.h">
+      <Filter>ENGINE\00.HEADER</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>ENGINE\00.HEADER</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>ENGINE\00.HEADER</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeMgr.h">
+      <Filter>ENGINE\02.MANAGER\TIMEMANAGER</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>ENGINE\02.MANAGER\PATHMANAGER</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ENGINE\02.MANAGER\SCENEMANAGER</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>ENGINE\02.MANAGER\KEYMANAGER</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>ENGINE\01.CORE\CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseWindow.h">
+      <Filter>ENGINE\01.CORE\BASEWINDOW</Filter>
+    </ClInclude>
+    <ClInclude Include="Res.h">
+      <Filter>ENGINE\04.RESOURCES\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManager.h">
+      <Filter>ENGINE\02.MANAGER\RESMANAGER</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>ENGINE\04.RESOURCES\TEXTURE</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ENGINE\05.SCENE\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>ENGINE\05.SCENE\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>ENGINE\03.OBJECT\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="TestObj.h">
+      <Filter>ENGINE\03.OBJECT\Test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>ENGINE\00.HEADER</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>ENGINE\02.MANAGER\TIMEMANAGER</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>ENGINE\02.MANAGER\PATHMANAGER</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ENGINE\02.MANAGER\SCENEMANAGER</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>ENGINE\02.MANAGER\KEYMANAGER</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>ENGINE\01.CORE\CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseWindow.cpp">
+      <Filter>ENGINE\01.CORE\BASEWINDOW</Filter>
+    </ClCompile>
+    <ClCompile Include="Res.cpp">
+      <Filter>ENGINE\04.RESOURCES\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManager.cpp">
+      <Filter>ENGINE\02.MANAGER\RESMANAGER</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>ENGINE\04.RESOURCES\TEXTURE</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ENGINE\05.SCENE\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>ENGINE\05.SCENE\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>ENGINE\03.OBJECT\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="TestObj.cpp">
+      <Filter>ENGINE\03.OBJECT\Test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ProjectJS.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="ProjectJS.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
