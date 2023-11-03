@@ -1,7 +1,7 @@
 #pragma once
-class TimeMgr
+class TimeManager
 {
-	SINGLE(TimeMgr);
+	SINGLE(TimeManager);
 public:
 	void Init();
 	void Update();

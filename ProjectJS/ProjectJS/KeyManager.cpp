@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "KeyMgr.h"
+#include "KeyManager.h"
 #include "Core.h"
 
-void KeyMgr::Init()
+void KeyManager::Init()
 {
 	for (int i = 0; i < (int)KEY_TYPE::LAST; ++i) {
 		m_vKey.push_back(tKeyInfo{ KEY_STATE::NONE, false });
@@ -11,7 +11,7 @@ void KeyMgr::Init()
 	m_ptMouse = {};
 }
 
-void KeyMgr::Update()
+void KeyManager::Update()
 {
 	HWND hWnd = GetFocus();
 	if (hWnd != nullptr) {

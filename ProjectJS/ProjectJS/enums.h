@@ -23,3 +23,13 @@ enum class OBJECT_GROUP {
 	MONSTER,
 	END = 30
 };
+
+enum class PEN_GROUP {
+	RED,
+	BLUE,
+	GREEN,
+	YELLOW,
+	WHITE,
+	BLACK,
+	END
+};

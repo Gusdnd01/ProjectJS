@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Core.h"
-#include "TimeMgr.h"
-#include "KeyMgr.h"
+#include "TimeManager.h"
+#include "KeyManager.h"
 #include "SceneManager.h"
 #include "PathManager.h"
 #include "ResManager.h"
@@ -15,21 +15,21 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 
 	m_hDC = GetDC(m_hWnd);
 	
-	// 1. 생성
+	//뒤에 그릴 디시랑 비트맵 생성
 	m_hbackDC = CreateCompatibleDC(m_hDC);
 	m_hbackbit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y);
 
-	// 2. 연결
+	//디시한테 비트맵 쥐어주기
 	SelectObject(m_hbackDC, m_hbackbit);
 
-	//m_obj.SetPos(Vector2({ m_ptResolution.x / 2, m_ptResolution.y / 2 }));
-	//m_obj.SetScale({ 100, 100 });
-
 	//====Managers=====
-	PathManager::GetInst()->Init();
-	TimeMgr::GetInst()->Init();
-	KeyMgr::GetInst()->Init();
-	SceneManager::GetInst()->Init();
+	GETINST(PathManager)->Init();
+	GETINST(TimeManager)->Init();
+	GETINST(KeyManager)->Init();
+	GETINST(SceneManager)->Init();
+
+	//===About-Draw====
+	CreatePens();
 
 	return m_hDC != nullptr;
 }
@@ -43,16 +43,17 @@ void Core::GameLoop()
 void Core::Update()
 {
 	//=====Manager Update=====
-	TimeMgr::GetInst()->Update();
-	KeyMgr::GetInst()->Update();
-	SceneManager::GetInst()->Update();
+	GETINST(TimeManager)->Update();
+	GETINST(KeyManager)->Update();
+	GETINST(SceneManager)->Update();
 }
 
 void Core::Render()
 {
 	PatBlt(m_hbackDC, 0,0, m_ptResolution.x, m_ptResolution.y,WHITENESS);
-	SceneManager::GetInst()->Render(m_hbackDC);
-	// 3. 옮긴다.
+	GETINST(SceneManager)->Render(m_hbackDC);
+
+	//여기서 옮기는 작업을 함
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_hbackDC, 0, 0, SRCCOPY);
 }
 
@@ -62,4 +63,11 @@ void Core::Release()
 	DeleteDC(m_hbackDC);
 	DeleteObject(m_hbackbit);
 	ResManager::GetInst()->Release();
+}
+
+void Core::CreatePens()
+{
+	m_hPen[static_cast<UINT>(PEN_GROUP::RED)] = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
+	m_hPen[static_cast<UINT>(PEN_GROUP::BLUE)] = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));
+	m_hPen[static_cast<UINT>(PEN_GROUP::GREEN)] = CreatePen(PS_SOLID, 5, RGB(0, 255, 0));
 }

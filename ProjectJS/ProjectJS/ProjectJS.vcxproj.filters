@@ -68,6 +68,15 @@
     <Filter Include="ENGINE\03.OBJECT\Test">
       <UniqueIdentifier>{f10d0c8f-dd56-458e-a274-bf76f0da355d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENGINE\00.HEADER\Vector2">
+      <UniqueIdentifier>{b6b8f071-d694-4c18-a9f7-7f5837c22958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\06.COMPONENTS">
+      <UniqueIdentifier>{949d6149-f5ea-4643-80e4-2e5a84c9863a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENGINE\06.COMPONENTS\COLLIDER">
+      <UniqueIdentifier>{b42d3643-b5e4-48f0-8af5-1a8d3d74bb24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -91,10 +100,7 @@
     <ClInclude Include="pch.h">
       <Filter>ENGINE\00.HEADER</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>ENGINE\00.HEADER</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeMgr.h">
+    <ClInclude Include="TimeManager.h">
       <Filter>ENGINE\02.MANAGER\TIMEMANAGER</Filter>
     </ClInclude>
     <ClInclude Include="PathManager.h">
@@ -103,7 +109,7 @@
     <ClInclude Include="SceneManager.h">
       <Filter>ENGINE\02.MANAGER\SCENEMANAGER</Filter>
     </ClInclude>
-    <ClInclude Include="KeyMgr.h">
+    <ClInclude Include="KeyManager.h">
       <Filter>ENGINE\02.MANAGER\KEYMANAGER</Filter>
     </ClInclude>
     <ClInclude Include="Core.h">
@@ -133,12 +139,15 @@
     <ClInclude Include="TestObj.h">
       <Filter>ENGINE\03.OBJECT\Test</Filter>
     </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>ENGINE\00.HEADER\Vector2</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ENGINE\06.COMPONENTS\COLLIDER</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>ENGINE\00.HEADER</Filter>
-    </ClCompile>
-    <ClCompile Include="TimeMgr.cpp">
+    <ClCompile Include="TimeManager.cpp">
       <Filter>ENGINE\02.MANAGER\TIMEMANAGER</Filter>
     </ClCompile>
     <ClCompile Include="PathManager.cpp">
@@ -147,7 +156,7 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>ENGINE\02.MANAGER\SCENEMANAGER</Filter>
     </ClCompile>
-    <ClCompile Include="KeyMgr.cpp">
+    <ClCompile Include="KeyManager.cpp">
       <Filter>ENGINE\02.MANAGER\KEYMANAGER</Filter>
     </ClCompile>
     <ClCompile Include="Core.cpp">
@@ -179,6 +188,12 @@
     </ClCompile>
     <ClCompile Include="TestObj.cpp">
       <Filter>ENGINE\03.OBJECT\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>ENGINE\00.HEADER\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ENGINE\06.COMPONENTS\COLLIDER</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

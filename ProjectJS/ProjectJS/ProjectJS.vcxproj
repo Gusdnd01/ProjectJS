@@ -148,11 +148,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseWindow.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="pch.h" />
@@ -166,13 +167,14 @@
     <ClInclude Include="TestObj.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TimeMgr.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseWindow.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -183,7 +185,7 @@
     <ClCompile Include="TestObj.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TimeMgr.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>

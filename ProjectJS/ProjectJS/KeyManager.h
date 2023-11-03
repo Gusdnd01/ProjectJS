@@ -6,9 +6,9 @@ struct tKeyInfo {
 	bool		IsPrevCheck;
 };
 
-class KeyMgr
+class KeyManager
 {
-	SINGLE(KeyMgr);
+	SINGLE(KeyManager);
 private:
 	vector<tKeyInfo> m_vKey;
 	int m_arrVKKey[(int)KEY_TYPE::LAST] =

@@ -38,10 +38,14 @@ public:
 	const HDC& GetMainDC() const {
 		return m_hDC;
 	}
+	const HPEN& GetHPen(PEN_GROUP type) { return m_hPen[static_cast<UINT>(type)]; }
 
 private:
 	void Update();
 	void Render();
+
+private:
+	void CreatePens();
 
 private:
 	HWND	m_hWnd;
@@ -49,6 +53,6 @@ private:
 	HDC		m_hbackDC; //백 버퍼 DC
 	HBITMAP m_hbackbit; //백 버퍼에 그릴 bmp
 	POINT	m_ptResolution; //해상도
-
+	HPEN	m_hPen[static_cast<UINT>(PEN_GROUP::END)]; //미리 정의해둘 팬들?
 };
 

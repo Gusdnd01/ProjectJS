@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "TimeMgr.h"
+#include "TimeManager.h"
 #include "Core.h"
 
-void TimeMgr::Init()
+void TimeManager::Init()
 {
 	m_dT = 0;
 	m_llPrevCount = {};
@@ -22,7 +22,7 @@ void TimeMgr::Init()
 	
 }
 
-void TimeMgr::Update()
+void TimeManager::Update()
 {
 	QueryPerformanceCounter(&m_llCurCount);
 	//DeltaTime
