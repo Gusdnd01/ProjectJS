@@ -14,7 +14,7 @@ public:
 	void SetScale(Vector2 _vScale) { m_vScale = _vScale; }
 	const Vector2& GetPos() const { return m_vPos; }
 	const Vector2& GetScale() const { return m_vScale; }
-private:
+protected:
 	Vector2 m_vPos;
 	Vector2 m_vScale;
 };

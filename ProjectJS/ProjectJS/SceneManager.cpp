@@ -2,15 +2,18 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "TestScene.h"
+#include "IntroScene.h"
 
 void SceneManager::Init()
 {
 	m_curScene = nullptr;
 	//¾À µî·Ï
 	RegisterScene(L"TestScene", make_shared<TestScene>());
+	RegisterScene(L"IntroScene", make_shared<IntroScene>());
 
 	//¾À ·Îµå
-	LoadScene(L"TestScene");
+	LoadScene(L"IntroScene");
+	//LoadScene(L"TestScene");
 }
 
 void SceneManager::Update()

@@ -21,5 +21,6 @@ public:
 	void AddObj(Object* obj, OBJECT_GROUP type) {
 		m_vObj[(UINT)type].push_back(obj);
 	}
+	//Object* GetObj(OBJECT_GROUP type) { return m_vObj[(UINT)type]; }
 };
 
