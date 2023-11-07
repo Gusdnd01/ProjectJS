@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "ResManager.h"
+#include "ResourceManager.h"
 #include "PathManager.h"
 #include "Texture.h"
 
-Texture* ResManager::TexLoad(const wstring& key, const wstring& relativePath)
+Texture* ResourceManager::TexLoad(const wstring& key, const wstring& relativePath)
 {
 	Texture* ptex = TexFind(key);
 	if (ptex != nullptr) {
@@ -20,7 +20,7 @@ Texture* ResManager::TexLoad(const wstring& key, const wstring& relativePath)
 	return ptex;
 }
 
-Texture* ResManager::TexFind(const wstring& key)
+Texture* ResourceManager::TexFind(const wstring& key)
 {
 	auto iter = mapTex.find(key);
 	if (iter != mapTex.end()) {
@@ -29,7 +29,7 @@ Texture* ResManager::TexFind(const wstring& key)
 	return nullptr;
 }
 
-void ResManager::Release()
+void ResourceManager::Release()
 {
 	for (auto iter = mapTex.begin(); iter != mapTex.end(); iter++) {
 		delete iter->second;

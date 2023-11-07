@@ -4,7 +4,11 @@ class TestObj :
     public Object
 {
 public:
-    void Update() override;
+    TestObj();
+    ~TestObj();
 
+public:
+    void Update() override;
+    void Render(HDC _dc) override;
 };
 

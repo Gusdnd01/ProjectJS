@@ -1,30 +1,28 @@
 #include "pch.h"
 #include "Collider.h"
+#include "Object.h"
 #include "Core.h"
-
 Collider::Collider()
-	:owner(0),pos(0), bounds(0)
+	: owner(nullptr)
 {
+
 }
 
 Collider::~Collider()
 {
 }
 
-void Collider::LateUpdate()
+void Collider::FinalUpdate()
 {
+	//object 위치를 따라가야한다.
+	Vector2 vObjPos = owner->GetPos();
+	finalPos = vObjPos + pos;
 }
 
-//초록색으로 Gizmos그려주는 함수
-void Collider::Gizmos(HDC _dc)
+void Collider::Render(HDC _dc)
 {
 	HPEN newPen = GETINST(Core)->GetHPen(PEN_GROUP::GREEN);
 	HPEN defaultPen = (HPEN)SelectObject(_dc, newPen);
-	RECT_RENDER(pos.x, pos.y, bounds.x, bounds.y, _dc);
+	RECT_RENDER(pos.x, pos.y, scale.x, scale.y, _dc);
 	SelectObject(_dc, defaultPen);
-}
-
-bool Collider::IsCollision()
-{
-	return false;
 }

@@ -21,7 +21,7 @@ void Texture::Load(const wstring& strFile)
 	bit = (HBITMAP)LoadImage(nullptr, strFile.c_str(), IMAGE_BITMAP, 0,0,LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 	assert(bit);
 
-	dc = CreateCompatibleDC(Core::GetInst()->GetMainDC());
+	dc = CreateCompatibleDC(GETINST(Core)->GetMainDC());
 	SelectObject(dc, bit);
 	GetObject(bit, sizeof(BITMAP), &bitInfo);
 }

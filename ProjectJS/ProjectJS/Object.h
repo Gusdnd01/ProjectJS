@@ -1,4 +1,5 @@
 #pragma once
+class Texture;
 class Object
 {
 public:

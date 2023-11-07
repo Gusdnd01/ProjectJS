@@ -159,7 +159,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="ProjectJS.h" />
     <ClInclude Include="Res.h" />
-    <ClInclude Include="ResManager.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -179,7 +179,7 @@
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Res.cpp" />
-    <ClCompile Include="ResManager.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TestObj.cpp" />

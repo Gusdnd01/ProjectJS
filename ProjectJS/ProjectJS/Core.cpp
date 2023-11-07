@@ -4,7 +4,7 @@
 #include "KeyManager.h"
 #include "SceneManager.h"
 #include "PathManager.h"
-#include "ResManager.h"
+#include "ResourceManager.h"
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
@@ -62,7 +62,7 @@ void Core::Release()
 	ReleaseDC(m_hWnd, m_hDC);
 	DeleteDC(m_hbackDC);
 	DeleteObject(m_hbackbit);
-	ResManager::GetInst()->Release();
+	GETINST(ResourceManager)->Release();
 }
 
 void Core::CreatePens()

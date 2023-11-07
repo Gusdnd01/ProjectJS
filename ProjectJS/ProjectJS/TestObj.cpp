@@ -3,6 +3,15 @@
 #include "KeyManager.h"
 #include "TimeManager.h"
 
+TestObj::TestObj()
+{
+
+}
+
+TestObj::~TestObj()
+{
+}
+
 void TestObj::Update()
 {
 	Vector2 pos = GetPos();
@@ -21,4 +30,9 @@ void TestObj::Update()
 		pos.y += 100.0f * fDT;
 	}
 	SetPos(pos);
+}
+
+void TestObj::Render(HDC _dc)
+{
+
 }

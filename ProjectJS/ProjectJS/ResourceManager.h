@@ -1,8 +1,8 @@
 #pragma once
 class Texture;
-class ResManager
+class ResourceManager
 {
-	SINGLE(ResManager);
+	SINGLE(ResourceManager);
 public:
 	Texture* TexLoad(const wstring& key, const wstring& relativePath);
 	Texture* TexFind(const wstring& key);

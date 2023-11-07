@@ -2,12 +2,17 @@
 #include "Object.h"
 #include "KeyManager.h"
 #include "TimeManager.h"
+#include "Texture.h"
 
 Object::Object()
 : m_vPos{}
 , m_vScale{}
 {
 
+}
+
+Object::Object(Texture* _tex)
+{
 }
 
 Object::~Object()
