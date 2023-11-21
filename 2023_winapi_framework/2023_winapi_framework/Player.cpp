@@ -11,8 +11,13 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
+
 Player::Player()
 	: m_pTex(nullptr)
+	, m_bLeft(false)
+	, m_bIsGround(false)
+	, m_fGravity(20.f)
+	, m_sState(STATE::IDLE)
 {
 	//m_pTex = new Texture;
 	//wstring strFilePath = PathMgr::GetInst()->GetResPath();
@@ -56,50 +61,28 @@ void Player::Update()
 {
 	Vec2 vPos = GetPos();
 
-	if (KEY_PRESS(KEY_TYPE::LEFT))
-	{
-		vPos.x -= 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::RIGHT))
-	{
-		vPos.x += 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::UP))
-	{
-		vPos.y -= 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Back", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::DOWN))
-	{
-		vPos.y += 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
-	}
-	if (KEY_DOWN(KEY_TYPE::SPACE))
-	{
-		CreateBullet();
-		ResMgr::GetInst()->Play(L"Shoot");
-	}
+	vPos = vPos + CalculateMovement();
+	vPos = vPos + CalculateGravity();
+
 	if(KEY_PRESS(KEY_TYPE::CTRL))
 		GetAnimator()->PlayAnim(L"Jiwoo_Attack", false, 1);
 	SetPos(vPos);
 	GetAnimator()->Update();
 }
 
-void Player::CreateBullet()
-{
-	Bullet* pBullet = new Bullet;
-	Vec2 vBulletPos = GetPos();
-	vBulletPos.y -= GetScale().y / 2.f;
-	pBullet->SetPos(vBulletPos);
-	pBullet->SetScale(Vec2(25.f,25.f));
-//	pBullet->SetDir(M_PI / 4 * 7);
-//	pBullet->SetDir(120* M_PI / 180);
-	pBullet->SetDir(Vec2(-10.f,-15.f));
-	pBullet->SetName(L"Player_Bullet");
-	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
-}
+//void Player::CreateBullet()
+//{
+//	Bullet* pBullet = new Bullet;
+//	Vec2 vBulletPos = GetPos();
+//	vBulletPos.y -= GetScale().y / 2.f;
+//	pBullet->SetPos(vBulletPos);
+//	pBullet->SetScale(Vec2(25.f,25.f));
+////	pBullet->SetDir(M_PI / 4 * 7);
+////	pBullet->SetDir(120* M_PI / 180);
+//	pBullet->SetDir(Vec2(-10.f,-15.f));
+//	pBullet->SetName(L"Player_Bullet");
+//	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
+//}
 
 void Player::Render(HDC _dc)
 {
@@ -137,3 +120,101 @@ void Player::Render(HDC _dc)
 	//	, 0, 0, Width, Height, RGB(255, 0, 255));
 	Component_Render(_dc);
 }
+
+void Player::EnterCollision(Collider* other)
+{
+	if (m_bIsGround) return;
+	m_bIsGround = true;
+}
+
+void Player::ExitCollision(Collider* other)
+{
+	m_bIsGround = false;
+}
+
+Vec2 Player::CalculateGravity()
+{
+	if (m_bIsGround) return Vec2(.0f);
+	return Vec2(0.f, 10.0f* m_fGravity * fDT);
+}
+
+Vec2 Player::CalculateMovement()
+{
+	Vec2 finalPos;
+
+	if (KEY_PRESS(KEY_TYPE::LEFT))
+	{
+		finalPos.x -= 100.f * fDT;
+		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
+	}
+	if (KEY_PRESS(KEY_TYPE::RIGHT))
+	{
+		finalPos.x += 100.f * fDT;
+		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	}
+	if (KEY_DOWN(KEY_TYPE::SPACE)) {
+		if (m_bIsGround) {
+			finalPos.y -= 1000.f * fDT;
+		}
+	}
+
+	return finalPos;
+}
+
+#pragma region FSM
+void Player::StateUpdate()
+{
+	switch (m_sState)
+	{
+	case STATE::MOVE:
+		MoveState(m_bLeft);
+		break;
+	case STATE::IDLE:
+		IdleState();
+		break;
+	case STATE::JUMP:
+		JumpState();
+		break;
+	case STATE::HURT:
+		HurtState();
+		break;
+	case STATE::END:
+		break;
+	default:
+		break;
+	}
+}
+void Player::StateChange(STATE _type)
+{
+	if (_type == STATE::END) return;
+
+	m_sState = _type;
+}
+
+void Player::IdleState()
+{
+	//가만히 있을때 애니메이션
+}
+
+void Player::JumpState()
+{
+	//점프할 떄 애니메이션
+}
+
+void Player::HurtState()
+{
+
+}
+
+void Player::MoveState(bool left)
+{
+	//움직일 때 애니메이션이랑 대충 ㅇㅇ
+	if (left) {
+
+	}
+	else {
+
+	}
+}
+#pragma endregion
+

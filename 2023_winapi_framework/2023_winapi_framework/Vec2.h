@@ -9,6 +9,7 @@ public:
 	Vec2(int _x, int _y);
 	Vec2(POINT _pt);
 	Vec2(const Vec2& _vec);
+	Vec2(float _value);
 public:
 	float Length() { return (float)(sqrt(pow(x, 2) + pow(y, 2))); }
 	Vec2& Normalize()

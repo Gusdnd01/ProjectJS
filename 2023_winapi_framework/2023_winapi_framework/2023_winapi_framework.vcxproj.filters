@@ -62,6 +62,15 @@
     <Filter Include="Engine\08. Module">
       <UniqueIdentifier>{b8698270-780f-4bb6-bf63-bf69c99fa2ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Player">
+      <UniqueIdentifier>{42be6644-ae32-40ee-8c25-d3da1785ac01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Ground">
+      <UniqueIdentifier>{9b44ea1b-67de-4317-a645-158282330282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\FSM">
+      <UniqueIdentifier>{b95d9234-2a2f-48b5-9e98-b6bc8f97e441}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -112,9 +121,6 @@
     <ClInclude Include="Start_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Engine\04. Object\MainObject</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Engine\04. Object\MainObject</Filter>
     </ClInclude>
@@ -153,6 +159,12 @@
     </ClInclude>
     <ClInclude Include="2023_winapi_framework.h">
       <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\04. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Engine\04. Object\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +214,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Engine\02. Core</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Engine\04. Object\MainObject</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Engine\04. Object\MainObject</Filter>
     </ClCompile>
@@ -240,6 +249,12 @@
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>Engine\07. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine\04. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Engine\04. Object\Ground</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
