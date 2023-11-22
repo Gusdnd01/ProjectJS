@@ -15,6 +15,13 @@ public:
 	void EnterCollision(Collider* _pOther);
 	void ExitCollision(Collider* _pOther);
 	void StayCollision(Collider* _pOther);
+
+public:
+	bool CheckLeft(Collider* _pOther);
+	bool CheckRight(Collider* _pOther);
+	bool CheckTop(Collider* _pOther);
+	bool CheckBottom(Collider* _pOther);
+
 public:
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	void SetOffSetPos(Vec2 _vOffsetPos) 
@@ -25,6 +32,10 @@ public:
 	{ return m_vFinalPos; }
 	const UINT& GetID() const { return m_ID; }
 	const Object* GetObj() const { return m_pOwner; }
+	const bool& GetCheckLeft() const { return m_bCheckLeft; }
+	const bool& GetCheckRight() const { return m_bCheckRight; }
+	const bool& GetCheckTop() const { return m_bCheckTop; }
+	const bool& GetCheckBottom() const { return m_bCheckBottom; }
 private:
 	UINT m_check;
 	Object* m_pOwner;
@@ -34,5 +45,9 @@ private:
 	friend class Object;
 	UINT m_ID; // 충돌체 ID값
 	static UINT m_sNextID;
+	bool m_bCheckLeft;
+	bool m_bCheckRight;
+	bool m_bCheckTop;
+	bool m_bCheckBottom;
 };
 

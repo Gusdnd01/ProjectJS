@@ -71,6 +71,9 @@
     <Filter Include="Engine\07. Component\FSM">
       <UniqueIdentifier>{b95d9234-2a2f-48b5-9e98-b6bc8f97e441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\GravityManager">
+      <UniqueIdentifier>{1074dcdb-af0b-4a04-a292-aac406dee7eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -166,6 +169,12 @@
     <ClInclude Include="Ground.h">
       <Filter>Engine\04. Object\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="GravityManager.h">
+      <Filter>Engine\03. Manager\GravityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Engine\07. Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -255,6 +264,12 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Engine\04. Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityManager.cpp">
+      <Filter>Engine\03. Manager\GravityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Engine\07. Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

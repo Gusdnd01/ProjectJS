@@ -4,12 +4,17 @@
 #include "TimeMgr.h"
 #include "Collider.h"
 #include "Animator.h"
+#include "RigidBody.h"
 Object::Object()
 	: m_pCollider(nullptr)
 	, m_vPos{}
 	, m_vScale{}
 	, m_IsAlive(true)
 	, m_pAnimator(nullptr)
+	, m_bCheckLeft(false)
+	, m_bCheckRight(false)
+	, m_bCheckTop(false)
+	, m_bCheckBottom(false)
 {
 }
 
@@ -32,6 +37,12 @@ void Object::CreateAnimator()
 {
 	m_pAnimator = new Animator;
 	m_pAnimator->m_pOwner = this;
+}
+
+void Object::CreateRigidBody()
+{
+	m_rb = new RigidBody;
+	m_rb->m_pOwner = this;
 }
 
 void Object::Update()
@@ -77,6 +88,5 @@ void Object::Component_Render(HDC _dc)
 		m_pCollider->Render(_dc);
 	if (nullptr != m_pAnimator)
 		m_pAnimator->Render(_dc);
-
 }
 
