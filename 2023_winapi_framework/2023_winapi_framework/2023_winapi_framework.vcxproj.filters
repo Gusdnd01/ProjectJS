@@ -62,6 +62,9 @@
     <Filter Include="Engine\08. Module">
       <UniqueIdentifier>{b8698270-780f-4bb6-bf63-bf69c99fa2ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\09.UI">
+      <UniqueIdentifier>{9709db8b-bd52-4a31-96a3-40a26a1560e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -157,6 +160,7 @@
     <ClInclude Include="Intro_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
+    <ClInclude Include="ShowSetting.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -247,5 +251,6 @@
     <ClCompile Include="Intro_Scene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
+    <ClCompile Include="ShowSetting.cpp" />
   </ItemGroup>
 </Project>

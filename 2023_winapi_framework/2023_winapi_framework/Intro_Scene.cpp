@@ -3,7 +3,11 @@
 #include "Object.h"
 #include "Core.h"
 #include "KeyMgr.h"
+#include "SceneMgr.h"
 #include "TimeMgr.h"
+#include "ShowSetting.h"
+
+int arrowY;
 
 void Intro_Scene::Init()
 {
@@ -30,9 +34,34 @@ void Intro_Scene::Render(HDC _dc)
 		moveY -= yIncrease;
 	}
 
-	int arrowY = y + moveY;
+	arrowY = y + moveY;
 
 	TextOut(_dc, x - 50, arrowY, L">", 1);
 
 	Scene::Render(_dc);
+}
+
+void Intro_Scene::Update()
+{
+	if (KEY_DOWN(KEY_TYPE::SPACE)) 
+	{
+		switch (arrowY)
+		{
+		case 360: //게임 시작 버튼
+		{
+			SceneMgr::GetInst()->LoadScene(L"Start_Scene");
+		}
+		break;
+		case 410: //세팅 버튼
+		{
+			ShowSetting::GetInst()->IsActive == true;
+		}
+		break;
+		default: //게임 나가기 버튼
+		{
+			exit(0);
+		}
+		break;
+		}
+	}
 }
