@@ -9,6 +9,10 @@ Collider::Collider()
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
+	, m_bCheckLeft(false)
+	, m_bCheckRight(false)
+	, m_bCheckTop(false)
+	, m_bCheckBottom(false)
 {
 	//Collider a, b;
 	//a = b;
@@ -21,6 +25,7 @@ Collider::Collider(const Collider& _origin)
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
+
 {
 }
 
@@ -55,6 +60,26 @@ void Collider::ExitCollision(Collider* _pOther)
 void Collider::StayCollision(Collider* _pOther)
 {
 	m_pOwner->StayCollision(_pOther);
+}
+
+bool Collider::CheckLeft(Collider* _pOther)
+{
+	return false;
+}
+
+bool Collider::CheckRight(Collider* _pOther)
+{
+	return false;
+}
+
+bool Collider::CheckTop(Collider* _pOther)
+{
+	return false;
+}
+
+bool Collider::CheckBottom(Collider* _pOther)
+{
+	return false;
 }
 
 void Collider::FinalUpdate()

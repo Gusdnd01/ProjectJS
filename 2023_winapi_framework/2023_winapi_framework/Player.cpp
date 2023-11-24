@@ -2,29 +2,36 @@
 #include "Player.h"
 #include "KeyMgr.h"
 #include "TimeMgr.h"
-#include "Bullet.h"
 #include "SceneMgr.h"
-#include "Scene.h"
-#include "Texture.h"
 #include "PathMgr.h"
 #include "ResMgr.h"
+#include "Bullet.h"
+#include "Scene.h"
+#include "Texture.h"
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "RigidBody.h"
+
 Player::Player()
 	: m_pTex(nullptr)
+	, m_bLeft(false)
+	, m_bIsGround(false)
+	, m_fGravity(20.f)
+	, m_sState(STATE::IDLE)
 {
-	//m_pTex = new Texture;
-	//wstring strFilePath = PathMgr::GetInst()->GetResPath();
-	//strFilePath += L"Texture\\plane.bmp";
-	//m_pTex->Load(strFilePath);
-	//m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\plane.bmp");
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f,30.f));
+
+	CreateRigidBody();
+	GetRigidBody()->SetMass(50.0f);
+	GetRigidBody()->SetGravity(9.8f);
+
+	//콜라이더의 오프셋을 변경하고 싶으면 이거 주석풀면된다.
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
 	
-	// 엉엉엉 내 20분 ㅠㅠㅠ ㅁ날어;ㅣ남러;ㅁ나얼
+	//애니메이터랑 애니메이션 설정이다.
 	CreateAnimator();
 	GetAnimator()->CreateAnim(L"Jiwoo_Front", m_pTex,Vec2(0.f, 150.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
@@ -54,51 +61,11 @@ Player::~Player()
 }
 void Player::Update()
 {
-	Vec2 vPos = GetPos();
+	if(m_bIsJump == false)
+		PlayerInput();
+	StateUpdate();
 
-	if (KEY_PRESS(KEY_TYPE::LEFT))
-	{
-		vPos.x -= 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::RIGHT))
-	{
-		vPos.x += 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::UP))
-	{
-		vPos.y -= 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Back", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::DOWN))
-	{
-		vPos.y += 100.f * fDT;
-		GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
-	}
-	if (KEY_DOWN(KEY_TYPE::SPACE))
-	{
-		CreateBullet();
-		ResMgr::GetInst()->Play(L"Shoot");
-	}
-	if(KEY_PRESS(KEY_TYPE::CTRL))
-		GetAnimator()->PlayAnim(L"Jiwoo_Attack", false, 1);
-	SetPos(vPos);
 	GetAnimator()->Update();
-}
-
-void Player::CreateBullet()
-{
-	Bullet* pBullet = new Bullet;
-	Vec2 vBulletPos = GetPos();
-	vBulletPos.y -= GetScale().y / 2.f;
-	pBullet->SetPos(vBulletPos);
-	pBullet->SetScale(Vec2(25.f,25.f));
-//	pBullet->SetDir(M_PI / 4 * 7);
-//	pBullet->SetDir(120* M_PI / 180);
-	pBullet->SetDir(Vec2(-10.f,-15.f));
-	pBullet->SetName(L"Player_Bullet");
-	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
 }
 
 void Player::Render(HDC _dc)
@@ -137,3 +104,110 @@ void Player::Render(HDC _dc)
 	//	, 0, 0, Width, Height, RGB(255, 0, 255));
 	Component_Render(_dc);
 }
+
+void Player::EnterCollision(Collider* other)
+{
+	if (m_bIsGround) return;
+	m_bIsGround = true;
+}
+
+void Player::ExitCollision(Collider* other)
+{
+	m_bIsGround = false;
+}
+
+void Player::PlayerInput()
+{
+	if (m_bIsJump) return;
+	STATE state = STATE::IDLE;
+	if (KEY_PRESS(KEY_TYPE::LEFT)) {
+		state = STATE::MOVE;
+		m_bLeft = true;
+	}
+	if (KEY_PRESS(KEY_TYPE::RIGHT)) {
+		state = STATE::MOVE;
+		m_bLeft = false;
+	}
+	if (KEY_DOWN(KEY_TYPE::SPACE)) {
+		m_bIsGround = false;
+		m_bIsJump = true;
+		state = STATE::JUMP;
+	}
+	StateChange(state);
+}
+
+
+#pragma region FSM
+void Player::StateUpdate()
+{
+	Vec2 vPos = GetPos();
+	switch (m_sState)
+	{
+	case STATE::MOVE:
+		MoveState(vPos, m_bLeft);
+		break;
+	case STATE::IDLE:
+		IdleState();
+		break;
+	case STATE::JUMP:
+		JumpState(vPos);
+		break;
+	case STATE::HURT:
+		HurtState();
+		break;
+	case STATE::END:
+		break;
+	default:
+		break;
+	}
+
+	SetPos(vPos);
+}
+void Player::StateChange(STATE _type)
+{
+	if (_type == STATE::END) return;
+
+	m_sState = _type;
+}
+
+void Player::IdleState()
+{
+	//가만히 있을때 애니메이션
+	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
+}
+
+void Player::JumpState(Vec2& pos)
+{
+	//점프할 떄 애니메이션
+	m_fTimer += fDT;
+
+	if (m_fTimer >= 1 ) {
+		StateChange(STATE::IDLE);
+		if (m_bIsGround) {
+			m_fTimer = 0;
+			m_bIsJump = false;
+		}
+	}
+
+	pos.y -= 100.0f * fDT;
+}
+
+void Player::HurtState()
+{
+	//으악
+}
+
+void Player::MoveState(Vec2& pos,bool left)
+{
+	//움직일 때 애니메이션이랑 대충 ㅇㅇ
+	if (left) {
+		pos.x -= 100.0f * fDT;
+		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
+	}
+	else {
+		pos.x += 100.0f *fDT;
+		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	}
+}
+#pragma endregion
+
