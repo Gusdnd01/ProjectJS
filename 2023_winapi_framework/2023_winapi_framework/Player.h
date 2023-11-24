@@ -36,9 +36,9 @@ public:
     void StateUpdate();
     void StateChange(STATE _type);
     void IdleState();
-    void JumpState();
+    void JumpState(Vec2& pos);
     void HurtState();
-    void MoveState(bool left);
+    void MoveState(Vec2& pos, bool left);
 
 public:
     const bool& GetIsJump() const { return m_bIsJump; }
@@ -47,6 +47,7 @@ private:
     Texture* m_pTex;
     RigidBody* m_rb;
     float    m_fTimer = 0.0f;
+    float    m_fPercent = 0.0f;
     float    m_fJumpPower;
     bool     m_bLeft = false;  
     bool     m_bIsJump = false;

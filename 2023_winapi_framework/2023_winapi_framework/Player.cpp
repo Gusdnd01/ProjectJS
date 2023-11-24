@@ -18,7 +18,7 @@ Player::Player()
 	: m_pTex(nullptr)
 	, m_bLeft(false)
 	, m_sState(STATE::IDLE)
-	, m_fJumpPower(3.0f)
+	, m_fJumpPower(7.0f)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
 	CreateCollider();
@@ -26,7 +26,7 @@ Player::Player()
 
 	CreateRigidBody();
 	GetRigidBody()->SetMass(50.0f);
-	GetRigidBody()->SetGravity(7.0f);
+	GetRigidBody()->SetGravity(4.0f);
 
 	GMGI->AddGravObj(this);
 
@@ -148,18 +148,18 @@ void Player::PlayerInput()
 #pragma region FSM
 void Player::StateUpdate()
 {
+	Vec2 pos = GetPos();
 	switch (m_sState)
 	{
 	case STATE::MOVE:
-		MoveState(m_bLeft);
+		MoveState(pos, m_bLeft);
 		break;
 	case STATE::IDLE:
 		IdleState();
 		break;
 	case STATE::JUMP:
 		m_bIsJump = true;
-		GetRigidBody()->SetGravity(-m_fJumpPower);
-		JumpState();
+		JumpState(pos );
 		break;
 	case STATE::HURT:	
 		HurtState();
@@ -169,6 +169,7 @@ void Player::StateUpdate()
 	default:
 		break;
 	}
+	SetPos(pos);
 }
 void Player::StateChange(STATE _type)
 {
@@ -183,27 +184,39 @@ void Player::IdleState()
 	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
 }
 
-void Player::JumpState()
+void Player::JumpState(Vec2& pos)
 {
 	//jump animation
 	//GetAnimator()->PlayAnim(L"Jump", false);
 
 	//timer
-	m_fTimer += fDT;
+	if(m_fTimer < 1)
+		m_fTimer += fDT;
 
+	//0 ~ 1
+	m_fPercent += m_fTimer < 1 ? fDT :-fDT;
+	GetRigidBody()->SetGravity(-m_fJumpPower *);
+
+
+	if (m_fPercent <= 0) {
+		m_fPercent = 0;
+	}
 	
+
+	pos.x += ((m_bLeft ? -400.0f : 400.0f) * (m_fPercent)) * fDT;
 
 	//if timer is greater than 1
 	if (m_fTimer >= 1 ) {
 		//redirect state to idle
 
 		//Compo status change
-		GetRigidBody()->SetGravity(7.0f);
+		GetRigidBody()->SetGravity(4.0f);
 		
 		//if Collider's Check Bottom is true
 		if (GetCollider()->GetCheckBottom()) {
 			//timer and jump setting
 			m_fTimer = 0;
+			m_fPercent = 0;
 			m_bIsJump = false;
 			StateChange(STATE::IDLE);
 		}
@@ -217,9 +230,8 @@ void Player::HurtState()
 	//Get hurt action
 }
 
-void Player::MoveState(bool left)
+void Player::MoveState(Vec2& pos,bool left)
 {
-	Vec2 pos = GetPos();
 
 	//Move Animation and move action
 	if (left) {
@@ -231,7 +243,6 @@ void Player::MoveState(bool left)
 		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
 
-	SetPos(pos);
 }
 #pragma endregion
 
