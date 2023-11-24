@@ -2,10 +2,11 @@
 #include "Collider.h"
 #include "Object.h"
 #include "SelectGDI.h"
+#include "Player.h"
 UINT Collider::m_sNextID = 0;
 Collider::Collider()
 	: m_pOwner(nullptr)
-	, m_vScale(Vec2(40.f,40.f))
+	, m_vScale(Vec2(40.f, 40.f))
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
@@ -14,8 +15,6 @@ Collider::Collider()
 	, m_bCheckTop(false)
 	, m_bCheckBottom(false)
 {
-	//Collider a, b;
-	//a = b;
 }
 
 Collider::Collider(const Collider& _origin)
@@ -47,7 +46,7 @@ void Collider::Render(HDC _dc)
 
 void Collider::EnterCollision(Collider* _pOther)
 {
- 	++m_check;
+	++m_check;
 	m_pOwner->EnterCollision(_pOther);
 	CheckPosition(_pOther);
 }
@@ -85,7 +84,10 @@ void Collider::CheckLeft(Collider* _pOther)
 	if (_pOther->GetFinalPos().x < GetFinalPos().x) {
 		m_bCheckLeft = true;
 	}
-	m_bCheckLeft = false;
+	else {
+		m_bCheckLeft = false;
+
+	}
 }
 
 void Collider::CheckRight(Collider* _pOther)
@@ -93,7 +95,10 @@ void Collider::CheckRight(Collider* _pOther)
 	if (_pOther->GetFinalPos().x > GetFinalPos().x) {
 		m_bCheckRight = true;
 	}
-	m_bCheckRight = false;
+	else {
+		m_bCheckRight = false;
+
+	}
 }
 
 void Collider::CheckTop(Collider* _pOther)
@@ -101,7 +106,9 @@ void Collider::CheckTop(Collider* _pOther)
 	if (_pOther->GetFinalPos().y < GetFinalPos().y) {
 		m_bCheckTop = true;
 	}
-	m_bCheckTop = false;
+	else {
+		m_bCheckTop = false;
+	}
 }
 
 void Collider::CheckBottom(Collider* _pOther)
@@ -109,7 +116,11 @@ void Collider::CheckBottom(Collider* _pOther)
 	if (_pOther->GetFinalPos().y > GetFinalPos().y) {
 		m_bCheckBottom = true;
 	}
-	m_bCheckBottom = false;
+	else {
+		m_bCheckBottom = false;
+	}
+
+	m_pOwner->CheckBottom(_pOther);
 }
 
 void Collider::FinalUpdate()

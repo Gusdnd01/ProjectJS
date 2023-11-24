@@ -78,6 +78,22 @@ void Object::StayCollision(Collider* _pOther)
 
 }
 
+void Object::CheckLeft(Collider* _pOther)
+{
+}
+
+void Object::CheckRight(Collider* _pOther)
+{
+}
+
+void Object::CheckTop(Collider* _pOther)
+{
+}
+
+void Object::CheckBottom(Collider* _pOther)
+{
+}
+
 void Object::Component_Render(HDC _dc)
 {
 	if (nullptr != m_pCollider)

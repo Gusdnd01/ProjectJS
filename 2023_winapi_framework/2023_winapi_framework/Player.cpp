@@ -18,21 +18,22 @@ Player::Player()
 	: m_pTex(nullptr)
 	, m_bLeft(false)
 	, m_sState(STATE::IDLE)
+	, m_fJumpPower(3.0f)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f,30.f));
 
 	CreateRigidBody();
-	GetRigidBody()->SetMass(1.0f);
-	GetRigidBody()->SetGravity(3.0f);
+	GetRigidBody()->SetMass(50.0f);
+	GetRigidBody()->SetGravity(7.0f);
 
 	GMGI->AddGravObj(this);
 
-	//콜라이더의 오프셋을 변경하고 싶으면 이거 주석풀면된다.
+	//if you want modify Collider's offset. use this
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
 	
-	//애니메이터랑 애니메이션 설정이다.
+	//Animator and animation setting 
 	CreateAnimator();
 	GetAnimator()->CreateAnim(L"Jiwoo_Front", m_pTex,Vec2(0.f, 150.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
@@ -46,12 +47,12 @@ Player::Player()
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
 	GetAnimator()->PlayAnim(L"Jiwoo_Front",true);
 
-	//// 오프셋 건드리기
+	//animation offset change
 	//Animation* pAnim = GetAnimator()->FindAnim(L"Jiwoo_Front");
-	//// 하나만
+	// only one 
 	//pAnim->SetFrameOffset(0, Vec2(0.f, 20.f));
 
-	//// 프레임 다 
+	//all frames
 	//for (size_t i = 0; i < pAnim->GetMaxFrame(); ++i)
 	//	pAnim->SetFrameOffset(i, Vec2(0.f, 20.f));
 }
@@ -108,17 +109,25 @@ void Player::Render(HDC _dc)
 
 void Player::EnterCollision(Collider* other)
 {
-	if (other == nullptr) return;
 }
 
 void Player::ExitCollision(Collider* other)
 {
 }
 
+void Player::CheckBottom(Collider* other)
+{
+}
+
 void Player::PlayerInput()
 {
+	//player during jump, return Input
 	if (m_bIsJump) return;
+	
+	//default is idle
 	STATE state = STATE::IDLE;
+
+	//some actions
 	if (KEY_PRESS(KEY_TYPE::LEFT)) {
 		state = STATE::MOVE;
 		m_bLeft = true;
@@ -128,9 +137,10 @@ void Player::PlayerInput()
 		m_bLeft = false;
 	}
 	if (KEY_DOWN(KEY_TYPE::SPACE)) {
-		m_bIsJump = true;
 		state = STATE::JUMP;
 	}
+
+	//lastly change state
 	StateChange(state);
 }
 
@@ -138,19 +148,20 @@ void Player::PlayerInput()
 #pragma region FSM
 void Player::StateUpdate()
 {
-	Vec2 vPos = GetPos();
 	switch (m_sState)
 	{
 	case STATE::MOVE:
-		MoveState(vPos, m_bLeft);
+		MoveState(m_bLeft);
 		break;
 	case STATE::IDLE:
 		IdleState();
 		break;
 	case STATE::JUMP:
-		JumpState(vPos);
+		m_bIsJump = true;
+		GetRigidBody()->SetGravity(-m_fJumpPower);
+		JumpState();
 		break;
-	case STATE::HURT:
+	case STATE::HURT:	
 		HurtState();
 		break;
 	case STATE::END:
@@ -158,8 +169,6 @@ void Player::StateUpdate()
 	default:
 		break;
 	}
-
-	SetPos(vPos);
 }
 void Player::StateChange(STATE _type)
 {
@@ -170,34 +179,49 @@ void Player::StateChange(STATE _type)
 
 void Player::IdleState()
 {
-	//가만히 있을때 애니메이션
+	//idle animation
 	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
 }
 
-void Player::JumpState(Vec2& pos)
+void Player::JumpState()
 {
-	//점프할 떄 애니메이션
+	//jump animation
+	//GetAnimator()->PlayAnim(L"Jump", false);
+
+	//timer
 	m_fTimer += fDT;
 
+	
+
+	//if timer is greater than 1
 	if (m_fTimer >= 1 ) {
-		StateChange(STATE::IDLE);
+		//redirect state to idle
+
+		//Compo status change
+		GetRigidBody()->SetGravity(7.0f);
+		
+		//if Collider's Check Bottom is true
 		if (GetCollider()->GetCheckBottom()) {
+			//timer and jump setting
 			m_fTimer = 0;
 			m_bIsJump = false;
+			StateChange(STATE::IDLE);
 		}
 	}
-
-	pos.y -= 100.0f * fDT;
+	if (m_bIsJump) GetCollider()->SetCheckBottom(false);
+	else GetCollider()->SetCheckBottom(true);
 }
 
 void Player::HurtState()
 {
-	//으악
+	//Get hurt action
 }
 
-void Player::MoveState(Vec2& pos,bool left)
+void Player::MoveState(bool left)
 {
-	//움직일 때 애니메이션이랑 대충 ㅇㅇ
+	Vec2 pos = GetPos();
+
+	//Move Animation and move action
 	if (left) {
 		pos.x -= 100.0f * fDT;
 		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
@@ -206,6 +230,8 @@ void Player::MoveState(Vec2& pos,bool left)
 		pos.x += 100.0f *fDT;
 		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
+
+	SetPos(pos);
 }
 #pragma endregion
 

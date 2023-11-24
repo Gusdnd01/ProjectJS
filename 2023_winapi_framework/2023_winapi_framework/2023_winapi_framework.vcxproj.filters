@@ -175,6 +175,9 @@
     <ClInclude Include="RigidBody.h">
       <Filter>Engine\07. Component</Filter>
     </ClInclude>
+    <ClInclude Include="Intro_Scene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -270,6 +273,9 @@
     </ClCompile>
     <ClCompile Include="RigidBody.cpp">
       <Filter>Engine\07. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro_Scene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

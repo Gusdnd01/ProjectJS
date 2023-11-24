@@ -23,6 +23,11 @@ public:
 	virtual void ExitCollision(Collider* _pOther);
 	virtual void StayCollision(Collider* _pOther);
 
+public:
+	virtual void CheckLeft(Collider* _pOther);
+	virtual void CheckRight(Collider* _pOther);
+	virtual void CheckTop(Collider* _pOther);
+	virtual void CheckBottom(Collider* _pOther);
 #pragma endregion
 
 public:

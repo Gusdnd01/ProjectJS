@@ -13,6 +13,7 @@ public:
 public:
 	void SetMass(float _mass) { m_fMass = _mass; }
 	void SetGravity(float _gravity) { m_fGravity = _gravity; }
+	void SetUseGrav(bool _value) { m_UseGravity = _value; }
 	void SetIsGround(bool _value) { m_bIsGround = _value; }
 	
 

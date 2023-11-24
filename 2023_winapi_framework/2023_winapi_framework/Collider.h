@@ -28,6 +28,8 @@ public:
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	void SetOffSetPos(Vec2 _vOffsetPos) 
 	{ m_vOffsetPos = _vOffsetPos; }
+	void SetCheckBottom(bool _value) { m_bCheckBottom = _value; }
+
 	const Vec2& GetScale() const { return m_vScale; }
 	const Vec2& GetOffSetPos() const { return m_vOffsetPos; }
 	const Vec2& GetFinalPos() const 
