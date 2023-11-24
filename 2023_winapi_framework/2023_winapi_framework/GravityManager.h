@@ -9,10 +9,9 @@ public:
 	void Update();
 
 public:
-	const float& GetGravity() const { return m_fGravity; }
+	void AddGravObj(Object* _obj);
 
 private:
 	vector<Object*> m_vGravityObj;
-	float m_fGravity;
 };
 

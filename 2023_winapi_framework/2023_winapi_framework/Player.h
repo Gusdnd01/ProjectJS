@@ -41,9 +41,7 @@ public:
 private:
     Texture* m_pTex;
     RigidBody* m_rb;
-    bool     m_bIsGround = false;
     bool     m_bLeft = false;   
-    float    m_fGravity = 9.8f;
     float    m_fTimer = 0.0f;
     bool     m_bIsJump = false;
     STATE    m_sState;

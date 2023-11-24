@@ -12,12 +12,11 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "RigidBody.h"
+#include "GravityManager.h"
 
 Player::Player()
 	: m_pTex(nullptr)
 	, m_bLeft(false)
-	, m_bIsGround(false)
-	, m_fGravity(20.f)
 	, m_sState(STATE::IDLE)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
@@ -25,8 +24,10 @@ Player::Player()
 	GetCollider()->SetScale(Vec2(20.f,30.f));
 
 	CreateRigidBody();
-	GetRigidBody()->SetMass(50.0f);
-	GetRigidBody()->SetGravity(9.8f);
+	GetRigidBody()->SetMass(1.0f);
+	GetRigidBody()->SetGravity(3.0f);
+
+	GMGI->AddGravObj(this);
 
 	//콜라이더의 오프셋을 변경하고 싶으면 이거 주석풀면된다.
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
@@ -107,13 +108,11 @@ void Player::Render(HDC _dc)
 
 void Player::EnterCollision(Collider* other)
 {
-	if (m_bIsGround) return;
-	m_bIsGround = true;
+	if (other == nullptr) return;
 }
 
 void Player::ExitCollision(Collider* other)
 {
-	m_bIsGround = false;
 }
 
 void Player::PlayerInput()
@@ -129,7 +128,6 @@ void Player::PlayerInput()
 		m_bLeft = false;
 	}
 	if (KEY_DOWN(KEY_TYPE::SPACE)) {
-		m_bIsGround = false;
 		m_bIsJump = true;
 		state = STATE::JUMP;
 	}
@@ -183,7 +181,7 @@ void Player::JumpState(Vec2& pos)
 
 	if (m_fTimer >= 1 ) {
 		StateChange(STATE::IDLE);
-		if (m_bIsGround) {
+		if (GetCollider()->GetCheckBottom()) {
 			m_fTimer = 0;
 			m_bIsJump = false;
 		}

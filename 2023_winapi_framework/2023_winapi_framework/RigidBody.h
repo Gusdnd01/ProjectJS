@@ -8,8 +8,13 @@ public:
 	~RigidBody();
 
 public:
+	const bool& IsGround() const { return m_bIsGround; }
+
+public:
 	void SetMass(float _mass) { m_fMass = _mass; }
 	void SetGravity(float _gravity) { m_fGravity = _gravity; }
+	void SetIsGround(bool _value) { m_bIsGround = _value; }
+	
 
 public:
 	void Update();
@@ -19,6 +24,7 @@ private:
 	float m_fMass;
 	float m_fGravity;
 	bool m_UseGravity;
+	bool m_bIsGround;
 	friend class Object;
 };
 

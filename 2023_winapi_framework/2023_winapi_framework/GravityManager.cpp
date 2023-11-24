@@ -12,3 +12,10 @@ void GravityManager::Update()
 		}
 	}
 }
+
+void GravityManager::AddGravObj(Object* _obj)
+{
+	if (_obj != nullptr) {
+		m_vGravityObj.push_back(_obj);
+	}
+}

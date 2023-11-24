@@ -7,6 +7,8 @@
 #include "ResMgr.h"
 #include "CollisionMgr.h"
 #include "EventMgr.h"
+#include "GravityManager.h"
+
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
 	// === 변수 초기화 === 
@@ -14,7 +16,6 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	m_ptResolution = _ptResolution;
 	m_hbackDC = 0;
 	m_hbackbit = 0;
-
 
 	// 더블버퍼링
 	m_hDC = GetDC(m_hWnd);	
@@ -62,6 +63,7 @@ void Core::Update()
 	// === Manager Update === 
 	TimeMgr::GetInst()->Update();
 	KeyMgr::GetInst()->Update();
+	GravityManager::GetInst()->Update();
 	SceneMgr::GetInst()->Update();
 	CollisionMgr::GetInst()->Update();
 //	Vec2 vPos = m_obj.GetPos();
@@ -104,7 +106,6 @@ void Core::Render()
 	BitBlt(m_hDC, 0,0, m_ptResolution.x, m_ptResolution.y, 
 		m_hbackDC, 0,0, SRCCOPY);
 	EventMgr::GetInst()->Update();
-
 
 	//TransparentBlt();
 	//StretchBlt();

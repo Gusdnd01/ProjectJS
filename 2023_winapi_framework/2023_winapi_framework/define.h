@@ -17,7 +17,7 @@ public:							\
 
 #define RECT_MAKE(posx, posy, scalex, scaley) {posx-scalex/2, posy-scaley/2, posx+scalex/2, posy+scaley/2}
 #define fDT TimeMgr::GetInst()->GetDT()
-#define fGravity GravityManager::GetInst()->GetGravity()
+#define GMGI GravityManager::GetInst()
 #define KEY_CHECK(key, state) KeyMgr::GetInst()->GetKey(key) == state
 #define KEY_NONE(key) KEY_CHECK(key, KEY_STATE::NONE)
 #define KEY_UP(key) KEY_CHECK(key, KEY_STATE::UP)
