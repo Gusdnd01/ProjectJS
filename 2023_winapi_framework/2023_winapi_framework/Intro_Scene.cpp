@@ -54,7 +54,7 @@ void Intro_Scene::Update()
 		break;
 		case 410: //세팅 버튼
 		{
-			ShowSetting::GetInst()->IsActive == true;
+			ShowSetting::GetInst()->IsActive = true;
 		}
 		break;
 		default: //게임 나가기 버튼

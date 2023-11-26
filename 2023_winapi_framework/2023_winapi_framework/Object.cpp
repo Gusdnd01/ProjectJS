@@ -11,10 +11,6 @@ Object::Object()
 	, m_vScale{}
 	, m_IsAlive(true)
 	, m_pAnimator(nullptr)
-	, m_bCheckLeft(false)
-	, m_bCheckRight(false)
-	, m_bCheckTop(false)
-	, m_bCheckBottom(false)
 {
 }
 

@@ -7,4 +7,5 @@ public:
 public:
 	void Init();
 	void Render(HDC _dc);
+	void Update();
 };
