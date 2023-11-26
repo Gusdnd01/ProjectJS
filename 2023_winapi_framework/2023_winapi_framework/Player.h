@@ -32,11 +32,13 @@ public:
     
 public:
     void PlayerInput();
-    void CalculateGravity();
 
 public:
     void StateUpdate();
     void StateChange(STATE _type);
+
+    //FSM Funtion
+public:
     void IdleState();
     void JumpState();
     void JumpChargeState();

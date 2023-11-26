@@ -35,7 +35,7 @@ public:
 	const Vec2& GetFinalPos() const 
 	{ return m_vFinalPos; }
 	const UINT& GetID() const { return m_ID; }
-	const Object* GetObj() const { return m_pOwner; }
+	Object* GetObj() const { return m_pOwner; }
 
 	const bool& GetCheckLeft() const { return m_bCheckLeft; }
 	const bool& GetCheckRight() const { return m_bCheckRight; }

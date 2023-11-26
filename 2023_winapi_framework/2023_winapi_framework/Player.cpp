@@ -5,13 +5,13 @@
 #include "SceneMgr.h"
 #include "PathMgr.h"
 #include "ResMgr.h"
-#include "Bullet.h"
 #include "Scene.h"
 #include "Texture.h"
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
 #include "RigidBody.h"
+#include "Gravity.h"
 
 Player::Player()
 	: m_pTex(nullptr)
@@ -28,8 +28,11 @@ Player::Player()
 
 	CreateRigidBody();
 	GetRigidBody()->SetMass(5.0f);
-	GetRigidBody()->SetFriction(50.0f);
+	GetRigidBody()->SetFriction(100.0f);
 	GetRigidBody()->SetMaxVelocity(1000.0f);
+
+	CreateGravity();
+	GetGravity()->SetGravity(1000.0f);
 
 	//if you want modify Collider's offset. use this
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
@@ -69,6 +72,16 @@ void Player::Update()
 
 	//fsm loop
 	StateUpdate();
+
+	if (m_bIsJump) {
+		m_fTimer += fDT;
+
+		if (m_fTimer >= 1.0f) {
+			m_bIsJump = false;
+			m_fJumpPower = 200.0f;
+		}
+	}
+
 
 	GetAnimator()->Update();
 }
@@ -126,9 +139,25 @@ void Player::PlayerInput()
 {
 	//player during jump, return Input
 	//if (m_bIsJump) return;
+	
 	STATE state = STATE::IDLE;
 
 	//some actions
+
+	if (m_bIsGround && KEY_DOWN(KEY_TYPE::A)) {
+		GetRigidBody()->AddForce(Vec2(-350.0f, 0.0f), FORCE_MODE::IMPULSE);
+	}
+	if (m_bIsGround && KEY_DOWN(KEY_TYPE::D)) {
+		GetRigidBody()->AddForce(Vec2(350.0f, 0.0f), FORCE_MODE::IMPULSE);
+	}
+	if (m_bIsGround && KEY_UP(KEY_TYPE::A)) {
+		GetRigidBody()->StopImmediatelyX();
+	}
+	if (m_bIsGround && KEY_UP(KEY_TYPE::D)) {
+		GetRigidBody()->StopImmediatelyX();
+
+	}
+
 	if (m_bIsGround && KEY_PRESS(KEY_TYPE::A)) {
 		state = STATE::MOVE;
 		m_bLeft = true;
@@ -137,33 +166,20 @@ void Player::PlayerInput()
 		state = STATE::MOVE;
 		m_bLeft = false;
 	}
-	if (m_bIsGround && KEY_DOWN(KEY_TYPE::SPACE)) {
+
+	if (m_bIsGround&& KEY_PRESS(KEY_TYPE::SPACE)) {
 		state = STATE::JUMP_CHARGE;
 	}
-	if (m_bIsGround && KEY_UP(KEY_TYPE::SPACE)) {
+	if (m_bIsGround&&KEY_UP(KEY_TYPE::SPACE)) {
 		m_bIsJump = true;
 		state = STATE::JUMP;
 	}
 
 	//lastly change state
 	StateChange(state);
-	//default is idle
 	
+	//default is idle
 }
-
-void Player::CalculateGravity()
-{
-	if (GetCollider() != nullptr) m_bIsGround = GetCollider()->GetCheckBottom();
-
-	//만약 땅에 있는 상태라면 내려가는걸 바로 멈춰준다.
-	if (m_bIsGround && !m_bIsJump) {
-		GetRigidBody()->StopImmediately();
-	}
-
-	//200의 힘으로 밑으로 계속 가속해준다.
-	GetRigidBody()->AddForce(Vec2(0.0f, 500.0f));
-}
-
 
 #pragma region FSM
 void Player::StateUpdate()
@@ -187,7 +203,7 @@ void Player::StateUpdate()
 		JumpChargeState();
 		break;
 
-	case STATE::HURT:	
+	case STATE::HURT:
 		HurtState();
 		break;
 
@@ -206,10 +222,9 @@ void Player::StateChange(STATE _type)
 
 void Player::IdleState()
 {
-	//여기선 중력계산이랑 아이들 애니메이션 실행만 해준다.
+	//아이들 애니메이션 실행만 해준다.
 	//idle animation
 	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
-	CalculateGravity();
 }
 
 void Player::JumpState()
@@ -218,16 +233,16 @@ void Player::JumpState()
 	//GetAnimator()->PlayAnim(L"Jump", false);
 
 	//점프 차지에서 올려준 점프 파워만큼 힘을 더해준다.
-	GetRigidBody()->AddForce(Vec2(0.0f, -m_fJumpPower));
+	GetRigidBody()->AddForce(Vec2(0.0f, -m_fJumpPower), FORCE_MODE::IMPULSE);
 }
 
 void Player::JumpChargeState()
 {
 	//프레임당 증가
-	m_fJumpPower += 200.0f ;
+	m_fJumpPower += 200.0f * fDT;
 
 	//최대값 지정
-	m_fJumpPower = clamp(m_fJumpPower, 0.0f, 5000.0f);
+	m_fJumpPower = clamp(m_fJumpPower, 200.0f, 600.0f);
 }
 
 void Player::HurtState()
@@ -240,11 +255,11 @@ void Player::MoveState()
 {
 	//Move Animation and move action
 	if (m_bLeft) {
-		GetRigidBody()->AddForce(Vec2(-400.0f, 0.0f));
+		GetRigidBody()->AddForce(Vec2(-350.0f, 0.0f), FORCE_MODE::FORCE);
 		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
 	}
 	else {
-		GetRigidBody()->AddForce(Vec2(400.0f, 0.0f));
+		GetRigidBody()->AddForce(Vec2(350.0f, 0.0f),FORCE_MODE::FORCE);
 		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
 

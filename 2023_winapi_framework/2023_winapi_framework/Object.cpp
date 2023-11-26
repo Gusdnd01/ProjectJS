@@ -5,12 +5,17 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "RigidBody.h"
+#include "Gravity.h"
+
 Object::Object()
-	: m_pCollider(nullptr)
-	, m_vPos{}
+	: m_vPos{}
 	, m_vScale{}
 	, m_IsAlive(true)
+	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
+	, m_cRb(nullptr)
+	, m_cGravity(nullptr)
+
 {
 }
 
@@ -20,6 +25,10 @@ Object::~Object()
 		delete m_pCollider;
 	if (nullptr != m_pAnimator)
 		delete m_pAnimator;
+	if (m_cRb != nullptr)
+		delete m_cRb;
+	if (m_cGravity != nullptr)
+		delete m_cGravity;
 
 }
 
@@ -37,8 +46,14 @@ void Object::CreateAnimator()
 
 void Object::CreateRigidBody()
 {
-	m_rb = new RigidBody;
-	m_rb->m_pOwner = this;
+	m_cRb = new RigidBody;
+	m_cRb->m_pOwner = this;
+}
+
+void Object::CreateGravity()
+{
+	m_cGravity = new Gravity;
+	m_cGravity->m_pOwner = this;
 }
 
 void Object::Update()
@@ -49,8 +64,10 @@ void Object::FinalUpdate()
 {
 	if (m_pCollider)
 		m_pCollider->FinalUpdate();
-	if (m_rb)
-		m_rb->FinalUpdate();
+	if (m_cRb)
+		m_cRb->FinalUpdate();
+	if (m_cGravity)
+		m_cGravity->FinalUpdate();
 }
 
 void Object::Render(HDC _dc)

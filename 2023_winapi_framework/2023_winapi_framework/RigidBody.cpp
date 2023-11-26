@@ -36,6 +36,7 @@ void RigidBody::FinalUpdate()
 		//fDT를 곱해줘야 프레임당 가속도를 더해줄 수 있겠지
 		m_vVelocity += m_vAccel * fDT;
 	}
+	m_vAccel += m_vAccelAlpha;
 
 	//만약 속도가 0이 아니다?
 	if (!m_vVelocity.IsZero()) {

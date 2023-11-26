@@ -2,6 +2,7 @@
 class Collider;
 class Animator;
 class RigidBody;
+class Gravity;
 class Object
 {
 public:
@@ -32,37 +33,43 @@ public:
 
 public:
 	//Set
-	void SetPos(Vec2 _vPos) { m_vPos = _vPos; }
+	void SetPos(Vec2 _vPos)		{ m_vPos = _vPos; }
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	void SetName(wstring _name) { m_strName = _name; }
 
 public:
 	//Status
-	const Vec2& GetPos() const { return m_vPos; }
-	const Vec2& GetScale() const { return m_vScale; }
-	const wstring& GetName() const { return m_strName; }
-	bool GetIsDead() const { return !m_IsAlive; }
+	const Vec2&		GetPos()	const { return m_vPos; }
+	const Vec2&		GetScale()	const { return m_vScale; }
+	const wstring&	GetName()	const { return m_strName; }
+	bool			GetIsDead() const { return !m_IsAlive; }
 
 public:
 	//Components
-	Collider* GetCollider() const { return m_pCollider; }
-	Animator* GetAnimator()	{ return m_pAnimator; }
-	RigidBody* GetRigidBody() const { return m_rb; }
+	Collider*	GetCollider()	{ return m_pCollider; }
+	Animator*	GetAnimator()	{ return m_pAnimator; }
+	RigidBody*	GetRigidBody()	{ return m_cRb; }
+	Gravity*	GetGravity()	{ return m_cGravity; }
 
 private:
 	void SetDead() { m_IsAlive = false; }
 	friend class EventMgr;
+
 public:
 	void CreateCollider();
 	void CreateAnimator();
 	void CreateRigidBody();
+	void CreateGravity();
 private:
 	Vec2 m_vPos; // 위치
 	Vec2 m_vScale; // 크기
-	Collider* m_pCollider;
+	
 	wstring m_strName; // 이름.
 	bool m_IsAlive;
-	Animator* m_pAnimator;
-	RigidBody* m_rb;
+
+	Collider*	m_pCollider;
+	Animator*	m_pAnimator;
+	RigidBody*	m_cRb;
+	Gravity*	m_cGravity;
 };
 

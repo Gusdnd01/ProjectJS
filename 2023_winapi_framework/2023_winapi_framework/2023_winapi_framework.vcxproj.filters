@@ -68,8 +68,17 @@
     <Filter Include="Engine\04. Object\Ground">
       <UniqueIdentifier>{9b44ea1b-67de-4317-a645-158282330282}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\07. Component\FSM">
-      <UniqueIdentifier>{b95d9234-2a2f-48b5-9e98-b6bc8f97e441}</UniqueIdentifier>
+    <Filter Include="Engine\07. Component\Animation">
+      <UniqueIdentifier>{9dec4fa9-c25e-4ea8-b4c9-bf9a92330b4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\Collider">
+      <UniqueIdentifier>{537ffc2b-a098-44bd-8f1f-8f710a6d8850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\Rigidbody">
+      <UniqueIdentifier>{78dfb1b9-53a8-40dc-ab26-b4dbee3b80f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\Gravity">
+      <UniqueIdentifier>{d165efc1-da4f-4113-a34a-91103614964f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,9 +148,6 @@
     <ClInclude Include="ResMgr.h">
       <Filter>Engine\03. Manager\ResMgr</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Engine\07. Component</Filter>
-    </ClInclude>
     <ClInclude Include="SelectGDI.h">
       <Filter>Engine\08. Module</Filter>
     </ClInclude>
@@ -150,12 +156,6 @@
     </ClInclude>
     <ClInclude Include="EventMgr.h">
       <Filter>Engine\03. Manager\EventMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Engine\07. Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Animator.h">
-      <Filter>Engine\07. Component</Filter>
     </ClInclude>
     <ClInclude Include="2023_winapi_framework.h">
       <Filter>Default</Filter>
@@ -166,11 +166,23 @@
     <ClInclude Include="Ground.h">
       <Filter>Engine\04. Object\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="RigidBody.h">
-      <Filter>Engine\07. Component</Filter>
-    </ClInclude>
     <ClInclude Include="Intro_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Engine\07. Component\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Engine\07. Component\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Engine\07. Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Engine\07. Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="Gravity.h">
+      <Filter>Engine\07. Component\Gravity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -238,9 +250,6 @@
     <ClCompile Include="ResMgr.cpp">
       <Filter>Engine\03. Manager\ResMgr</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Engine\07. Component</Filter>
-    </ClCompile>
     <ClCompile Include="SelectGDI.cpp">
       <Filter>Engine\08. Module</Filter>
     </ClCompile>
@@ -250,23 +259,29 @@
     <ClCompile Include="EventMgr.cpp">
       <Filter>Engine\03. Manager\EventMgr</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Engine\07. Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Animator.cpp">
-      <Filter>Engine\07. Component</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Engine\04. Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Engine\04. Object\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="RigidBody.cpp">
-      <Filter>Engine\07. Component</Filter>
-    </ClCompile>
     <ClCompile Include="Intro_Scene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Engine\07. Component\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Engine\07. Component\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Engine\07. Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Engine\07. Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Gravity.cpp">
+      <Filter>Engine\07. Component\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
