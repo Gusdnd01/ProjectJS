@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "GravityManager.h"
+#include "RigidBodyManager.h"
 #include "RigidBody.h"
 #include "Collider.h"
 #include "Object.h"
 
-void GravityManager::Update()
+void RigidBodyManager::Update()
 {
 	for (int i = 0; i < m_vGravityObj.size(); ++i) {
 		if (!m_vGravityObj[i]->GetCollider()->GetCheckBottom()) {
@@ -13,7 +13,7 @@ void GravityManager::Update()
 	}
 }
 
-void GravityManager::AddGravObj(Object* _obj)
+void RigidBodyManager::AddGravObj(Object* _obj)
 {
 	if (_obj != nullptr) {
 		m_vGravityObj.push_back(_obj);

@@ -1,9 +1,9 @@
 #pragma once
 
 class Object;
-class GravityManager
+class RigidBodyManager
 {
-	SINGLE(GravityManager);
+	SINGLE(RigidBodyManager);
 
 public:
 	void Update();

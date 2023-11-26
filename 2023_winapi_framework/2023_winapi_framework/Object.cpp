@@ -43,18 +43,14 @@ void Object::CreateRigidBody()
 
 void Object::Update()
 {
-	//Vec2 vPos = m_obj.GetPos();
-
-//	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-//	if(KeyMgr::GetInst()->GetKey(KEY_TYPE::LEFT) == KEY_STATE::UP)
-
-	//m_obj.SetPos(vPos);
 }
 
 void Object::FinalUpdate()
 {
 	if (m_pCollider)
 		m_pCollider->FinalUpdate();
+	if (m_rb)
+		m_rb->FinalUpdate();
 }
 
 void Object::Render(HDC _dc)

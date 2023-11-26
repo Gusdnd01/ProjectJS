@@ -24,7 +24,10 @@ Collider::Collider(const Collider& _origin)
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
-
+	, m_bCheckLeft(false)
+	, m_bCheckRight(false)
+	, m_bCheckTop(false)
+	, m_bCheckBottom(false)
 {
 }
 
@@ -120,7 +123,7 @@ void Collider::CheckBottom(Collider* _pOther)
 		m_bCheckBottom = false;
 	}
 
-	m_pOwner->CheckBottom(_pOther);
+	//m_pOwner->CheckBottom(_pOther);
 }
 
 void Collider::FinalUpdate()

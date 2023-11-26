@@ -12,23 +12,24 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "RigidBody.h"
-#include "GravityManager.h"
 
 Player::Player()
 	: m_pTex(nullptr)
 	, m_bLeft(false)
+	, m_bIsJump(false)
+	, m_bIsGround(false)
+	, m_fTimer(0.0f)
+	, m_fJumpPower(5.0f)
 	, m_sState(STATE::IDLE)
-	, m_fJumpPower(7.0f)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f,30.f));
 
 	CreateRigidBody();
-	GetRigidBody()->SetMass(50.0f);
-	GetRigidBody()->SetGravity(4.0f);
-
-	GMGI->AddGravObj(this);
+	GetRigidBody()->SetMass(5.0f);
+	GetRigidBody()->SetFriction(50.0f);
+	GetRigidBody()->SetMaxVelocity(1000.0f);
 
 	//if you want modify Collider's offset. use this
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
@@ -63,8 +64,10 @@ Player::~Player()
 }
 void Player::Update()
 {
-	if(m_bIsJump == false)
-		PlayerInput();
+	//get input
+	PlayerInput();
+
+	//fsm loop
 	StateUpdate();
 
 	GetAnimator()->Update();
@@ -122,124 +125,126 @@ void Player::CheckBottom(Collider* other)
 void Player::PlayerInput()
 {
 	//player during jump, return Input
-	if (m_bIsJump) return;
-	
-	//default is idle
+	//if (m_bIsJump) return;
 	STATE state = STATE::IDLE;
 
 	//some actions
-	if (KEY_PRESS(KEY_TYPE::LEFT)) {
+	if (m_bIsGround && KEY_PRESS(KEY_TYPE::A)) {
 		state = STATE::MOVE;
 		m_bLeft = true;
 	}
-	if (KEY_PRESS(KEY_TYPE::RIGHT)) {
+	if (m_bIsGround && KEY_PRESS(KEY_TYPE::D)) {
 		state = STATE::MOVE;
 		m_bLeft = false;
 	}
-	if (KEY_DOWN(KEY_TYPE::SPACE)) {
+	if (m_bIsGround && KEY_DOWN(KEY_TYPE::SPACE)) {
+		state = STATE::JUMP_CHARGE;
+	}
+	if (m_bIsGround && KEY_UP(KEY_TYPE::SPACE)) {
+		m_bIsJump = true;
 		state = STATE::JUMP;
 	}
 
 	//lastly change state
 	StateChange(state);
+	//default is idle
+	
+}
+
+void Player::CalculateGravity()
+{
+	if (GetCollider() != nullptr) m_bIsGround = GetCollider()->GetCheckBottom();
+
+	//만약 땅에 있는 상태라면 내려가는걸 바로 멈춰준다.
+	if (m_bIsGround && !m_bIsJump) {
+		GetRigidBody()->StopImmediately();
+	}
+
+	//200의 힘으로 밑으로 계속 가속해준다.
+	GetRigidBody()->AddForce(Vec2(0.0f, 500.0f));
 }
 
 
 #pragma region FSM
 void Player::StateUpdate()
 {
-	Vec2 pos = GetPos();
+	//현제 상태를 구하고 그 값에 따라 스위치문을 돌린다.
 	switch (m_sState)
 	{
-	case STATE::MOVE:
-		MoveState(pos, m_bLeft);
-		break;
 	case STATE::IDLE:
 		IdleState();
 		break;
-	case STATE::JUMP:
-		m_bIsJump = true;
-		JumpState(pos );
+
+	case STATE::MOVE:
+		MoveState();
 		break;
+	
+	case STATE::JUMP:
+		JumpState();
+		break;
+
+	case STATE::JUMP_CHARGE:
+		JumpChargeState();
+		break;
+
 	case STATE::HURT:	
 		HurtState();
 		break;
+
 	case STATE::END:
 		break;
+
 	default:
 		break;
 	}
-	SetPos(pos);
 }
 void Player::StateChange(STATE _type)
 {
 	if (_type == STATE::END) return;
-
 	m_sState = _type;
 }
 
 void Player::IdleState()
 {
+	//여기선 중력계산이랑 아이들 애니메이션 실행만 해준다.
 	//idle animation
 	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
+	CalculateGravity();
 }
 
-void Player::JumpState(Vec2& pos)
+void Player::JumpState()
 {
 	//jump animation
 	//GetAnimator()->PlayAnim(L"Jump", false);
 
-	//timer
-	if(m_fTimer < 1)
-		m_fTimer += fDT;
+	//점프 차지에서 올려준 점프 파워만큼 힘을 더해준다.
+	GetRigidBody()->AddForce(Vec2(0.0f, -m_fJumpPower));
+}
 
-	//0 ~ 1
-	m_fPercent += m_fTimer < 1 ? fDT :-fDT;
-	GetRigidBody()->SetGravity(-m_fJumpPower *);
+void Player::JumpChargeState()
+{
+	//프레임당 증가
+	m_fJumpPower += 200.0f ;
 
-
-	if (m_fPercent <= 0) {
-		m_fPercent = 0;
-	}
-	
-
-	pos.x += ((m_bLeft ? -400.0f : 400.0f) * (m_fPercent)) * fDT;
-
-	//if timer is greater than 1
-	if (m_fTimer >= 1 ) {
-		//redirect state to idle
-
-		//Compo status change
-		GetRigidBody()->SetGravity(4.0f);
-		
-		//if Collider's Check Bottom is true
-		if (GetCollider()->GetCheckBottom()) {
-			//timer and jump setting
-			m_fTimer = 0;
-			m_fPercent = 0;
-			m_bIsJump = false;
-			StateChange(STATE::IDLE);
-		}
-	}
-	if (m_bIsJump) GetCollider()->SetCheckBottom(false);
-	else GetCollider()->SetCheckBottom(true);
+	//최대값 지정
+	m_fJumpPower = clamp(m_fJumpPower, 0.0f, 5000.0f);
 }
 
 void Player::HurtState()
 {
 	//Get hurt action
+	//여기서는 벽에 부딫혔을 때에 실행해줄 무언가!
 }
 
-void Player::MoveState(Vec2& pos,bool left)
+void Player::MoveState()
 {
-
 	//Move Animation and move action
-	if (left) {
-		pos.x -= 100.0f * fDT;
+	if (m_bLeft) {
+		GetRigidBody()->AddForce(Vec2(-400.0f, 0.0f));
 		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
 	}
 	else {
-		pos.x += 100.0f *fDT;
+		GetRigidBody()->AddForce(Vec2(400.0f, 0.0f));
 		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
 

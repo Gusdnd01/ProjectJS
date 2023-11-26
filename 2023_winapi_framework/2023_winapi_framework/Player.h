@@ -5,6 +5,7 @@ enum class STATE {
     MOVE,
     IDLE,
     JUMP,
+    JUMP_CHARGE,
     HURT,
     END = 10
 };
@@ -31,26 +32,27 @@ public:
     
 public:
     void PlayerInput();
+    void CalculateGravity();
 
 public:
     void StateUpdate();
     void StateChange(STATE _type);
     void IdleState();
-    void JumpState(Vec2& pos);
+    void JumpState();
+    void JumpChargeState();
     void HurtState();
-    void MoveState(Vec2& pos, bool left);
+    void MoveState();
 
 public:
     const bool& GetIsJump() const { return m_bIsJump; }
 
 private:
     Texture* m_pTex;
-    RigidBody* m_rb;
+    bool     m_bLeft;  
+    bool     m_bIsJump;
+    bool     m_bIsGround;
     float    m_fTimer = 0.0f;
-    float    m_fPercent = 0.0f;
     float    m_fJumpPower;
-    bool     m_bLeft = false;  
-    bool     m_bIsJump = false;
     STATE    m_sState;
 };
 
