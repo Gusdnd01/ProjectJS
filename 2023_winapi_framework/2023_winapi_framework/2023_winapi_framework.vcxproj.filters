@@ -160,7 +160,14 @@
     <ClInclude Include="Intro_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="ShowSetting.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="ShowSetting.h">
+      <Filter>Engine\09.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Engine\05. Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -251,6 +258,13 @@
     <ClCompile Include="Intro_Scene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="ShowSetting.cpp" />
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="ShowSetting.cpp">
+      <Filter>Engine\09.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Engine\05. Scene</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

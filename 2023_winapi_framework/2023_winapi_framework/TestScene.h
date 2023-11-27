@@ -1,16 +1,12 @@
 #pragma once
 #include "Scene.h"
 
-class Intro_Scene
+
+class TestScene
 	: public Scene
 {
-private:
-	int moveY;
-	int yIncrease;
-	int arrowY;
-	bool isClick;
 public:
 	virtual void Init() override;
 	virtual void Render(HDC _dc) override;
-	virtual void Update() override;
 };
+
