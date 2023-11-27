@@ -22,8 +22,8 @@ public:
 	}
 
 	void StopImmediatelyY() {
-		m_vAccel.y = 0.0f;
 		m_vForce.y = 0.0f;
+		m_vAccel.y = 0.0f;
 		m_vVelocity.y = 0.0f;
 	};
 
@@ -37,7 +37,10 @@ public:
 public:
 	void SetMass(float _value) { m_fMass = _value; }
 	void SetFriction(float _value) { m_fFriction = _value; }
-	void SetMaxVelocity(float _value) { m_fMaxVelocity = _value; }
+	void SetMaxVelocity(const Vec2& _value) { m_vMaxVelocity = _value; }
+	void SetAccelAlpha(const Vec2& _value) {
+		m_vAccelAlpha = _value;
+	}
 
 private:
 	Object* m_pOwner;
@@ -45,9 +48,9 @@ private:
 	Vec2 m_vAccel;
 	Vec2 m_vAccelAlpha;
 	Vec2 m_vVelocity;
+	Vec2 m_vMaxVelocity;
 	float m_fMass;
 	float m_fFriction;
-	float m_fMaxVelocity;
 	friend class Object;
 };
 

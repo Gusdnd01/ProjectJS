@@ -22,26 +22,27 @@ Player::Player()
 	, m_fJumpPower(5.0f)
 	, m_sState(STATE::IDLE)
 {
-	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
+	this->SetName(L"Player");
+
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jumpking.bmp");
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f,30.f));
+	GetCollider()->SetScale(Vec2(20.f,50.f));
 
 	CreateRigidBody();
 	GetRigidBody()->SetMass(5.0f);
 	GetRigidBody()->SetFriction(100.0f);
-	GetRigidBody()->SetMaxVelocity(1000.0f);
+	GetRigidBody()->SetMaxVelocity(Vec2(200.0f, 500.0f));
 
 	CreateGravity();
-	GetGravity()->SetGravity(1000.0f);
 
 	//if you want modify Collider's offset. use this
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
 	
 	//Animator and animation setting 
 	CreateAnimator();
-	GetAnimator()->CreateAnim(L"Jiwoo_Front", m_pTex,Vec2(0.f, 150.f),
+	GetAnimator()->CreateAnim(L"jumpking_idle", m_pTex,Vec2(0.f, 150.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->CreateAnim(L"Jiwoo_Back", m_pTex, Vec2(0.f, 100.f),
+	GetAnimator()->CreateAnim(L"jumpking_walk", m_pTex, Vec2(0.f, 100.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
 	GetAnimator()->CreateAnim(L"Jiwoo_Left", m_pTex, Vec2(0.f, 0.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
@@ -73,17 +74,8 @@ void Player::Update()
 	//fsm loop
 	StateUpdate();
 
-	if (m_bIsJump) {
-		m_fTimer += fDT;
-
-		if (m_fTimer >= 1.0f) {
-			m_bIsJump = false;
-			m_fJumpPower = 200.0f;
-		}
-	}
-
-
 	GetAnimator()->Update();
+
 }
 
 void Player::Render(HDC _dc)
@@ -139,6 +131,7 @@ void Player::PlayerInput()
 {
 	//player during jump, return Input
 	//if (m_bIsJump) return;
+	m_bIsGround = GetGravity()->GetOnGround();
 	
 	STATE state = STATE::IDLE;
 
@@ -155,7 +148,6 @@ void Player::PlayerInput()
 	}
 	if (m_bIsGround && KEY_UP(KEY_TYPE::D)) {
 		GetRigidBody()->StopImmediatelyX();
-
 	}
 
 	if (m_bIsGround && KEY_PRESS(KEY_TYPE::A)) {
@@ -234,15 +226,16 @@ void Player::JumpState()
 
 	//점프 차지에서 올려준 점프 파워만큼 힘을 더해준다.
 	GetRigidBody()->AddForce(Vec2(0.0f, -m_fJumpPower), FORCE_MODE::IMPULSE);
+	m_fJumpPower = 10.0f;
 }
 
 void Player::JumpChargeState()
 {
 	//프레임당 증가
-	m_fJumpPower += 200.0f * fDT;
+	m_fJumpPower += 1.0f * fDT;
 
 	//최대값 지정
-	m_fJumpPower = clamp(m_fJumpPower, 200.0f, 600.0f);
+	m_fJumpPower = clamp(m_fJumpPower, 100.0f, 500.0f);
 }
 
 void Player::HurtState()

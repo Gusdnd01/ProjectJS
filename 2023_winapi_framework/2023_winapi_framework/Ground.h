@@ -12,5 +12,6 @@ public:
 
 public:
     void EnterCollision(Collider* _other);
+    void ExitCollision(Collider* _other);
 };
 

@@ -62,12 +62,12 @@ void Object::Update()
 
 void Object::FinalUpdate()
 {
+	if (m_cGravity)
+		m_cGravity->FinalUpdate();
 	if (m_pCollider)
 		m_pCollider->FinalUpdate();
 	if (m_cRb)
 		m_cRb->FinalUpdate();
-	if (m_cGravity)
-		m_cGravity->FinalUpdate();
 }
 
 void Object::Render(HDC _dc)

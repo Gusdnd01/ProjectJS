@@ -6,7 +6,6 @@
 Gravity::Gravity()
 	: m_pOwner(nullptr)
 	, m_bOnGround(false)
-	, m_fGravity(0.0f)
 {
 }
 
@@ -16,8 +15,14 @@ Gravity::~Gravity()
 
 void Gravity::FinalUpdate()
 {
-	if (m_bOnGround) return;
-	m_pOwner->GetRigidBody()->AddForce(Vec2(0.0f, m_fGravity), FORCE_MODE::FORCE);
+	RigidBody* rb = m_pOwner->GetRigidBody();
+	float alpha = m_bOnGround ? 0 : 500.0f;
+
+	if (rb) {
+		rb->SetAccelAlpha(Vec2(0.0f, alpha));
+	}
+
+	//m_pOwner->GetRigidBody()->AddForce(Vec2(0.0f, 800.f), FORCE_MODE::FORCE);
 }
 
 void Gravity::OnGround(bool _value)
