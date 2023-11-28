@@ -12,7 +12,6 @@ void Intro_Scene::Init()
 	moveY = 0;
 	yIncrease = 50;
 	arrowY = 0;
-	isClick = false;
 }
 
 void Intro_Scene::Render(HDC _dc)

@@ -4,6 +4,9 @@
 #include "KeyMgr.h"
 #include "ResMgr.h"
 #include "SceneMgr.h"
+#include "PathMgr.h"
+#include "Texture.h"
+#include "Object.h"
 
 void ShowSetting::Init()
 {
@@ -12,21 +15,18 @@ void ShowSetting::Init()
 	yIncrease = 100;
 	bgmVolume = 1;
 	effectVolume = 1;
+
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Setting", L"Texture\\GameP_Setting.bmp");	
 }
 void ShowSetting::Render(HDC _dc)
 {
 	int x = Core::GetInst()->GetResolution().x / 2;
 	int y = Core::GetInst()->GetResolution().y / 2;
 
+
 	if (IsActive)
 	{
-		Rectangle(_dc, x - 500, y - 250, x + 500, y + 250);
-		
-		TextOut(_dc, x, y - 220, L"GAME OPTIONS", 12);
-
-		TextOut(_dc, x - yIncrease, y - yIncrease, L"BGM:", 4);
-		TextOut(_dc, x - yIncrease, y, L"SFX:", 4);
-		TextOut(_dc, x, y + yIncrease, L"BACK", 4);
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex->GetDC(), 0, 0, 1920, 1080, RGB(255,255,255));
 	
 		if (moveY < yIncrease && KEY_DOWN(KEY_TYPE::DOWN))
 		{

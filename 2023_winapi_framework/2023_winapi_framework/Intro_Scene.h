@@ -8,7 +8,6 @@ private:
 	int moveY;
 	int yIncrease;
 	int arrowY;
-	bool isClick;
 public:
 	virtual void Init() override;
 	virtual void Render(HDC _dc) override;
