@@ -6,21 +6,24 @@ class ShowSetting
 	SINGLE(ShowSetting);
 public:
 	bool IsActive = false;
+	bool IsEscActive = false;
 public:
 	void Init();
 	void Render(HDC _dc);
 	void Update();
-	void AddObject(Object* _pObj, OBJECT_GROUP _eType)
-	{
-		m_vecObj[(UINT)_eType].push_back(_pObj);
-	}
 private:
-	int moveY;
-	int yIncrease;
-	int arrowY;
+	int settingMoveY;
+	int settingYIncrease;
+	int settingArrowY;
+
+	int escMoveY;
+	int escYIncrease;
+	int escArrowY;
+private:
 	float bgmVolume;
 	float effectVolume;
 private:
-	Texture* m_pTex;
-	vector<Object*> m_vecObj[(UINT)OBJECT_GROUP::END];
+	Texture* m_pTex_SettingPannel;
+	Texture* m_pTex_arrow;
+	Texture* m_pTex_ESC;
 };

@@ -13,7 +13,7 @@ void TestScene::Init()
 	pObj->SetScale(Vec2(100.f, 100.f));
 	AddObject(pObj, OBJECT_GROUP::DEFAULT);
 
-	ShowSetting::GetInst()->IsActive == false;
+	ShowSetting::GetInst()->IsEscActive == false;
 	ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
 	ResMgr::GetInst()->Play(L"BGM");
 }
@@ -23,6 +23,6 @@ void TestScene::Render(HDC _dc)
 	Scene::Render(_dc);
 	if (KEY_DOWN(KEY_TYPE::ESC))
 	{
-		ShowSetting::GetInst()->IsActive = true;
+		ShowSetting::GetInst()->IsEscActive = true;
 	}
 }

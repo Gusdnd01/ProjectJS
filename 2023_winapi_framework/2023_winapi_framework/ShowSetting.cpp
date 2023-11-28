@@ -10,13 +10,20 @@
 
 void ShowSetting::Init()
 {
-	arrowY = 0;
-	moveY = 0;
-	yIncrease = 100;
+	settingArrowY = 0;
+	settingMoveY = 0;
+	settingYIncrease = 100;
+
+	escArrowY = 0;
+	escMoveY = -100;
+	escYIncrease = 65;
+
 	bgmVolume = 1;
 	effectVolume = 1;
 
-	m_pTex = ResMgr::GetInst()->TexLoad(L"Setting", L"Texture\\GameP_Setting.bmp");	
+	m_pTex_SettingPannel = ResMgr::GetInst()->TexLoad(L"Setting", L"Texture\\GameP_Setting.bmp");
+	m_pTex_arrow = ResMgr::GetInst()->TexLoad(L"Arrow", L"Texture\\arrow.bmp");
+	m_pTex_ESC = ResMgr::GetInst()->TexLoad(L"ESC", L"Texture\\GameP_ESC.bmp");
 }
 void ShowSetting::Render(HDC _dc)
 {
@@ -26,27 +33,42 @@ void ShowSetting::Render(HDC _dc)
 
 	if (IsActive)
 	{
-		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex->GetDC(), 0, 0, 1920, 1080, RGB(255,255,255));
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_SettingPannel->GetDC(), 0, 0, 1920, 1080, RGB(255,255,255));
 	
-		if (moveY < yIncrease && KEY_DOWN(KEY_TYPE::DOWN))
+		if (settingMoveY < settingYIncrease && KEY_DOWN(KEY_TYPE::DOWN))
 		{
-			moveY += yIncrease;
+			settingMoveY += settingYIncrease;
 		}
-		if (moveY > -yIncrease && KEY_DOWN(KEY_TYPE::UP))
+		if (settingMoveY > -settingYIncrease && KEY_DOWN(KEY_TYPE::UP))
 		{
-			moveY -= yIncrease;
+			settingMoveY -= settingYIncrease;
 		}
 
 	
-		arrowY = y + moveY;
+		settingArrowY = y + settingMoveY;
 		
-		TextOut(_dc, x - 150, arrowY, L">", 1);
-		TextOut(_dc, x + 150, arrowY, L"<", 1);
+		TransparentBlt(_dc, x - 170, settingArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 300, 300, RGB(255,0,255));
 
-		if (arrowY == 460 && KEY_DOWN(KEY_TYPE::SPACE))
+		if (settingArrowY == 460 && KEY_DOWN(KEY_TYPE::SPACE))
 		{
 			IsActive = false;
 		}
+	}
+	if (!IsActive && IsEscActive)
+	{
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_ESC->GetDC(), 0, 0, 1920, 1080, RGB(255, 255, 255));
+		if (escMoveY < 80 && KEY_DOWN(KEY_TYPE::DOWN))
+		{
+			escMoveY += escYIncrease;
+		}
+		if (escMoveY > -100 && KEY_DOWN(KEY_TYPE::UP))
+		{
+			escMoveY -= escYIncrease;
+		}
+		
+		escArrowY = y + escMoveY;
+
+		TransparentBlt(_dc, x - 170, escArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 300, 300, RGB(255, 0, 255));
 	}
 }
 
@@ -54,7 +76,7 @@ void ShowSetting::Update()
 {
 	if (IsActive)
 	{
-		if (arrowY == 260)
+		if (settingArrowY == 260)
 		{
 			if (bgmVolume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
 			{
@@ -66,7 +88,7 @@ void ShowSetting::Update()
 			}
 			ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, bgmVolume);
 		}
-		else if (arrowY == 360)
+		else if (settingArrowY == 360)
 		{
 			if (effectVolume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
 			{
@@ -81,8 +103,34 @@ void ShowSetting::Update()
 	}
 	else
 	{
-		arrowY = 0;
-		moveY = 0;
-		yIncrease = 100;
+		settingArrowY = 0;
+		settingMoveY = 0;
+		settingYIncrease = 100;
+	}
+
+	if (IsEscActive && KEY_DOWN(KEY_TYPE::SPACE))
+	{
+		if (escArrowY == 260) //계속하기
+		{
+			IsEscActive = false;
+		}
+		if (escArrowY == 325) //게임 다시하기
+		{
+
+		}
+		if (escArrowY == 390) //게임 설정
+		{
+			IsActive = true;
+		}
+		if (escArrowY == 455) //게임 나가기
+		{
+			exit(0);
+		}
+	}
+	if (!IsEscActive)
+	{
+		escArrowY = 0;
+		escMoveY = -100;
+		escYIncrease = 65;
 	}
 }
