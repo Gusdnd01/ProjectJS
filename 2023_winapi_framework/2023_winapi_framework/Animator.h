@@ -24,6 +24,7 @@ public:
 	Object* GetObj() const { return m_pOwner; }
 	const bool& GetRepeat() const { return m_IsRepeat; }
 	const int& GetRepeatcnt() const { return m_repeatcnt; }
+	const map<wstring, Animation*>& GetAnimationMap() const { return m_mapAnim; }
 	void SetRepeatcnt() { --m_repeatcnt; }
 private:
 	map<wstring, Animation*> m_mapAnim;

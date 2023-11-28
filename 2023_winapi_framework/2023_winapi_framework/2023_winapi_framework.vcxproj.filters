@@ -80,6 +80,9 @@
     <Filter Include="Engine\07. Component\Gravity">
       <UniqueIdentifier>{d165efc1-da4f-4113-a34a-91103614964f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\CameraManager">
+      <UniqueIdentifier>{ddde27b3-3b4e-4bd0-8ae0-a1fbf1955593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -184,6 +187,9 @@
     <ClInclude Include="Gravity.h">
       <Filter>Engine\07. Component\Gravity</Filter>
     </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Engine\03. Manager\CameraManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -282,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="Gravity.cpp">
       <Filter>Engine\07. Component\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Engine\03. Manager\CameraManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

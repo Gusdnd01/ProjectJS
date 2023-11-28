@@ -33,6 +33,10 @@ public:
 		m_vVelocity.x = 0.0f;
 	}
 
+	//Get Function
+public:
+	const Vec2& GetVelocity()const { return m_vVelocity; }
+
 	//Set Function
 public:
 	void SetMass(float _value) { m_fMass = _value; }

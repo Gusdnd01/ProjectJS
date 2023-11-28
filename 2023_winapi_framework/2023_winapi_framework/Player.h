@@ -7,6 +7,7 @@ enum class STATE {
     JUMP,
     JUMP_CHARGE,
     HURT,
+    FALL,
     END = 10
 };
 
@@ -41,6 +42,7 @@ public:
 public:
     void IdleState();
     void JumpState();
+    void FallState();
     void JumpChargeState();
     void HurtState();
     void MoveState();

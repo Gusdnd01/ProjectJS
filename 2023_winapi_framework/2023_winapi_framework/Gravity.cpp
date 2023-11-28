@@ -16,7 +16,7 @@ Gravity::~Gravity()
 void Gravity::FinalUpdate()
 {
 	RigidBody* rb = m_pOwner->GetRigidBody();
-	float alpha = m_bOnGround ? 0 : 500.0f;
+	float alpha = m_bOnGround ? 0 : 100.0f;
 
 	if (rb) {
 		rb->SetAccelAlpha(Vec2(0.0f, alpha));

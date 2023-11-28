@@ -24,42 +24,52 @@ Player::Player()
 {
 	this->SetName(L"Player");
 
-	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jumpking.bmp");
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\frog_base.bmp");
+
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f,50.f));
+	//오프셋이랑 크기 수정했는데 왜 크기만 적용시키고 똑같이 동작함?
+	GetCollider()->SetScale(Vec2(48.0f, 48.0f));
 
 	CreateRigidBody();
 	GetRigidBody()->SetMass(5.0f);
 	GetRigidBody()->SetFriction(100.0f);
-	GetRigidBody()->SetMaxVelocity(Vec2(200.0f, 500.0f));
+	GetRigidBody()->SetMaxVelocity(Vec2(200.0f, 1000.0f));
 
 	CreateGravity();
 
 	//if you want modify Collider's offset. use this
-	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
 	
 	//Animator and animation setting 
 	CreateAnimator();
-	GetAnimator()->CreateAnim(L"jumpking_idle", m_pTex,Vec2(0.f, 150.f),
-		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->CreateAnim(L"jumpking_walk", m_pTex, Vec2(0.f, 100.f),
-		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->CreateAnim(L"Jiwoo_Left", m_pTex, Vec2(0.f, 0.f),
-		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->CreateAnim(L"Jiwoo_Right", m_pTex, Vec2(0.f, 50.f),
-		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->CreateAnim(L"Jiwoo_Attack", m_pTex, Vec2(0.f, 200.f),
-		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->PlayAnim(L"Jiwoo_Front",true);
+	//Left Animation
+	GetAnimator()->CreateAnim(L"frog_idle", m_pTex,Vec2(0.0f, 0.0f),Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f),8, 0.2f);
+ 	GetAnimator()->CreateAnim(L"frog_hop", m_pTex, Vec2(0.f, 48.f),Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_jump_charge", m_pTex, Vec2(48.0f * 2.0f, 48.0f), Vec2(48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
+	GetAnimator()->CreateAnim(L"frog_jump", m_pTex, Vec2(48.f * 3.0f, 48.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_fall", m_pTex, Vec2(48.0f * 6.0f, 48.0f),Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
+
+	//Right Animation
+	GetAnimator()->CreateAnim(L"frog_idle", m_pTex,Vec2(0.0f, 0.0f),Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f),8, 0.2f);
+ 	GetAnimator()->CreateAnim(L"frog_hop", m_pTex, Vec2(0.f, 48.f),Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_jump_charge", m_pTex, Vec2(48.0f * 2.0f, 48.0f), Vec2(48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
+	GetAnimator()->CreateAnim(L"frog_jump", m_pTex, Vec2(48.f * 3.0f, 48.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_fall", m_pTex, Vec2(48.0f * 6.0f, 48.0f),Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
+
+	//Left Idle Play
+	GetAnimator()->PlayAnim(L"frog_idle",true);
 
 	//animation offset change
 	//Animation* pAnim = GetAnimator()->FindAnim(L"Jiwoo_Front");
 	// only one 
 	//pAnim->SetFrameOffset(0, Vec2(0.f, 20.f));
-
+	
+	
 	//all frames
-	//for (size_t i = 0; i < pAnim->GetMaxFrame(); ++i)
-	//	pAnim->SetFrameOffset(i, Vec2(0.f, 20.f));
+	for (auto pAnim : GetAnimator()->GetAnimationMap()) {
+		Animation* tempAnim = pAnim.second;
+		for (size_t i = 0; i < tempAnim->GetMaxFrame(); ++i)
+			tempAnim->SetFrameOffset(i, Vec2(-48.0f));
+	}
 }
 Player::~Player()
 {
@@ -75,6 +85,8 @@ void Player::Update()
 	StateUpdate();
 
 	GetAnimator()->Update();
+
+	
 
 }
 
@@ -117,6 +129,8 @@ void Player::Render(HDC _dc)
 
 void Player::EnterCollision(Collider* other)
 {
+	GetRigidBody()->StopImmediatelyX();
+	m_bIsJump = false;
 }
 
 void Player::ExitCollision(Collider* other)
@@ -167,6 +181,10 @@ void Player::PlayerInput()
 		state = STATE::JUMP;
 	}
 
+	if (!m_bIsGround && GetRigidBody()->GetVelocity().y >= 0) {
+		state = STATE::FALL;
+	}
+
 	//lastly change state
 	StateChange(state);
 	
@@ -195,6 +213,10 @@ void Player::StateUpdate()
 		JumpChargeState();
 		break;
 
+	case STATE::FALL:
+		FallState();
+		break;
+
 	case STATE::HURT:
 		HurtState();
 		break;
@@ -214,9 +236,15 @@ void Player::StateChange(STATE _type)
 
 void Player::IdleState()
 {
-	//아이들 애니메이션 실행만 해준다.
+	//아이들 애니메이션이나 점프 애니메이션을 실행 해준다.
 	//idle animation
-	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
+	if (m_bIsJump) {
+		GetAnimator()->PlayAnim(L"frog_jump", true);
+	}
+	else {
+		GetAnimator()->PlayAnim(L"frog_idle", true);
+	}
+	//jump animation
 }
 
 void Player::JumpState()
@@ -229,13 +257,20 @@ void Player::JumpState()
 	m_fJumpPower = 10.0f;
 }
 
+void Player::FallState()
+{
+	GetAnimator()->PlayAnim(L"frog_fall", true);
+}
+
 void Player::JumpChargeState()
 {
+	GetAnimator()->PlayAnim(L"frog_jump_charge", true);
+
 	//프레임당 증가
-	m_fJumpPower += 1.0f * fDT;
+	m_fJumpPower += 100.0f * fDT;
 
 	//최대값 지정
-	m_fJumpPower = clamp(m_fJumpPower, 100.0f, 500.0f);
+	m_fJumpPower = clamp(m_fJumpPower, 500.0f, 5000.0f);
 }
 
 void Player::HurtState()
@@ -247,13 +282,14 @@ void Player::HurtState()
 void Player::MoveState()
 {
 	//Move Animation and move action
+
+	GetAnimator()->PlayAnim(L"frog_hop", true);
+
 	if (m_bLeft) {
 		GetRigidBody()->AddForce(Vec2(-350.0f, 0.0f), FORCE_MODE::FORCE);
-		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
 	}
 	else {
 		GetRigidBody()->AddForce(Vec2(350.0f, 0.0f),FORCE_MODE::FORCE);
-		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
 
 }

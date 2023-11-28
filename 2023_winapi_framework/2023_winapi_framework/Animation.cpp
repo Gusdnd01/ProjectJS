@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Texture.h"
 #include "TimeMgr.h"
+#include "Core.h"
 Animation::Animation()
 	: m_pAnimator(nullptr)
 	, m_CurFrame(0)
@@ -42,20 +43,39 @@ void Animation::Render(HDC _dc)
 {
 	Object* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetPos();
+	Vec2 vScale = pObj->GetScale();
 
 	// 오프셋 적용
 	vPos = vPos + m_vecAnimFrame[m_CurFrame].vOffset;
+	HBITMAP _backbit = CreateCompatibleBitmap(_dc, Core::GetInst()->GetResolution().x, Core::GetInst()->GetResolution().y);
+	HDC _backDC = CreateCompatibleDC(_dc);
+	SelectObject(_backDC, _backbit);
+	PatBlt(_backDC, 0, 0, Core::GetInst()->GetResolution().x, Core::GetInst()->GetResolution().y, WHITENESS);
+	StretchBlt(_backDC
+		,0
+		,0
+		, (int)(m_vecAnimFrame[m_CurFrame].vSlice.x) * vScale.x
+		, (int)(m_vecAnimFrame[m_CurFrame].vSlice.y) * vScale.y
+		, m_pTex->GetDC()
+		, (int)(m_vecAnimFrame[m_CurFrame].vLT.x)
+		, (int)(m_vecAnimFrame[m_CurFrame].vLT.y)
+		, (int)(m_vecAnimFrame[m_CurFrame].vSlice.x)
+		, (int)(m_vecAnimFrame[m_CurFrame].vSlice.y), SRCCOPY);
+
 	TransparentBlt(_dc
 		,(int)(vPos.x - m_vecAnimFrame[m_CurFrame].vSlice.x /2.f)
 		,(int)(vPos.y - m_vecAnimFrame[m_CurFrame].vSlice.y / 2.f)
-		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.x)
-		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.y)
-		,m_pTex->GetDC()
-		,(int)(m_vecAnimFrame[m_CurFrame].vLT.x)
-		,(int)(m_vecAnimFrame[m_CurFrame].vLT.y)
-		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.x)
-		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.y)
+		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.x) * vScale.x
+		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.y) * vScale.y
+		,_backDC
+		,0
+		,0
+		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.x) * vScale.x
+		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.y) * vScale.y
 		,RGB(255,0,255));
+
+	DeleteObject(_backbit);
+	DeleteDC(_backDC);
 }
 
 void Animation::Create(Texture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, int _framecount, float _fDuration)

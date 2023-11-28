@@ -64,12 +64,12 @@ void RigidBody::FinalUpdate()
 	//}
 
 	//만약 X값의 속도가 내가 설정한 최대 속도를 넘어간다?
-	if (m_vVelocity.x != 0.0f && (fabs(m_vVelocity.x) < fabs(m_vMaxVelocity.x))) {
-		m_vVelocity.x = (m_vVelocity.x / fabs(m_vVelocity.x)) * fabs(m_vMaxVelocity.x);
+	if (m_vVelocity.x != 0.0f && (abs(m_vVelocity.x) > abs(m_vMaxVelocity.x))) {
+		m_vVelocity.x = (m_vVelocity.x / abs(m_vVelocity.x)) * abs(m_vMaxVelocity.x);
 	}
 	//Y축도 마찬가지로
-	if (m_vVelocity.y != 0.0f && (fabs(m_vVelocity.y) < fabs(m_vMaxVelocity.y))) {
-		m_vVelocity.y = (m_vVelocity.y / fabs(m_vVelocity.y)) * fabs(m_vMaxVelocity.y);
+	if (m_vVelocity.y != 0.0f && (abs(m_vVelocity.y) > abs(m_vMaxVelocity.y))) {
+		m_vVelocity.y = (m_vVelocity.y / abs(m_vVelocity.y)) * abs(m_vMaxVelocity.y);
 	}
 
 	Move();
