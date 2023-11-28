@@ -10,10 +10,6 @@ Collider::Collider()
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
-	, m_bCheckLeft(false)
-	, m_bCheckRight(false)
-	, m_bCheckTop(false)
-	, m_bCheckBottom(false)
 {
 }
 
@@ -24,10 +20,7 @@ Collider::Collider(const Collider& _origin)
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
-	, m_bCheckLeft(false)
-	, m_bCheckRight(false)
-	, m_bCheckTop(false)
-	, m_bCheckBottom(false)
+	, m_bIsCollision(false)
 {
 }
 
@@ -50,15 +43,15 @@ void Collider::Render(HDC _dc)
 void Collider::EnterCollision(Collider* _pOther)
 {
 	++m_check;
+	m_bIsCollision = true;
 	m_pOwner->EnterCollision(_pOther);
-	CheckPosition(_pOther);
 }
 
 void Collider::ExitCollision(Collider* _pOther)
 {
 	--m_check;
+	m_bIsCollision = false;
 	m_pOwner->ExitCollision(_pOther);
-	ReleaseCheck();
 }
 
 void Collider::StayCollision(Collider* _pOther)
@@ -66,64 +59,15 @@ void Collider::StayCollision(Collider* _pOther)
 	m_pOwner->StayCollision(_pOther);
 }
 
-void Collider::CheckPosition(Collider* _pOther)
+bool Collider::CheckBottom(Collider* _pOther)
 {
-	CheckLeft(_pOther);
-	CheckRight(_pOther);
-	CheckTop(_pOther);
-	CheckBottom(_pOther);
-}
-
-void Collider::ReleaseCheck()
-{
-	m_bCheckLeft = false;
-	m_bCheckRight = false;
-	m_bCheckTop = false;
-	m_bCheckBottom = false;
-}
-
-void Collider::CheckLeft(Collider* _pOther)
-{
-	if (_pOther->GetFinalPos().x < GetFinalPos().x) {
-		m_bCheckLeft = true;
+	//COllider checke!
+	if (_pOther->GetFinalPos().y < GetFinalPos().y && 
+		((_pOther->GetFinalPos().x + _pOther->GetScale().x / 2) > GetFinalPos().x && 
+		 (_pOther->GetFinalPos().x - _pOther->GetScale().x / 2) < GetFinalPos().x)) {
+		return true;
 	}
-	else {
-		m_bCheckLeft = false;
-
-	}
-}
-
-void Collider::CheckRight(Collider* _pOther)
-{
-	if (_pOther->GetFinalPos().x > GetFinalPos().x) {
-		m_bCheckRight = true;
-	}
-	else {
-		m_bCheckRight = false;
-
-	}
-}
-
-void Collider::CheckTop(Collider* _pOther)
-{
-	if (_pOther->GetFinalPos().y < GetFinalPos().y) {
-		m_bCheckTop = true;
-	}
-	else {
-		m_bCheckTop = false;
-	}
-}
-
-void Collider::CheckBottom(Collider* _pOther)
-{
-	if (_pOther->GetFinalPos().y > GetFinalPos().y) {
-		m_bCheckBottom = true;
-	}
-	else {
-		m_bCheckBottom = false;
-	}
-
-	//m_pOwner->CheckBottom(_pOther);
+	return false;
 }
 
 void Collider::FinalUpdate()

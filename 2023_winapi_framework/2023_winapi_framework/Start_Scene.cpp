@@ -8,6 +8,7 @@
 #include "CollisionMgr.h"
 #include "ResMgr.h"
 #include "Ground.h"
+#include "Collider.h"
 void Start_Scene::Init()
 {
 	Object* pObj = new Player;
@@ -18,7 +19,14 @@ void Start_Scene::Init()
 	Object* ground = new Ground;
 	ground->SetPos(Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y }));
 	ground->SetScale(Vec2(3100.0f, 100.0f));
+	ground->GetCollider()->SetScale(ground->GetScale());
 	AddObject(ground, OBJECT_GROUP::GROUND);
+
+	Object* ground2 = new Ground;
+	ground2->SetPos(Vec2({ Core::GetInst()->GetResolution().x / 2 + 200.0f, Core::GetInst()->GetResolution().y/2 + 100.0f }));
+	ground2->SetScale(Vec2(300.0f, 100.0f));
+	ground2->GetCollider()->SetScale(ground2->GetScale());
+	AddObject(ground2, OBJECT_GROUP::GROUND);
 
 	// 몬스터 세팅 마구마구 배치를 해봅시다.
 
@@ -47,7 +55,6 @@ void Start_Scene::Init()
 	//ResMgr::GetInst()->Play(L"BGM");
 
 	// 충돌체크해야되는것들을 설정하자.
-	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::GROUND);
 }
 

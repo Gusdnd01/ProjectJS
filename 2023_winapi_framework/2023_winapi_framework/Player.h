@@ -53,12 +53,10 @@ private:
     bool     m_bLeft;  
     bool     m_bIsJump;
     bool     m_bIsGround;
+    bool     m_bCanMove;
     float    m_fTimer = 0.0f;
     float    m_fJumpPower;
     STATE    m_sState;
     string   m_LR;
-
-private:
-    
 };
 

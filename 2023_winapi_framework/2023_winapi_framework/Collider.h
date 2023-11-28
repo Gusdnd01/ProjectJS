@@ -17,18 +17,10 @@ public:
 	void StayCollision(Collider* _pOther);
 
 public:
-	void CheckPosition(Collider* _pOther);
-	void ReleaseCheck();
-	void CheckLeft(Collider* _pOther);
-	void CheckRight(Collider* _pOther);
-	void CheckTop(Collider* _pOther);
-	void CheckBottom(Collider* _pOther);
-
-public:
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	void SetOffSetPos(Vec2 _vOffsetPos) 
 	{ m_vOffsetPos = _vOffsetPos; }
-	void SetCheckBottom(bool _value) { m_bCheckBottom = _value; }
+	void SetPawn(Object* _value) { m_pOwner = _value; }
 
 	const Vec2& GetScale() const { return m_vScale; }
 	const Vec2& GetOffSetPos() const { return m_vOffsetPos; }
@@ -37,10 +29,8 @@ public:
 	const UINT& GetID() const { return m_ID; }
 	Object* GetObj() const { return m_pOwner; }
 
-	const bool& GetCheckLeft() const { return m_bCheckLeft; }
-	const bool& GetCheckRight() const { return m_bCheckRight; }
-	const bool& GetCheckTop() const { return m_bCheckTop; }
-	const bool& GetCheckBottom() const { return m_bCheckBottom; }
+	const bool& GetIsCollision() const { return m_bIsCollision; }
+	bool CheckBottom(Collider* _pOther);
 
 private:
 	UINT m_check;
@@ -51,9 +41,7 @@ private:
 	friend class Object;
 	UINT m_ID; // 충돌체 ID값
 	static UINT m_sNextID;
-	bool m_bCheckLeft;
-	bool m_bCheckRight;
-	bool m_bCheckTop;
-	bool m_bCheckBottom;
+	bool m_bIsCollision;
+
 };
 

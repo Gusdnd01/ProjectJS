@@ -63,8 +63,8 @@ void Animation::Render(HDC _dc)
 		, (int)(m_vecAnimFrame[m_CurFrame].vSlice.y), SRCCOPY);
 
 	TransparentBlt(_dc
-		,(int)(vPos.x - m_vecAnimFrame[m_CurFrame].vSlice.x /2.f)
-		,(int)(vPos.y - m_vecAnimFrame[m_CurFrame].vSlice.y / 2.f)
+		,(int)(vPos.x - m_vecAnimFrame[m_CurFrame].vSlice.x /2.f * vScale.x)
+		,(int)(vPos.y - m_vecAnimFrame[m_CurFrame].vSlice.y / 2.f * vScale.y)
 		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.x) * vScale.x
 		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.y) * vScale.y
 		,_backDC
