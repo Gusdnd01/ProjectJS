@@ -19,6 +19,7 @@ private:
 	int escMoveY;
 	int escYIncrease;
 	int escArrowY;
+
 private:
 	float bgmVolume;
 	float effectVolume;
@@ -26,4 +27,6 @@ private:
 	Texture* m_pTex_SettingPannel;
 	Texture* m_pTex_arrow;
 	Texture* m_pTex_ESC;
+	Texture* m_pTex_SoundBar_null;
+	Texture* m_pTex_SoundBar;
 };
