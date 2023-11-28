@@ -83,6 +83,9 @@
     <Filter Include="Engine\03. Manager\CameraManager">
       <UniqueIdentifier>{ddde27b3-3b4e-4bd0-8ae0-a1fbf1955593}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\09.UI">
+      <UniqueIdentifier>{6c219499-ba0a-4669-8234-c77473818e09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -190,6 +193,12 @@
     <ClInclude Include="CameraManager.h">
       <Filter>Engine\03. Manager\CameraManager</Filter>
     </ClInclude>
+    <ClInclude Include="ShowSetting.h">
+      <Filter>Engine\09.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -291,6 +300,12 @@
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>Engine\03. Manager\CameraManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowSetting.cpp">
+      <Filter>Engine\09.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

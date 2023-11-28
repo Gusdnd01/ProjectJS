@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-
 enum class STATE {
     MOVE,
     IDLE,
@@ -8,9 +7,8 @@ enum class STATE {
     JUMP_CHARGE,
     HURT,
     FALL,
-    END = 10
+    END = 10,
 };
-
 class Texture;
 class RigidBody;
 
@@ -58,5 +56,9 @@ private:
     float    m_fTimer = 0.0f;
     float    m_fJumpPower;
     STATE    m_sState;
+    string   m_LR;
+
+private:
+    
 };
 

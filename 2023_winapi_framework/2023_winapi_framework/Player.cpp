@@ -41,22 +41,22 @@ Player::Player()
 	
 	//Animator and animation setting 
 	CreateAnimator();
-	//Left Animation
-	GetAnimator()->CreateAnim(L"frog_idle", m_pTex,Vec2(0.0f, 0.0f),Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f),8, 0.2f);
- 	GetAnimator()->CreateAnim(L"frog_hop", m_pTex, Vec2(0.f, 48.f),Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
-	GetAnimator()->CreateAnim(L"frog_jump_charge", m_pTex, Vec2(48.0f * 2.0f, 48.0f), Vec2(48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
-	GetAnimator()->CreateAnim(L"frog_jump", m_pTex, Vec2(48.f * 3.0f, 48.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
-	GetAnimator()->CreateAnim(L"frog_fall", m_pTex, Vec2(48.0f * 6.0f, 48.0f),Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
-
 	//Right Animation
-	GetAnimator()->CreateAnim(L"frog_idle", m_pTex,Vec2(0.0f, 0.0f),Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f),8, 0.2f);
- 	GetAnimator()->CreateAnim(L"frog_hop", m_pTex, Vec2(0.f, 48.f),Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
-	GetAnimator()->CreateAnim(L"frog_jump_charge", m_pTex, Vec2(48.0f * 2.0f, 48.0f), Vec2(48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
-	GetAnimator()->CreateAnim(L"frog_jump", m_pTex, Vec2(48.f * 3.0f, 48.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
-	GetAnimator()->CreateAnim(L"frog_fall", m_pTex, Vec2(48.0f * 6.0f, 48.0f),Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_idleR", m_pTex,Vec2(0.0f, 0.0f),Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f),8, 0.2f);
+ 	GetAnimator()->CreateAnim(L"frog_hopR", m_pTex, Vec2(0.f, 48.f),Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_jump_chargeR", m_pTex, Vec2(48.0f * 2.0f, 48.0f), Vec2(48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
+	GetAnimator()->CreateAnim(L"frog_jumpR", m_pTex, Vec2(48.f * 3.0f, 48.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_fallR", m_pTex, Vec2(48.0f * 6.0f, 48.0f),Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
 
-	//Left Idle Play
-	GetAnimator()->PlayAnim(L"frog_idle",true);
+	//Left Animation
+	GetAnimator()->CreateAnim(L"frog_idleL", m_pTex,Vec2(0.0f, 240.0f),Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f),8, 0.2f);
+ 	GetAnimator()->CreateAnim(L"frog_hopL", m_pTex, Vec2(0.f, 288.f),Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_jump_chargeL", m_pTex, Vec2(48.0f * 2.0f, 288.0f), Vec2(48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
+	GetAnimator()->CreateAnim(L"frog_jumpL", m_pTex, Vec2(48.f * 3.0f,288.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
+	GetAnimator()->CreateAnim(L"frog_fallL", m_pTex, Vec2(48.0f * 6.0f, 288.0f),Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
+
+	//Right Idle Play
+	GetAnimator()->PlayAnim(L"frog_idleR",true);
 
 	//animation offset change
 	//Animation* pAnim = GetAnimator()->FindAnim(L"Jiwoo_Front");
@@ -85,9 +85,6 @@ void Player::Update()
 	StateUpdate();
 
 	GetAnimator()->Update();
-
-	
-
 }
 
 void Player::Render(HDC _dc)
@@ -148,7 +145,7 @@ void Player::PlayerInput()
 	m_bIsGround = GetGravity()->GetOnGround();
 	
 	STATE state = STATE::IDLE;
-
+	m_LR = m_bLeft ? "L" : "R";
 	//some actions
 
 	if (m_bIsGround && KEY_DOWN(KEY_TYPE::A)) {
@@ -221,16 +218,12 @@ void Player::StateUpdate()
 		HurtState();
 		break;
 
-	case STATE::END:
-		break;
-
 	default:
 		break;
 	}
 }
 void Player::StateChange(STATE _type)
 {
-	if (_type == STATE::END) return;
 	m_sState = _type;
 }
 
@@ -239,10 +232,20 @@ void Player::IdleState()
 	//아이들 애니메이션이나 점프 애니메이션을 실행 해준다.
 	//idle animation
 	if (m_bIsJump) {
-		GetAnimator()->PlayAnim(L"frog_jump", true);
+		if (m_bLeft) {
+			GetAnimator()->PlayAnim(L"frog_jumpL", true);
+		}
+		else {
+			GetAnimator()->PlayAnim(L"frog_jumpR", true);
+		}
 	}
 	else {
-		GetAnimator()->PlayAnim(L"frog_idle", true);
+		if (m_bLeft) {
+			GetAnimator()->PlayAnim(L"frog_idleL", true);
+		}
+		else {
+			GetAnimator()->PlayAnim(L"frog_idleR", true);
+		}
 	}
 	//jump animation
 }
