@@ -2,10 +2,11 @@
 #include "Collider.h"
 #include "Object.h"
 #include "SelectGDI.h"
+#include "Player.h"
 UINT Collider::m_sNextID = 0;
 Collider::Collider()
 	: m_pOwner(nullptr)
-	, m_vScale(Vec2(40.f,40.f))
+	, m_vScale(Vec2(40.f, 40.f))
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
@@ -14,8 +15,6 @@ Collider::Collider()
 	, m_bCheckTop(false)
 	, m_bCheckBottom(false)
 {
-	//Collider a, b;
-	//a = b;
 }
 
 Collider::Collider(const Collider& _origin)
@@ -25,7 +24,10 @@ Collider::Collider(const Collider& _origin)
 	, m_ID(m_sNextID++)
 	, m_check(0)
 	, m_vFinalPos{}
-
+	, m_bCheckLeft(false)
+	, m_bCheckRight(false)
+	, m_bCheckTop(false)
+	, m_bCheckBottom(false)
 {
 }
 
@@ -47,14 +49,16 @@ void Collider::Render(HDC _dc)
 
 void Collider::EnterCollision(Collider* _pOther)
 {
- 	++m_check;
+	++m_check;
 	m_pOwner->EnterCollision(_pOther);
+	CheckPosition(_pOther);
 }
 
 void Collider::ExitCollision(Collider* _pOther)
 {
 	--m_check;
 	m_pOwner->ExitCollision(_pOther);
+	ReleaseCheck();
 }
 
 void Collider::StayCollision(Collider* _pOther)
@@ -62,29 +66,68 @@ void Collider::StayCollision(Collider* _pOther)
 	m_pOwner->StayCollision(_pOther);
 }
 
-bool Collider::CheckLeft(Collider* _pOther)
+void Collider::CheckPosition(Collider* _pOther)
 {
-	return false;
+	CheckLeft(_pOther);
+	CheckRight(_pOther);
+	CheckTop(_pOther);
+	CheckBottom(_pOther);
 }
 
-bool Collider::CheckRight(Collider* _pOther)
+void Collider::ReleaseCheck()
 {
-	return false;
+	m_bCheckLeft = false;
+	m_bCheckRight = false;
+	m_bCheckTop = false;
+	m_bCheckBottom = false;
 }
 
-bool Collider::CheckTop(Collider* _pOther)
+void Collider::CheckLeft(Collider* _pOther)
 {
-	return false;
+	if (_pOther->GetFinalPos().x < GetFinalPos().x) {
+		m_bCheckLeft = true;
+	}
+	else {
+		m_bCheckLeft = false;
+
+	}
 }
 
-bool Collider::CheckBottom(Collider* _pOther)
+void Collider::CheckRight(Collider* _pOther)
 {
-	return false;
+	if (_pOther->GetFinalPos().x > GetFinalPos().x) {
+		m_bCheckRight = true;
+	}
+	else {
+		m_bCheckRight = false;
+
+	}
+}
+
+void Collider::CheckTop(Collider* _pOther)
+{
+	if (_pOther->GetFinalPos().y < GetFinalPos().y) {
+		m_bCheckTop = true;
+	}
+	else {
+		m_bCheckTop = false;
+	}
+}
+
+void Collider::CheckBottom(Collider* _pOther)
+{
+	if (_pOther->GetFinalPos().y > GetFinalPos().y) {
+		m_bCheckBottom = true;
+	}
+	else {
+		m_bCheckBottom = false;
+	}
+
+	//m_pOwner->CheckBottom(_pOther);
 }
 
 void Collider::FinalUpdate()
 {
-	// Object위치를 따라가야 하는거야.
 	Vec2 vObjPos = m_pOwner->GetPos();
 	m_vFinalPos = vObjPos + m_vOffsetPos;
 }

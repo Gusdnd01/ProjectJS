@@ -17,25 +17,31 @@ public:
 	void StayCollision(Collider* _pOther);
 
 public:
-	bool CheckLeft(Collider* _pOther);
-	bool CheckRight(Collider* _pOther);
-	bool CheckTop(Collider* _pOther);
-	bool CheckBottom(Collider* _pOther);
+	void CheckPosition(Collider* _pOther);
+	void ReleaseCheck();
+	void CheckLeft(Collider* _pOther);
+	void CheckRight(Collider* _pOther);
+	void CheckTop(Collider* _pOther);
+	void CheckBottom(Collider* _pOther);
 
 public:
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	void SetOffSetPos(Vec2 _vOffsetPos) 
 	{ m_vOffsetPos = _vOffsetPos; }
+	void SetCheckBottom(bool _value) { m_bCheckBottom = _value; }
+
 	const Vec2& GetScale() const { return m_vScale; }
 	const Vec2& GetOffSetPos() const { return m_vOffsetPos; }
 	const Vec2& GetFinalPos() const 
 	{ return m_vFinalPos; }
 	const UINT& GetID() const { return m_ID; }
-	const Object* GetObj() const { return m_pOwner; }
+	Object* GetObj() const { return m_pOwner; }
+
 	const bool& GetCheckLeft() const { return m_bCheckLeft; }
 	const bool& GetCheckRight() const { return m_bCheckRight; }
 	const bool& GetCheckTop() const { return m_bCheckTop; }
 	const bool& GetCheckBottom() const { return m_bCheckBottom; }
+
 private:
 	UINT m_check;
 	Object* m_pOwner;

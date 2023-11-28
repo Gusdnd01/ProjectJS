@@ -15,6 +15,8 @@
 using std::vector;
 using std::map;
 using std::wstring;
+using std::clamp;
+using std::abs;
 
 // transparent 등 blt 쓸 때 필요
 #pragma comment(lib, "Msimg32.lib")

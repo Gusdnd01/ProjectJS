@@ -6,5 +6,12 @@ class Ground :
 public:
     Ground();
     ~Ground();
+
+public:
+    void Update() override;
+
+public:
+    void EnterCollision(Collider* _other);
+    void ExitCollision(Collider* _other);
 };
 

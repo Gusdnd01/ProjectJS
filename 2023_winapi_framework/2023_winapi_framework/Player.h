@@ -5,6 +5,7 @@ enum class STATE {
     MOVE,
     IDLE,
     JUMP,
+    JUMP_CHARGE,
     HURT,
     END = 10
 };
@@ -26,6 +27,8 @@ public:
 public:
     void EnterCollision(Collider* other) override;
     void ExitCollision(Collider* other) override;
+
+    void CheckBottom(Collider* other) override;
     
 public:
     void PlayerInput();
@@ -33,19 +36,25 @@ public:
 public:
     void StateUpdate();
     void StateChange(STATE _type);
+
+    //FSM Funtion
+public:
     void IdleState();
-    void JumpState(Vec2& pos);
+    void JumpState();
+    void JumpChargeState();
     void HurtState();
-    void MoveState(Vec2& pos,bool left);
+    void MoveState();
+
+public:
+    const bool& GetIsJump() const { return m_bIsJump; }
 
 private:
     Texture* m_pTex;
-    RigidBody* m_rb;
-    bool     m_bIsGround = false;
-    bool     m_bLeft = false;   
-    float    m_fGravity = 9.8f;
+    bool     m_bLeft;  
+    bool     m_bIsJump;
+    bool     m_bIsGround;
     float    m_fTimer = 0.0f;
-    bool     m_bIsJump = false;
+    float    m_fJumpPower;
     STATE    m_sState;
 };
 

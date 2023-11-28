@@ -12,7 +12,7 @@ void Start_Scene::Init()
 {
 	Object* pObj = new Player;
 	pObj->SetPos((Vec2({Core::GetInst()->GetResolution().x /2, Core::GetInst()->GetResolution().y / 2})));
-	pObj->SetScale(Vec2(100.f,100.f));
+	pObj->SetScale(Vec2(300.f,300.f));
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 
 	Object* ground = new Ground;
@@ -42,9 +42,9 @@ void Start_Scene::Init()
 	//	AddObject(pMonster, OBJECT_GROUP::MONSTER);
 	//}
 	// 사운드 세팅
-	ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
-	ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
-	ResMgr::GetInst()->Play(L"BGM");
+	//ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
+	//ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
+	//ResMgr::GetInst()->Play(L"BGM");
 
 	// 충돌체크해야되는것들을 설정하자.
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);

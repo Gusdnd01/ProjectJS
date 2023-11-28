@@ -5,37 +5,44 @@
 #include "SceneMgr.h"
 #include "PathMgr.h"
 #include "ResMgr.h"
-#include "Bullet.h"
 #include "Scene.h"
 #include "Texture.h"
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
 #include "RigidBody.h"
+#include "Gravity.h"
 
 Player::Player()
 	: m_pTex(nullptr)
 	, m_bLeft(false)
+	, m_bIsJump(false)
 	, m_bIsGround(false)
-	, m_fGravity(20.f)
+	, m_fTimer(0.0f)
+	, m_fJumpPower(5.0f)
 	, m_sState(STATE::IDLE)
 {
-	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jiwoo.bmp");
+	this->SetName(L"Player");
+
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\jumpking.bmp");
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f,30.f));
+	GetCollider()->SetScale(Vec2(20.f,50.f));
 
 	CreateRigidBody();
-	GetRigidBody()->SetMass(50.0f);
-	GetRigidBody()->SetGravity(9.8f);
+	GetRigidBody()->SetMass(5.0f);
+	GetRigidBody()->SetFriction(100.0f);
+	GetRigidBody()->SetMaxVelocity(Vec2(200.0f, 500.0f));
 
-	//콜라이더의 오프셋을 변경하고 싶으면 이거 주석풀면된다.
+	CreateGravity();
+
+	//if you want modify Collider's offset. use this
 	//GetCollider()->SetOffSetPos(Vec2(50.f,0.f));
 	
-	//애니메이터랑 애니메이션 설정이다.
+	//Animator and animation setting 
 	CreateAnimator();
-	GetAnimator()->CreateAnim(L"Jiwoo_Front", m_pTex,Vec2(0.f, 150.f),
+	GetAnimator()->CreateAnim(L"jumpking_idle", m_pTex,Vec2(0.f, 150.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->CreateAnim(L"Jiwoo_Back", m_pTex, Vec2(0.f, 100.f),
+	GetAnimator()->CreateAnim(L"jumpking_walk", m_pTex, Vec2(0.f, 100.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
 	GetAnimator()->CreateAnim(L"Jiwoo_Left", m_pTex, Vec2(0.f, 0.f),
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
@@ -45,12 +52,12 @@ Player::Player()
 		Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
 	GetAnimator()->PlayAnim(L"Jiwoo_Front",true);
 
-	//// 오프셋 건드리기
+	//animation offset change
 	//Animation* pAnim = GetAnimator()->FindAnim(L"Jiwoo_Front");
-	//// 하나만
+	// only one 
 	//pAnim->SetFrameOffset(0, Vec2(0.f, 20.f));
 
-	//// 프레임 다 
+	//all frames
 	//for (size_t i = 0; i < pAnim->GetMaxFrame(); ++i)
 	//	pAnim->SetFrameOffset(i, Vec2(0.f, 20.f));
 }
@@ -61,11 +68,14 @@ Player::~Player()
 }
 void Player::Update()
 {
-	if(m_bIsJump == false)
-		PlayerInput();
+	//get input
+	PlayerInput();
+
+	//fsm loop
 	StateUpdate();
 
 	GetAnimator()->Update();
+
 }
 
 void Player::Render(HDC _dc)
@@ -107,107 +117,145 @@ void Player::Render(HDC _dc)
 
 void Player::EnterCollision(Collider* other)
 {
-	if (m_bIsGround) return;
-	m_bIsGround = true;
 }
 
 void Player::ExitCollision(Collider* other)
 {
-	m_bIsGround = false;
+}
+
+void Player::CheckBottom(Collider* other)
+{
 }
 
 void Player::PlayerInput()
 {
-	if (m_bIsJump) return;
+	//player during jump, return Input
+	//if (m_bIsJump) return;
+	m_bIsGround = GetGravity()->GetOnGround();
+	
 	STATE state = STATE::IDLE;
-	if (KEY_PRESS(KEY_TYPE::LEFT)) {
+
+	//some actions
+
+	if (m_bIsGround && KEY_DOWN(KEY_TYPE::A)) {
+		GetRigidBody()->AddForce(Vec2(-350.0f, 0.0f), FORCE_MODE::IMPULSE);
+	}
+	if (m_bIsGround && KEY_DOWN(KEY_TYPE::D)) {
+		GetRigidBody()->AddForce(Vec2(350.0f, 0.0f), FORCE_MODE::IMPULSE);
+	}
+	if (m_bIsGround && KEY_UP(KEY_TYPE::A)) {
+		GetRigidBody()->StopImmediatelyX();
+	}
+	if (m_bIsGround && KEY_UP(KEY_TYPE::D)) {
+		GetRigidBody()->StopImmediatelyX();
+	}
+
+	if (m_bIsGround && KEY_PRESS(KEY_TYPE::A)) {
 		state = STATE::MOVE;
 		m_bLeft = true;
 	}
-	if (KEY_PRESS(KEY_TYPE::RIGHT)) {
+	if (m_bIsGround && KEY_PRESS(KEY_TYPE::D)) {
 		state = STATE::MOVE;
 		m_bLeft = false;
 	}
-	if (KEY_DOWN(KEY_TYPE::SPACE)) {
-		m_bIsGround = false;
+
+	if (m_bIsGround&& KEY_PRESS(KEY_TYPE::SPACE)) {
+		state = STATE::JUMP_CHARGE;
+	}
+	if (m_bIsGround&&KEY_UP(KEY_TYPE::SPACE)) {
 		m_bIsJump = true;
 		state = STATE::JUMP;
 	}
-	StateChange(state);
-}
 
+	//lastly change state
+	StateChange(state);
+	
+	//default is idle
+}
 
 #pragma region FSM
 void Player::StateUpdate()
 {
-	Vec2 vPos = GetPos();
+	//현제 상태를 구하고 그 값에 따라 스위치문을 돌린다.
 	switch (m_sState)
 	{
-	case STATE::MOVE:
-		MoveState(vPos, m_bLeft);
-		break;
 	case STATE::IDLE:
 		IdleState();
 		break;
-	case STATE::JUMP:
-		JumpState(vPos);
+
+	case STATE::MOVE:
+		MoveState();
 		break;
+	
+	case STATE::JUMP:
+		JumpState();
+		break;
+
+	case STATE::JUMP_CHARGE:
+		JumpChargeState();
+		break;
+
 	case STATE::HURT:
 		HurtState();
 		break;
+
 	case STATE::END:
 		break;
+
 	default:
 		break;
 	}
-
-	SetPos(vPos);
 }
 void Player::StateChange(STATE _type)
 {
 	if (_type == STATE::END) return;
-
 	m_sState = _type;
 }
 
 void Player::IdleState()
 {
-	//가만히 있을때 애니메이션
+	//아이들 애니메이션 실행만 해준다.
+	//idle animation
 	GetAnimator()->PlayAnim(L"Jiwoo_Front", true);
 }
 
-void Player::JumpState(Vec2& pos)
+void Player::JumpState()
 {
-	//점프할 떄 애니메이션
-	m_fTimer += fDT;
+	//jump animation
+	//GetAnimator()->PlayAnim(L"Jump", false);
 
-	if (m_fTimer >= 1 ) {
-		StateChange(STATE::IDLE);
-		if (m_bIsGround) {
-			m_fTimer = 0;
-			m_bIsJump = false;
-		}
-	}
+	//점프 차지에서 올려준 점프 파워만큼 힘을 더해준다.
+	GetRigidBody()->AddForce(Vec2(0.0f, -m_fJumpPower), FORCE_MODE::IMPULSE);
+	m_fJumpPower = 10.0f;
+}
 
-	pos.y -= 100.0f * fDT;
+void Player::JumpChargeState()
+{
+	//프레임당 증가
+	m_fJumpPower += 1.0f * fDT;
+
+	//최대값 지정
+	m_fJumpPower = clamp(m_fJumpPower, 100.0f, 500.0f);
 }
 
 void Player::HurtState()
 {
-	//으악
+	//Get hurt action
+	//여기서는 벽에 부딫혔을 때에 실행해줄 무언가!
 }
 
-void Player::MoveState(Vec2& pos,bool left)
+void Player::MoveState()
 {
-	//움직일 때 애니메이션이랑 대충 ㅇㅇ
-	if (left) {
-		pos.x -= 100.0f * fDT;
+	//Move Animation and move action
+	if (m_bLeft) {
+		GetRigidBody()->AddForce(Vec2(-350.0f, 0.0f), FORCE_MODE::FORCE);
 		GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
 	}
 	else {
-		pos.x += 100.0f *fDT;
+		GetRigidBody()->AddForce(Vec2(350.0f, 0.0f),FORCE_MODE::FORCE);
 		GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
+
 }
 #pragma endregion
 

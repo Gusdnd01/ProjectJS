@@ -49,3 +49,9 @@ enum class EVENT_TYPE
 	SCENE_CHANGE,
 	END
 };
+
+enum class FORCE_MODE {
+	IMPULSE,
+	FORCE,
+	END = 3,
+};
