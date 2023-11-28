@@ -7,22 +7,23 @@
 #include "ResMgr.h"
 #include "CollisionMgr.h"
 #include "EventMgr.h"
+#include "ShowSetting.h"
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
-	// === º¯¼ö ÃÊ±âÈ­ === 
+	// === ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ === 
 	m_hWnd = _hWnd;
 	m_ptResolution = _ptResolution;
 	m_hbackDC = 0;
 	m_hbackbit = 0;
 
-	// ´õºí¹öÆÛ¸µ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½
 	m_hDC = GetDC(m_hWnd);	
-	// 1. »ý¼º
+	// 1. ï¿½ï¿½ï¿½ï¿½
 	m_hbackbit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y);
 	m_hbackDC = CreateCompatibleDC(m_hDC);
 
-	// 2. ¿¬°á
+	// 2. ï¿½ï¿½ï¿½ï¿½
 	SelectObject(m_hbackDC, m_hbackbit);
 
 	CreateGDI();
@@ -32,6 +33,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	KeyMgr::GetInst()->Init();
 	ResMgr::GetInst()->Init();
 	SceneMgr::GetInst()->Init();
+	ShowSetting::GetInst()->Init();
 
 	return true;
 }
@@ -50,15 +52,35 @@ void Core::Update()
 	KeyMgr::GetInst()->Update();
 	SceneMgr::GetInst()->Update();
 	CollisionMgr::GetInst()->Update();
+	ShowSetting::GetInst()->Update();
+//	Vec2 vPos = m_obj.GetPos();
+//
+////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+////	if(KeyMgr::GetInst()->GetKey(KEY_TYPE::LEFT) == KEY_STATE::UP)
+//	if(KEY_UP(KEY_TYPE::LEFT))
+//	{
+////		m_obj.m_ptPos.x -= 1;
+//		vPos.x -= 100.f;// *fDT;
+//	}
+//
+////	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+//	if(KEY_DOWN(KEY_TYPE::RIGHT))
+//	{
+////		m_obj.m_ptPos.x += 1;
+//		vPos.x += 100.f * fDT;
+//	}
+//	m_obj.SetPos(vPos);
 }
 
 void Core::Render()
 {
-	// Ä¥ÇÑ´Ù.
+	// Ä¥ï¿½Ñ´ï¿½.
 	//Rectangle(m_hbackDC, -1,-1,m_ptResolution.x +1,m_ptResolution.y + 1);
 	PatBlt(m_hbackDC, 0, 0, m_ptResolution.x, m_ptResolution.y, WHITENESS);
 
 	SceneMgr::GetInst()->Render(m_hbackDC);
+	ShowSetting::GetInst()->Render(m_hbackDC);
+
 	/*Vec2 vPos = m_obj.GetPos();
 	Vec2 vScale = m_obj.GetScale();
 	RECT_RENDER(vPos.x, vPos.y, vScale.x, vScale.y, m_hbackDC);*/
@@ -69,7 +91,7 @@ void Core::Render()
 	//swprintf_s(mousebuf, L"Mouse: x %d, y: %d", mousepos.x, mousepos.y);
 	//TextOut(m_hbackDC, 10, 10, mousebuf, wcslen(mousebuf));
 
-	// 3. ¿Å±ä´Ù.
+	// 3. ï¿½Å±ï¿½ï¿½.
 	BitBlt(m_hDC, 0,0, m_ptResolution.x, m_ptResolution.y, 
 		m_hbackDC, 0,0, SRCCOPY);
 	EventMgr::GetInst()->Update();
@@ -102,8 +124,8 @@ void Core::CreateGDI()
 void Core::Release()
 {
 	ReleaseDC(m_hWnd, m_hDC);
-	DeleteDC(m_hbackDC); // createdc ÇÑ°Å Áö¿ì´Â°Å
-	DeleteObject(m_hbackbit); // createbit ÇÑ°Å Áö¿ì´Â°Å
+	DeleteDC(m_hbackDC); // createdc ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½Â°ï¿½
+	DeleteObject(m_hbackbit); // createbit ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½Â°ï¿½
 	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
 	{
 		DeleteObject(m_arrPen[i]);
