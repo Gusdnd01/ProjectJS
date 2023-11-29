@@ -18,18 +18,22 @@ void ShowSetting::Init()
 	escMoveY = -100;
 	escYIncrease = 65;
 
-	bgmVolume = 1;
-	effectVolume = 1;
+	bgmVolume = 10;
+	effectVolume = 10;
+
+	#pragma region Texture Load
 
 	m_pTex_SettingPannel = ResMgr::GetInst()->TexLoad(L"Setting", L"Texture\\GameP_Setting.bmp");
 	m_pTex_arrow = ResMgr::GetInst()->TexLoad(L"Arrow", L"Texture\\arrow.bmp");
 	m_pTex_ESC = ResMgr::GetInst()->TexLoad(L"ESC", L"Texture\\GameP_ESC.bmp");
+	m_pTex_SoundBar = ResMgr::GetInst()->TexLoad(L"SoundBar", L"Texture\\SoundBar.bmp");
+	m_pTex_SoundBar_null = ResMgr::GetInst()->TexLoad(L"SoundBar_null", L"Texture\\SoundBar_null.bmp");
+#pragma endregion
 }
 void ShowSetting::Render(HDC _dc)
 {
 	int x = Core::GetInst()->GetResolution().x / 2;
 	int y = Core::GetInst()->GetResolution().y / 2;
-
 
 	if (IsActive)
 	{
@@ -44,7 +48,31 @@ void ShowSetting::Render(HDC _dc)
 			settingMoveY -= settingYIncrease;
 		}
 
-	
+		#pragma region BGM SOUND
+
+			for (int i = 0; i < 10; i++)
+			{
+				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+			}
+			for (int i = 0; i < bgmVolume; i++)
+			{
+				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+			}
+
+		#pragma endregion
+		#pragma region SFX SOUND
+
+			for (int i = 0; i < 10; i++)
+			{
+				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+			}
+			for (int i = 0; i < effectVolume; i++)
+			{
+				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+			}
+
+		#pragma endregion
+
 		settingArrowY = y + settingMoveY;
 		
 		TransparentBlt(_dc, x - 170, settingArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 300, 300, RGB(255,0,255));
@@ -80,25 +108,25 @@ void ShowSetting::Update()
 		{
 			if (bgmVolume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
 			{
-				bgmVolume -= 0.1f;
+				bgmVolume -= 1;
 			}
-			if (bgmVolume < 1 && KEY_DOWN(KEY_TYPE::RIGHT))
+			if (bgmVolume < 10 && KEY_DOWN(KEY_TYPE::RIGHT))
 			{
-				bgmVolume += 0.1f;
+				bgmVolume += 1;
 			}
-			ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, bgmVolume);
+			ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, bgmVolume * 0.1f);
 		}
 		else if (settingArrowY == 360)
 		{
 			if (effectVolume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
 			{
-				effectVolume -= 0.1f;
+				effectVolume -= 1;
 			}
-			if (effectVolume < 1 && KEY_DOWN(KEY_TYPE::RIGHT))
+			if (effectVolume < 10 && KEY_DOWN(KEY_TYPE::RIGHT))
 			{
-				effectVolume += 0.1f;
+				effectVolume += 1;
 			}
-			ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, effectVolume);
+			ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, effectVolume * 0.1f);
 		}
 	}
 	else

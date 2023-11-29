@@ -15,7 +15,6 @@ Object::Object()
 	, m_pAnimator(nullptr)
 	, m_cRb(nullptr)
 	, m_cGravity(nullptr)
-
 {
 }
 
