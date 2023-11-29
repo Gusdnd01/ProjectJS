@@ -31,6 +31,9 @@ public:
 
 	const bool& GetIsCollision() const { return m_bIsCollision; }
 	bool CheckBottom(Collider* _pOther);
+	bool CheckTop(Collider* _pOther);
+	bool CheckLeft(Collider* _pOther);
+	bool CheckRight(Collider* _pOther);
 
 private:
 	UINT m_check;

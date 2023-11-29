@@ -125,8 +125,20 @@ void Player::Render(HDC _dc)
 
 void Player::EnterCollision(Collider* other)
 {
-	GetRigidBody()->StopImmediatelyX();
-	m_bIsJump = false;
+	if (GetCollider()->CheckBottom(other) && (!GetCollider()->CheckLeft(other) || !GetCollider()->CheckRight(other))) {
+		GetRigidBody()->StopImmediatelyX();
+		m_bIsJump = false;
+	}
+	if (GetCollider()->CheckLeft(other) || GetCollider()->CheckRight(other)) {
+		GetRigidBody()->StopImmediatelyX();
+		GetGravity()->OnGround(false);
+	}
+	if (GetCollider()->CheckTop(other)) {
+		GetRigidBody()->StopImmediatelyY();
+		GetGravity()->OnGround(false);
+		//GetRigidBody()->AddForce(Vec2(0.0f, 1000.0f), FORCE_MODE::IMPULSE);
+	}
+
 }
 
 void Player::ExitCollision(Collider* other)

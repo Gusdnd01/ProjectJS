@@ -62,9 +62,40 @@ void Collider::StayCollision(Collider* _pOther)
 bool Collider::CheckBottom(Collider* _pOther)
 {
 	//COllider checke!
-	if (_pOther->GetFinalPos().y < GetFinalPos().y && 
-		((_pOther->GetFinalPos().x + _pOther->GetScale().x / 2) > GetFinalPos().x && 
-		 (_pOther->GetFinalPos().x - _pOther->GetScale().x / 2) < GetFinalPos().x)) {
+	if (_pOther->GetFinalPos().y > GetFinalPos().y && 
+		((_pOther->GetFinalPos().x + _pOther->GetScale().x / 2) > (GetFinalPos().x - GetScale().x/2) && 
+		 (_pOther->GetFinalPos().x - _pOther->GetScale().x / 2) < (GetFinalPos().x + GetScale().x/2))) {
+		return true;
+	}
+	return false;
+}
+
+bool Collider::CheckTop(Collider* _pOther)
+{
+	if (_pOther->GetFinalPos().y < GetFinalPos().y &&
+		((_pOther->GetFinalPos().x + _pOther->GetScale().x / 2) > (GetFinalPos().x - GetScale().x/2) &&
+		 (_pOther->GetFinalPos().x - _pOther->GetScale().x / 2) < (GetFinalPos().x + GetScale().x/2))) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Collider::CheckLeft(Collider* _pOther)
+{
+	if (_pOther->GetFinalPos().x < GetFinalPos().x &&
+		((_pOther->GetFinalPos().y + _pOther->GetScale().y / 2) > (GetFinalPos().y- GetScale().y/2) &&
+		 (_pOther->GetFinalPos().y - _pOther->GetScale().y / 2) < (GetFinalPos().y+ GetScale().y/2))) {
+		return true;
+	}
+	return false;
+}
+
+bool Collider::CheckRight(Collider* _pOther)
+{
+	if (_pOther->GetFinalPos().x > GetFinalPos().x &&
+		((_pOther->GetFinalPos().y + _pOther->GetScale().y / 2) >(GetFinalPos().y - GetScale().y/2) &&
+		 (_pOther->GetFinalPos().y - _pOther->GetScale().y / 2) <(GetFinalPos().y + GetScale().y/2))) {
 		return true;
 	}
 	return false;

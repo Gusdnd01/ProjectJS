@@ -20,7 +20,7 @@ void Ground::EnterCollision(Collider* _other)
 {
 	Object* obj = _other->GetObj();
 
-	if (obj->GetName() == L"Player") {
+	if (obj->GetName() == L"Player" && !GetCollider()->CheckBottom(_other)) {
 		obj->GetGravity()->OnGround(true);
 
 		Vec2 objPos = obj->GetPos();

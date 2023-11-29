@@ -24,9 +24,15 @@ void Start_Scene::Init()
 
 	Object* ground2 = new Ground;
 	ground2->SetPos(Vec2({ Core::GetInst()->GetResolution().x / 2 + 200.0f, Core::GetInst()->GetResolution().y/2 + 100.0f }));
-	ground2->SetScale(Vec2(300.0f, 100.0f));
+	ground2->SetScale(Vec2(300.0f, 50.0f));
 	ground2->GetCollider()->SetScale(ground2->GetScale());
 	AddObject(ground2, OBJECT_GROUP::GROUND);
+	
+	Object* ground3 = new Ground;
+	ground3->SetPos(Vec2({ Core::GetInst()->GetResolution().x / 2 - 300.0f, Core::GetInst()->GetResolution().y/2 -100.0f }));
+	ground3->SetScale(Vec2(300.0f, 50.0f));
+	ground3->GetCollider()->SetScale(ground3->GetScale());
+	AddObject(ground3, OBJECT_GROUP::GROUND);
 
 	// 몬스터 세팅 마구마구 배치를 해봅시다.
 
