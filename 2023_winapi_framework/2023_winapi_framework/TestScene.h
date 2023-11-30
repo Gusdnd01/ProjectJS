@@ -8,5 +8,6 @@ class TestScene
 public:
 	virtual void Init() override;
 	virtual void Render(HDC _dc) override;
+	virtual void Release() override;
 };
 

@@ -5,6 +5,8 @@
 #include "ShowSetting.h"
 #include "Object.h"
 #include "Core.h"
+#include "ResMgr.h"
+#include "ShowSetting.h"
 
 void TestScene::Init()
 {
@@ -25,4 +27,9 @@ void TestScene::Render(HDC _dc)
 	{
 		ShowSetting::GetInst()->IsEscActive = true;
 	}
+}
+
+void TestScene::Release()
+{
+	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
 }

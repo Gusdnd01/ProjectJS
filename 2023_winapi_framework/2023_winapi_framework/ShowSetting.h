@@ -20,7 +20,7 @@ private:
 	int escYIncrease;
 	int escArrowY;
 
-private:
+public:
 	float bgmVolume;
 	float effectVolume;
 private:
