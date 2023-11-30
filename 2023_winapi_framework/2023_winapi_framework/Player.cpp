@@ -26,7 +26,7 @@ Player::Player()
 {
 	this->SetName(L"Player");
 
-	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\bluebluefrogssss.bmp");
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\player.bmp");
 
 	CreateCollider();
 	//애니메이터 오프셋 옮겨주는거로 해결
