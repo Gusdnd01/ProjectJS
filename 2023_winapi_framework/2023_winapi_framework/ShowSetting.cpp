@@ -11,7 +11,7 @@
 void ShowSetting::Init()
 {
 	settingArrowY = 0;
-	settingMoveY = 0;
+	settingMoveY = -100;
 	settingYIncrease = 100;
 
 	escArrowY = 0;
@@ -37,7 +37,7 @@ void ShowSetting::Render(HDC _dc)
 
 	if (IsActive)
 	{
-		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_SettingPannel->GetDC(), 0, 0, 1920, 1080, RGB(255,255,255));
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_SettingPannel->GetDC(), 0, 0, 1920, 1080, RGB(255,0,255));
 	
 		if (settingMoveY < settingYIncrease && KEY_DOWN(KEY_TYPE::DOWN))
 		{
@@ -84,7 +84,7 @@ void ShowSetting::Render(HDC _dc)
 	}
 	if (!IsActive && IsEscActive)
 	{
-		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_ESC->GetDC(), 0, 0, 1920, 1080, RGB(255, 255, 255));
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_ESC->GetDC(), 0, 0, 1920, 1080, RGB(255, 0, 255));
 		if (escMoveY < 80 && KEY_DOWN(KEY_TYPE::DOWN))
 		{
 			escMoveY += escYIncrease;
@@ -132,7 +132,7 @@ void ShowSetting::Update()
 	else
 	{
 		settingArrowY = 0;
-		settingMoveY = 0;
+		settingMoveY = -100;
 		settingYIncrease = 100;
 	}
 
@@ -152,7 +152,8 @@ void ShowSetting::Update()
 		}
 		if (escArrowY == 455) //게임 나가기
 		{
-			exit(0);
+			SceneMgr::GetInst()->LoadScene(L"Intro_Scene");
+			IsEscActive = false;
 		}
 	}
 	if (!IsEscActive)

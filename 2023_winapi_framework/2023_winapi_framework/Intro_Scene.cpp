@@ -6,25 +6,42 @@
 #include "SceneMgr.h"
 #include "TimeMgr.h"
 #include "ShowSetting.h"
+#include "ResMgr.h"
+#include "Texture.h"
 
 void Intro_Scene::Init()
 {
 	moveY = 0;
 	yIncrease = 50;
 	arrowY = 0;
+
+	TexSizeX = 150;
+	TexSizeY = 27;
+
+	start = 1;
+	setting = 1;
+	exiT = 1;
+
+	introTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
+	GameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
+	Setting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
+	Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
+
+	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
+	ResMgr::GetInst()->Play(L"IntroBGM");
 }
 
 void Intro_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
 
-	int x = Core::GetInst()->GetResolution().x / 2;
-	int y = Core::GetInst()->GetResolution().y / 2;
+	int x = 10;//Core::GetInst()->GetResolution().x / 2 - 75 ;
+	int y = Core::GetInst()->GetResolution().y / 2 + 150;
 
-	SetTextAlign(_dc, TA_CENTER);
-	TextOut(_dc, x, y, L"START", 5);
-	TextOut(_dc, x, y + yIncrease, L"SETTING", 7);
-	TextOut(_dc, x, y + yIncrease * 2, L"EXIT", 4);
+	TransparentBlt(_dc, 0, 0, 1280, 750, introTex->GetDC(), 0, 0, 1920, 1080, RGB(255,0,255));
+	TransparentBlt(_dc, x + 40, y, TexSizeX * start, TexSizeY * start, GameStart->GetDC(), 0, 0, 213, 39, RGB(255, 0, 255));
+	TransparentBlt(_dc, x, y + yIncrease, TexSizeX * setting, TexSizeY * setting, Setting->GetDC(), 0, 0, 213, 39, RGB(255, 0, 255));
+	TransparentBlt(_dc, x, y + yIncrease * 2, TexSizeX * exiT, TexSizeY * exiT, Exit->GetDC(), 0, 0, 213, 39, RGB(255, 0, 255));
 
 	if (ShowSetting::GetInst()->IsActive == false)
 	{
@@ -40,9 +57,30 @@ void Intro_Scene::Render(HDC _dc)
 
 	arrowY = y + moveY;
 
-	TextOut(_dc, x - 50, arrowY, L">", 1);
-	TextOut(_dc, x + 50, arrowY, L"<", 1);
-
+	switch (arrowY)
+	{
+	case 510: //게임 시작 버튼
+	{
+		start = 1.25f;
+		setting = 1;
+		exiT = 1;
+	}
+	break;
+	case 560: //세팅 버튼
+	{
+		start = 1;
+		setting = 1.25f;
+		exiT = 1;
+	}
+	break;
+	default: //게임 나가기 버튼
+	{
+		start = 1;
+		setting = 1;
+		exiT = 1.25f;
+	}
+	break;
+	}
 }
 
 void Intro_Scene::Update()
@@ -53,12 +91,12 @@ void Intro_Scene::Update()
 	{
 		switch (arrowY)
 		{
-		case 360: //게임 시작 버튼
+		case 510: //게임 시작 버튼(360)
 		{
 			SceneMgr::GetInst()->LoadScene(L"Start_Scene");
 		}
 		break;
-		case 410: //세팅 버튼
+		case 560: //세팅 버튼(410)
 		{
 			ShowSetting::GetInst()->IsActive = true;
 		}
@@ -70,4 +108,9 @@ void Intro_Scene::Update()
 		break;
 		}
 	}
+}
+
+void Intro_Scene::Release()
+{
+	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
 }
