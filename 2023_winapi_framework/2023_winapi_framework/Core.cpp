@@ -8,6 +8,7 @@
 #include "CollisionMgr.h"
 #include "EventMgr.h"
 #include "ShowSetting.h"
+#include "CameraManager.h"
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
@@ -77,6 +78,8 @@ void Core::Render()
 	// ĥ�Ѵ�.
 	//Rectangle(m_hbackDC, -1,-1,m_ptResolution.x +1,m_ptResolution.y + 1);
 	PatBlt(m_hbackDC, 0, 0, m_ptResolution.x, m_ptResolution.y, WHITENESS);
+
+	CameraManager::GetInst()->Update();
 
 	SceneMgr::GetInst()->Render(m_hbackDC);
 	ShowSetting::GetInst()->Render(m_hbackDC);

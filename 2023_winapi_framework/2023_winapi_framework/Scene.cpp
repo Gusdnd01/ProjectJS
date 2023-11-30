@@ -12,6 +12,7 @@ Scene::~Scene()
 
 void Scene::Update()
 {
+
 	for (UINT i = 0; i < (UINT)OBJECT_GROUP::END; ++i)
 	{
 		for (size_t j = 0; j < m_vecObj[i].size(); ++j)

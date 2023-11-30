@@ -58,5 +58,6 @@ private:
     float    m_fJumpPower;
     STATE    m_sState;
     string   m_LR;
+    UINT     m_nLevel;
 };
 

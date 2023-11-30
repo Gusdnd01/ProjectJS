@@ -12,6 +12,7 @@
 #include "Animation.h"
 #include "RigidBody.h"
 #include "Gravity.h"
+#include "Core.h"
 
 Player::Player()
 	: m_pTex(nullptr)
@@ -129,8 +130,14 @@ void Player::EnterCollision(Collider* other)
 		GetRigidBody()->StopImmediatelyX();
 		m_bIsJump = false;
 	}
-	if (GetCollider()->CheckLeft(other) || GetCollider()->CheckRight(other)) {
+	else if (GetCollider()->CheckLeft(other) && !m_bIsGround) {
 		GetRigidBody()->StopImmediatelyX();
+		GetRigidBody()->AddForce(Vec2(200.0f, -200.0f),FORCE_MODE::IMPULSE);
+		GetGravity()->OnGround(false);
+	}
+	else if (GetCollider()->CheckRight(other) && !m_bIsGround) {
+		GetRigidBody()->StopImmediatelyX();
+		GetRigidBody()->AddForce(Vec2(-200.0f, -200.0f), FORCE_MODE::IMPULSE);
 		GetGravity()->OnGround(false);
 	}
 	if (GetCollider()->CheckTop(other)) {
@@ -138,7 +145,6 @@ void Player::EnterCollision(Collider* other)
 		GetGravity()->OnGround(false);
 		//GetRigidBody()->AddForce(Vec2(0.0f, 1000.0f), FORCE_MODE::IMPULSE);
 	}
-
 }
 
 void Player::ExitCollision(Collider* other)
@@ -160,25 +166,25 @@ void Player::PlayerInput()
 
 	if (state == STATE::IDLE && m_bIsGround) {
 		if (m_bCanMove) {
-			if (KEY_DOWN(KEY_TYPE::A)) {
+			if (KEY_DOWN(KEY_TYPE::LEFT)) {
 				GetRigidBody()->AddForce(Vec2(-350.0f, 0.0f), FORCE_MODE::IMPULSE);
 			}
-			if (KEY_DOWN(KEY_TYPE::D)) {
+			if (KEY_DOWN(KEY_TYPE::RIGHT)) {
 				GetRigidBody()->AddForce(Vec2(350.0f, 0.0f), FORCE_MODE::IMPULSE);
 			}
-			if (KEY_PRESS(KEY_TYPE::A)) {
+			if (KEY_PRESS(KEY_TYPE::LEFT)) {
 				state = STATE::MOVE;
 				m_bLeft = true;
 			}
-			if (KEY_PRESS(KEY_TYPE::D)) {
+			if (KEY_PRESS(KEY_TYPE::RIGHT)) {
 				state = STATE::MOVE;
 				m_bLeft = false;
 			}
 		}
-		if (KEY_UP(KEY_TYPE::A)) {
+		if (KEY_UP(KEY_TYPE::LEFT)) {
 			GetRigidBody()->StopImmediatelyX();
 		}
-		if (KEY_UP(KEY_TYPE::D)) {
+		if (KEY_UP(KEY_TYPE::RIGHT)) {
 			GetRigidBody()->StopImmediatelyX();
 		}
 
@@ -209,7 +215,7 @@ void Player::StateUpdate()
 	//현제 상태를 구하고 그 값에 따라 스위치문을 돌린다.
 	switch (m_sState)
 	{
-	case STATE::IDLE:
+	case STATE::IDLE: 
 		IdleState();
 		break;
 

@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Texture.h"
 #include "TimeMgr.h"
+#include "CameraManager.h"
 #include "Core.h"
 Animation::Animation()
 	: m_pAnimator(nullptr)
@@ -44,9 +45,10 @@ void Animation::Render(HDC _dc)
 	Object* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetPos();
 	Vec2 vScale = pObj->GetScale();
+	Vec2 renderPos = CameraManager::GetInst()->GetRenderPos(vPos);
 
 	// 오프셋 적용
-	vPos = vPos + m_vecAnimFrame[m_CurFrame].vOffset;
+	renderPos = renderPos + m_vecAnimFrame[m_CurFrame].vOffset;
 	HBITMAP _backbit = CreateCompatibleBitmap(_dc, Core::GetInst()->GetResolution().x, Core::GetInst()->GetResolution().y);
 	HDC _backDC = CreateCompatibleDC(_dc);
 	SelectObject(_backDC, _backbit);
@@ -63,8 +65,8 @@ void Animation::Render(HDC _dc)
 		, (int)(m_vecAnimFrame[m_CurFrame].vSlice.y), SRCCOPY);
 
 	TransparentBlt(_dc
-		,(int)(vPos.x - m_vecAnimFrame[m_CurFrame].vSlice.x /2.f * vScale.x)
-		,(int)(vPos.y - m_vecAnimFrame[m_CurFrame].vSlice.y / 2.f * vScale.y)
+		,(int)(renderPos.x - m_vecAnimFrame[m_CurFrame].vSlice.x /2.f * vScale.x)
+		,(int)(renderPos.y - m_vecAnimFrame[m_CurFrame].vSlice.y / 2.f * vScale.y)
 		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.x) * vScale.x
 		,(int)(m_vecAnimFrame[m_CurFrame].vSlice.y) * vScale.y
 		,_backDC

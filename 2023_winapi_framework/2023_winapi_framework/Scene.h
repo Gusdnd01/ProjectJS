@@ -12,6 +12,7 @@ public:
 	virtual void FinalUpdate();
 	virtual void Render(HDC _dc);
 	virtual void Release();
+
 public:
 	const vector<Object*>& GetGroupObject(OBJECT_GROUP _etype) const
 	{
@@ -22,7 +23,7 @@ public:
 	{
 		m_vecObj[(UINT)_eType].push_back(_pObj);
 	}
-private:
+protected:
 //	Object*  m_obj;
 	vector<Object*> m_vecObj[(UINT)OBJECT_GROUP::END];
 };

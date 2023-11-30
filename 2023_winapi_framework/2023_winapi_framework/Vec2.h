@@ -39,8 +39,10 @@ public:
 		return Vec2(x / _vOther.x, y / _vOther.y);
 	}
 	Vec2 operator / (float _value) {
-		assert(!0.0f == _value);
-		return Vec2(x / _value, y / _value);
+		if (0.0f != _value)
+			return Vec2(x / _value, y / _value);
+		else
+			return Vec2(0.0f);
 	}
 	Vec2 operator * (int _i)
 	{
@@ -61,6 +63,9 @@ public:
 		x *= _value;
 		y *= _value;
 		return *this;
+	}
+	bool operator != (Vec2 _vOther) {
+		return x != _vOther.x || y != _vOther.y;
 	}
 public:
 	float x;
