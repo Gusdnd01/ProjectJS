@@ -7,6 +7,8 @@ class ShowSetting
 public:
 	bool IsActive = false;
 	bool IsEscActive = false;
+
+	wstring  CurSceneName;
 public:
 	void Init();
 	void Render(HDC _dc);
@@ -19,7 +21,6 @@ private:
 	int escMoveY;
 	int escYIncrease;
 	int escArrowY;
-
 public:
 	float bgmVolume;
 	float effectVolume;
