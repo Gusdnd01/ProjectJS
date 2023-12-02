@@ -93,7 +93,7 @@ void Intro_Scene::Update()
 		{
 		case 510: //게임 시작 버튼(360)
 		{
-			SceneMgr::GetInst()->LoadScene(L"Start_Scene");
+			SceneMgr::GetInst()->LoadScene(L"IntroStoryScene");
 		}
 		break;
 		case 560: //세팅 버튼(410)

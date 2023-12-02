@@ -199,6 +199,7 @@
     <ClInclude Include="TestScene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
+    <ClInclude Include="IntroStoryScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -307,5 +308,6 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
+    <ClCompile Include="IntroStoryScene.cpp" />
   </ItemGroup>
 </Project>

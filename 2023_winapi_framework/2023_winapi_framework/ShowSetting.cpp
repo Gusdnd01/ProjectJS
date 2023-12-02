@@ -102,7 +102,7 @@ void ShowSetting::Render(HDC _dc)
 
 void ShowSetting::Update()
 {
-	if (IsActive)
+	if (IsActive) //볼륨 세팅창
 	{
 		if (settingArrowY == 260)
 		{
@@ -129,14 +129,14 @@ void ShowSetting::Update()
 			ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, effectVolume * 0.1f);
 		}
 	}
-	else
+	else //볼륨 세팅창 초기화
 	{
 		settingArrowY = 0;
 		settingMoveY = -100;
 		settingYIncrease = 100;
 	}
 
-	if (IsEscActive && KEY_DOWN(KEY_TYPE::SPACE))
+	if (IsEscActive && KEY_DOWN(KEY_TYPE::SPACE)) //설정창
 	{
 		if (escArrowY == 260) //계속하기
 		{
@@ -144,7 +144,8 @@ void ShowSetting::Update()
 		}
 		if (escArrowY == 325) //게임 다시하기
 		{
-
+			SceneMgr::GetInst()->LoadScene(CurSceneName);
+			IsEscActive = false;
 		}
 		if (escArrowY == 390) //게임 설정
 		{
@@ -156,7 +157,7 @@ void ShowSetting::Update()
 			IsEscActive = false;
 		}
 	}
-	if (!IsEscActive)
+	if (!IsEscActive) //설정창 초기화
 	{
 		escArrowY = 0;
 		escMoveY = -100;
