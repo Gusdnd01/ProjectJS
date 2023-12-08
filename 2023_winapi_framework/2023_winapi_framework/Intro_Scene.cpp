@@ -38,10 +38,10 @@ void Intro_Scene::Render(HDC _dc)
 	int x = 10;//Core::GetInst()->GetResolution().x / 2 - 75 ;
 	int y = Core::GetInst()->GetResolution().y / 2 + 150;
 
-	TransparentBlt(_dc, 0, 0, 1280, 750, introTex->GetDC(), 0, 0, 1920, 1080, RGB(255,0,255));
-	TransparentBlt(_dc, x + 40, y, TexSizeX * start, TexSizeY * start, GameStart->GetDC(), 0, 0, 213, 39, RGB(255, 0, 255));
-	TransparentBlt(_dc, x, y + yIncrease, TexSizeX * setting, TexSizeY * setting, Setting->GetDC(), 0, 0, 213, 39, RGB(255, 0, 255));
-	TransparentBlt(_dc, x, y + yIncrease * 2, TexSizeX * exiT, TexSizeY * exiT, Exit->GetDC(), 0, 0, 213, 39, RGB(255, 0, 255));
+	TransparentBlt(_dc, 0, 0, 1280, 750, introTex->GetDC(), 0, 0, introTex->GetWidth(), introTex->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, x + 40, y, TexSizeX * start, TexSizeY * start, GameStart->GetDC(), 0, 0, GameStart->GetWidth(), GameStart->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, x, y + yIncrease, TexSizeX * setting, TexSizeY * setting, Setting->GetDC(), 0, 0, Setting->GetWidth(), Setting->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, x, y + yIncrease * 2, TexSizeX * exiT, TexSizeY * exiT, Exit->GetDC(), 0, 0, Exit->GetWidth(), Exit->GetHeight(), RGB(255, 0, 255));
 
 	if (ShowSetting::GetInst()->IsActive == false)
 	{

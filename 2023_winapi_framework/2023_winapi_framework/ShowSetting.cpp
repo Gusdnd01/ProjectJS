@@ -37,7 +37,8 @@ void ShowSetting::Render(HDC _dc)
 
 	if (IsActive)
 	{
-		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_SettingPannel->GetDC(), 0, 0, 1920, 1080, RGB(255,0,255));
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_SettingPannel->GetDC(), 0, 0, 
+			m_pTex_SettingPannel->GetWidth(), m_pTex_SettingPannel->GetHeight(), RGB(255, 0, 255));
 	
 		if (settingMoveY < settingYIncrease && KEY_DOWN(KEY_TYPE::DOWN))
 		{
@@ -52,11 +53,13 @@ void ShowSetting::Render(HDC _dc)
 
 			for (int i = 0; i < 10; i++)
 			{
-				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 
+					m_pTex_SoundBar_null->GetWidth(), m_pTex_SoundBar_null->GetHeight(), RGB(255, 255, 255));
 			}
 			for (int i = 0; i < bgmVolume; i++)
 			{
-				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 
+					m_pTex_SoundBar->GetWidth(), m_pTex_SoundBar->GetHeight(), RGB(255, 255, 255));
 			}
 
 		#pragma endregion
@@ -64,18 +67,21 @@ void ShowSetting::Render(HDC _dc)
 
 			for (int i = 0; i < 10; i++)
 			{
-				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 
+					m_pTex_SoundBar_null->GetWidth(), m_pTex_SoundBar_null->GetHeight(), RGB(255, 255, 255));
 			}
 			for (int i = 0; i < effectVolume; i++)
 			{
-				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 200, 300, RGB(255, 255, 255));
+				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 
+					m_pTex_SoundBar->GetWidth(), m_pTex_SoundBar->GetHeight(), RGB(255, 255, 255));
 			}
 
 		#pragma endregion
 
 		settingArrowY = y + settingMoveY;
 		
-		TransparentBlt(_dc, x - 170, settingArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 300, 300, RGB(255,0,255));
+		TransparentBlt(_dc, x - 170, settingArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 
+			m_pTex_arrow->GetWidth(), m_pTex_arrow->GetHeight(), RGB(255, 0, 255));
 
 		if (settingArrowY == 460 && KEY_DOWN(KEY_TYPE::SPACE))
 		{
@@ -84,7 +90,8 @@ void ShowSetting::Render(HDC _dc)
 	}
 	if (!IsActive && IsEscActive)
 	{
-		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_ESC->GetDC(), 0, 0, 1920, 1080, RGB(255, 0, 255));
+		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_ESC->GetDC(), 0, 0, 
+			m_pTex_ESC->GetWidth(), m_pTex_ESC->GetHeight(), RGB(255, 0, 255));
 		if (escMoveY < 80 && KEY_DOWN(KEY_TYPE::DOWN))
 		{
 			escMoveY += escYIncrease;
@@ -96,7 +103,8 @@ void ShowSetting::Render(HDC _dc)
 		
 		escArrowY = y + escMoveY;
 
-		TransparentBlt(_dc, x - 170, escArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 300, 300, RGB(255, 0, 255));
+		TransparentBlt(_dc, x - 170, escArrowY, 20, 20, m_pTex_arrow->GetDC(), 0, 0, 
+			m_pTex_arrow->GetWidth(), m_pTex_arrow->GetHeight(), RGB(255, 0, 255));
 	}
 }
 

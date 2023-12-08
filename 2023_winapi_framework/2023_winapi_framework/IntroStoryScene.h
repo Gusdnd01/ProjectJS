@@ -18,5 +18,6 @@ private:
 	Texture* m_Story3;
 	Texture* m_Story4;
 	Texture* m_Story5;
+	Texture* m_BK;
 };
 
