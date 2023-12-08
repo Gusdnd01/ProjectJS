@@ -7,11 +7,12 @@
 #include "Animator.h"
 #include "RigidBody.h"
 #include "Gravity.h"
-
+#include "Core.h"
 Object::Object()
 	: m_vPos{}
 	, m_vScale{}
 	, m_IsAlive(true)
+	, m_IsClampPos(false)
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
 	, m_cRb(nullptr)
@@ -58,6 +59,9 @@ void Object::CreateGravity()
 
 void Object::Update()
 {
+	if (m_IsClampPos) {
+		m_vPos.x = clamp(m_vPos.x, 0 + m_vScale.x , Core::GetInst()->GetResolution().x - m_vScale.x );
+	}
 }
 
 void Object::FinalUpdate()

@@ -86,6 +86,9 @@
     <Filter Include="Engine\09.UI">
       <UniqueIdentifier>{6c219499-ba0a-4669-8234-c77473818e09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\TileManager">
+      <UniqueIdentifier>{14631702-54c6-43c5-affa-935e04128553}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -199,9 +202,11 @@
     <ClInclude Include="TestScene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="IntroStoryScene.h">
-      <Filter>Engine\05. Scene\MainScene</Filter>
+    <ClInclude Include="IntroStoryScene.h" />
+    <ClInclude Include="Tile.h">
+      <Filter>Engine\04. Object</Filter>
     </ClInclude>
+    <ClInclude Include="TileManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -310,8 +315,10 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="IntroStoryScene.cpp">
-      <Filter>Engine\05. Scene\MainScene</Filter>
+    <ClCompile Include="IntroStoryScene.cpp" />
+    <ClCompile Include="Tile.cpp">
+      <Filter>Engine\04. Object</Filter>
     </ClCompile>
+    <ClCompile Include="TileManager.cpp" />
   </ItemGroup>
 </Project>

@@ -25,8 +25,9 @@ Player::Player()
 	, m_sState(STATE::IDLE)
 {
 	this->SetName(L"Player");
-
+	this->SetIsClamp(true);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player", L"Texture\\player.bmp");
+
 
 	CreateCollider();
 	//애니메이터 오프셋 옮겨주는거로 해결
@@ -78,6 +79,8 @@ Player::~Player()
 }
 void Player::Update()
 {
+	Object::Update();
+
 	//get input
 	PlayerInput();
 

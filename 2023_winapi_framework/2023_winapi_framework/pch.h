@@ -18,6 +18,13 @@ using std::wstring;
 using std::string;
 using std::clamp;
 using std::abs;
+using std::make_pair;
+
+
+struct tTileSlice {
+	Vec2 vLT;
+	Vec2 vSlice;
+};
 
 
 // transparent 등 blt 쓸 때 필요
