@@ -11,7 +11,7 @@ public:
     virtual void Release() override;
 
 public:
-    void ModifyPos(const Vec2& _pos,const wstring& _name, bool minus) {
+    void ModifyPos(const Vec2& _pos,const wstring& _name) {
         for (UINT i = 0; i < 30; i++) {
             for (UINT j = 0; j < m_vecObj[i].size(); j++)
             {
@@ -23,6 +23,7 @@ public:
         }
     }
     int CheckStage(float _yValue);
+    void CreateObj(Object* obj, Vec2 Pos, Vec2 Scale, Vec2 Col, OBJECT_GROUP Type);
 
 private:
     Object* m_pPlayer;

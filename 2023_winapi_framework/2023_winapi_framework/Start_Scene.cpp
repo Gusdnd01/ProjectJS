@@ -8,12 +8,22 @@
 #include "CollisionMgr.h"
 #include "CameraManager.h"
 #include "ResMgr.h"
+#include "TileManager.h"
 #include "Ground.h"
+#include "Tile.h"
 #include "Collider.h"
+#include "Texture.h"
+
 void Start_Scene::Init()
 {
 	Vec2 centerPos = Vec2((int)Core::GetInst()->GetResolution().x/2,
 		Core::GetInst()->GetResolution().y/2);
+
+	Object* back = new Tile;
+	back->SetPos(centerPos);
+	back->SetScale(centerPos * 2);
+	AddObject(back, OBJECT_GROUP::DEFAULT);
+	back->SetName(L"Background");
 
 	Object* pObj= new Player;
 	pObj->SetPos(centerPos);
@@ -21,59 +31,46 @@ void Start_Scene::Init()
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 	m_pPlayer = pObj;
 
-	Object* wallL = new Ground;
+	/*Object* wallL = new Ground;
 	wallL->SetPos(centerPos - Vec2(centerPos.x, 0.0f));
-	wallL->SetScale(Vec2(10.0f, 10000.0f));
+	wallL->SetScale(Vec2(10.0f, 100000.0f));
 	wallL->GetCollider()->SetScale(wallL->GetScale());
 	AddObject(wallL, OBJECT_GROUP::GROUND);
 	
 	Object* wallR = new Ground;
 	wallR->SetPos(centerPos + Vec2(centerPos.x, 0.0f));
-	wallR->SetScale(Vec2(10.0f, 10000.0f));
+	wallR->SetScale(Vec2(10.0f, 100000.0f));
 	wallR->GetCollider()->SetScale(wallR->GetScale());
-	AddObject(wallR, OBJECT_GROUP::GROUND);
+	AddObject(wallR, OBJECT_GROUP::GROUND);*/
 
-	Object* ground = new Ground;
-	ground->SetPos(centerPos + Vec2(0.0f, centerPos.y));
-	ground->SetScale(Vec2(3100.0f, 100.0f));
-	ground->GetCollider()->SetScale(ground->GetScale());
-	AddObject(ground, OBJECT_GROUP::GROUND);
+	//땅 충돌체.
+	Ground* ground = new Ground;
+	ground->SetTiles(276, 277, 278);
+	CreateObj(ground, Vec2(centerPos.x, centerPos.y * 2), Vec2(1200, 100), Vec2(3000.0f, 100.0f), OBJECT_GROUP::GROUND);
 
-	Object* ground2 = new Ground;
-	ground2->SetPos(centerPos + Vec2(200.0f, 100.0f));
-	ground2->SetScale(Vec2(300.0f, 50.0f));
-	ground2->GetCollider()->SetScale(ground2->GetScale());
-	AddObject(ground2, OBJECT_GROUP::GROUND);
+	Ground* ground2 = new Ground;
+	ground2->SetTiles(276, 277,278);
+	CreateObj(ground2,centerPos + Vec2(200.0f, 100.0f), Vec2(300.0f, 50.0f), Vec2(300.0f, 50.0f), OBJECT_GROUP::GROUND);
+
+	Ground* ground3 = new Ground;
+	ground3->SetTiles(276, 277, 278);
+	CreateObj(ground3, centerPos + Vec2(-200.0f, -100.0f), Vec2(300.0f, 50.0f), Vec2(300.0f, 50.0f), OBJECT_GROUP::GROUND);
+
+	Ground* ground4 = new Ground;
+	ground4->SetTiles(276, 277, 278);
+	CreateObj(ground4, centerPos + Vec2(200.0f, -200.0f), Vec2(300.0f, 50.0f), Vec2(300.0f, 50.0f), OBJECT_GROUP::GROUND);
 	
-	Object* ground3 = new Ground;
-	ground3->SetPos(centerPos + Vec2(-200.0f, -100.0f));
-	ground3->SetScale(Vec2(300.0f, 50.0f));
-	ground3->GetCollider()->SetScale(ground3->GetScale());
-	AddObject(ground3, OBJECT_GROUP::GROUND);
+	Ground* ground5 = new Ground;
+	ground5->SetTiles(276, 277, 278);
+	CreateObj(ground5, centerPos + Vec2(-200.0f, -300.0f), Vec2(300.0f, 50.0f), Vec2(300.0f, 50.0f), OBJECT_GROUP::GROUND);
 
-	Object* ground4 = new Ground;
-	ground4->SetPos(centerPos + Vec2(200.0f, -200.0f));
-	ground4->SetScale(Vec2(300.0f, 50.0f));
-	ground4->GetCollider()->SetScale(ground4->GetScale());
-	AddObject(ground4, OBJECT_GROUP::GROUND);
+	Ground* ground6 = new Ground;
+	ground6->SetTiles(276, 277, 278);
+	CreateObj(ground6, Vec2(200.0f, -400.0f), Vec2(300.0f, 50.0f), Vec2(300.0f, 50.0f), OBJECT_GROUP::GROUND);
 	
-	Object* ground5 = new Ground;
-	ground5->SetPos(centerPos + Vec2(-200.0f, -300.0f));
-	ground5->SetScale(Vec2(300.0f, 50.0f));
-	ground5->GetCollider()->SetScale(ground5->GetScale());
-	AddObject(ground5, OBJECT_GROUP::GROUND);
-
-	Object* ground6 = new Ground;
-	ground6->SetPos(centerPos + Vec2(200.0f, -400.0f));
-	ground6->SetScale(Vec2(300.0f, 50.0f));
-	ground6->GetCollider()->SetScale(ground6->GetScale());
-	AddObject(ground6, OBJECT_GROUP::GROUND);
-	
-	Object* ground7 = new Ground;
-	ground7->SetPos(centerPos + Vec2(-200.0f, -500.0f));
-	ground7->SetScale(Vec2(300.0f, 50.0f));
-	ground7->GetCollider()->SetScale(ground7->GetScale());
-	AddObject(ground7, OBJECT_GROUP::GROUND);
+	Ground* ground7 = new Ground;
+	ground7->SetTiles(276, 277, 278);
+	CreateObj(ground6, Vec2(-200.0f, -500.0f), Vec2(300.0f, 50.0f), Vec2(300.0f, 50.0f), OBJECT_GROUP::GROUND);
 
 	//Object인데 위치 정보만 갖고 있는 오브젝트이다.
 	Object* camRig = new Object;
@@ -125,8 +122,8 @@ void Start_Scene::Update()
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
 	
-	ModifyPos(Vec2(0.0f, m_vStage[CheckStage(pPos.y)]), L"camRig", true);
-
+	ModifyPos(Vec2(0.0f, m_vStage[CheckStage(pPos.y)]), L"camRig");
+	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Background");
 	Scene::Update();
 	//if(KEY_DOWN(KEY_TYPE::ENTER))
 	//	// 씬 변경
@@ -155,4 +152,12 @@ int Start_Scene::CheckStage(float _yValue)
 	}
 
 	return stage_index;
+}
+
+void Start_Scene::CreateObj(Object* obj, Vec2 Pos, Vec2 Scale, Vec2 Col, OBJECT_GROUP Type)
+{
+	obj->SetPos(Pos);
+	obj->SetScale(Scale);
+	obj->GetCollider()->SetScale(Col);
+	AddObject(obj, Type);
 }

@@ -40,7 +40,7 @@ ATOM BaseWindow::MyRegisterClass()
     wcex.hInstance = m_hInst;
     wcex.hIcon = LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MY2023WINAPIFRAMEWORK22));
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
     wcex.lpszMenuName = nullptr;
     wcex.lpszClassName = WINDOW_CLASS_NAME;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));

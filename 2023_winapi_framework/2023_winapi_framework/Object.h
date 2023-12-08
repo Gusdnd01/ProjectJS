@@ -36,6 +36,7 @@ public:
 	void SetPos(Vec2 _vPos)		{ m_vPos = _vPos; }
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	void SetName(wstring _name) { m_strName = _name; }
+	void SetIsClamp(bool _value) { m_IsClampPos = _value; }
 
 public:
 	//Status
@@ -66,6 +67,7 @@ private:
 	
 	wstring m_strName; // ¿Ã∏ß.
 	bool m_IsAlive;
+	bool m_IsClampPos;
 
 	Collider*	m_pCollider;
 	Animator*	m_pAnimator;

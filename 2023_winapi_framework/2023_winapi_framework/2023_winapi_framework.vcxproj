@@ -203,6 +203,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileManager.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
@@ -237,6 +239,8 @@
     <ClCompile Include="Start_Scene.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
