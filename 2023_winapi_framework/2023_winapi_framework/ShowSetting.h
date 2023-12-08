@@ -13,6 +13,8 @@ public:
 	void Init();
 	void Render(HDC _dc);
 	void Update();
+public:
+	const float GetBGM() { return bgmVolume; }
 private:
 	int settingMoveY;
 	int settingYIncrease;
@@ -21,7 +23,7 @@ private:
 	int escMoveY;
 	int escYIncrease;
 	int escArrowY;
-public:
+private:
 	float bgmVolume;
 	float effectVolume;
 private:
