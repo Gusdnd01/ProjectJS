@@ -202,12 +202,15 @@
     <ClInclude Include="TestScene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
+    <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Tile.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
-    <ClInclude Include="TileManager.h" />
-    <ClInclude Include="IntroStoryScene.h">
-      <Filter>Engine\05. Scene\MainScene</Filter>
+    <ClInclude Include="TileManager.h">
+      <Filter>Engine\03. Manager\TileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEndVolume.h">
+      <Filter>Engine\04. Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,12 +320,15 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
+    <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Tile.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
-    <ClCompile Include="TileManager.cpp" />
-    <ClCompile Include="IntroStoryScene.cpp">
-      <Filter>Engine\05. Scene\MainScene</Filter>
+    <ClCompile Include="TileManager.cpp">
+      <Filter>Engine\03. Manager\TileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEndVolume.cpp">
+      <Filter>Engine\04. Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
