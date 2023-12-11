@@ -202,11 +202,13 @@
     <ClInclude Include="TestScene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Tile.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
     <ClInclude Include="TileManager.h" />
+    <ClInclude Include="IntroStoryScene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -315,10 +317,12 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Tile.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
     <ClCompile Include="TileManager.cpp" />
+    <ClCompile Include="IntroStoryScene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

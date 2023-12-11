@@ -23,6 +23,9 @@ void IntroStoryScene::Init()
 	m_BK = ResMgr::GetInst()->TexLoad(L"BK", L"Texture\\BLACKBK.bmp");
 
 	ResMgr::GetInst()->LoadSound(L"IntroStoryBGM", L"Sound\\IntroStoryBGM.wav", true);
+
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
 	ResMgr::GetInst()->Play(L"IntroStoryBGM");
 }
 
