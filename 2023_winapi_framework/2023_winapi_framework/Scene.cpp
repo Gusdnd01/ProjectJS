@@ -12,7 +12,6 @@ Scene::~Scene()
 
 void Scene::Update()
 {
-
 	for (UINT i = 0; i < (UINT)OBJECT_GROUP::END; ++i)
 	{
 		for (size_t j = 0; j < m_vecObj[i].size(); ++j)
@@ -57,6 +56,7 @@ void Scene::Release()
 	{
 		for (size_t j = 0; j < m_vecObj[i].size(); ++j)
 		{
+			//없는걸 참조? 아ㅋㅋ 개멍청했네ㅋㅋ
 			delete m_vecObj[i][j];
 		}
 		m_vecObj[i].clear();

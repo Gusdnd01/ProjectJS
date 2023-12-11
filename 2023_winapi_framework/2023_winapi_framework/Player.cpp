@@ -18,6 +18,7 @@ Player::Player()
 	: m_pTex(nullptr)
 	, m_bLeft(false)
 	, m_bIsJump(false)
+	, m_bIsUp(false)
 	, m_bCanMove(false)
 	, m_bIsGround(false)
 	, m_fTimer(0.0f)
@@ -34,9 +35,9 @@ Player::Player()
 	GetCollider()->SetScale(Vec2(48.0f, 48.0f));
 
 	CreateRigidBody();
-	GetRigidBody()->SetMass(5.0f);
-	GetRigidBody()->SetFriction(100.0f);
-	GetRigidBody()->SetMaxVelocity(Vec2(1000.0f, 5000.0f));
+	GetRigidBody()->SetMass(10.0f);
+	GetRigidBody()->SetFriction(1000.0f);
+	GetRigidBody()->SetMaxVelocity(Vec2(1000.0f, 2000.0f));
 
 	CreateGravity();
 
@@ -79,7 +80,7 @@ Player::~Player()
 }
 void Player::Update()
 {
-	Object::Update();
+	Object::Update(); 
 
 	//get input
 	PlayerInput();
@@ -175,6 +176,9 @@ void Player::PlayerInput()
 			if (KEY_DOWN(KEY_TYPE::RIGHT)) {
 				GetRigidBody()->AddForce(Vec2(350.0f, 0.0f), FORCE_MODE::IMPULSE);
 			}
+			if (KEY_DOWN(KEY_TYPE::UP)) {
+				m_bIsUp = true;
+			}
 			if (KEY_PRESS(KEY_TYPE::LEFT)) {
 				state = STATE::MOVE;
 				m_bLeft = true;
@@ -189,6 +193,9 @@ void Player::PlayerInput()
 		}
 		if (KEY_UP(KEY_TYPE::RIGHT)) {
 			GetRigidBody()->StopImmediatelyX();
+		}
+		if (KEY_UP(KEY_TYPE::UP)) {
+			m_bIsUp = false;
 		}
 
 		if (KEY_PRESS(KEY_TYPE::SPACE)) {
@@ -282,12 +289,17 @@ void Player::JumpState()
 	//GetAnimator()->PlayAnim(L"Jump", false);
 
 	//현제 바라보고 있는 방향에 따라서 x축에 가해줄 힘을 구해준다.
-	float xForce = 350.0f + (m_fJumpPower);
+	float xForce = 350.0f + (m_fJumpPower * 0.2f);
 	xForce = m_bLeft ? -xForce : xForce;
+
+	if (m_bIsUp) {
+		xForce = 0.0f;
+	}
 
 	//점프 차지에서 올려준 점프 파워만큼 힘을 더해준다.
 	GetRigidBody()->AddForce(Vec2(xForce, -m_fJumpPower), FORCE_MODE::IMPULSE);
 	m_fJumpPower = 10.0f;
+	m_bIsUp = false;
 }
 
 void Player::FallState()
@@ -310,10 +322,10 @@ void Player::JumpChargeState()
 	}
 
 	//프레임당 증가
-	m_fJumpPower += 1000.0f * fDT;
+	m_fJumpPower += 500.0f * fDT;
 
 	//최대값 지정
-	m_fJumpPower = clamp(m_fJumpPower, 500.0f, 5000.0f);
+	m_fJumpPower = clamp(m_fJumpPower, 500.0f, 2000.0f);
 }
 
 void Player::HurtState()

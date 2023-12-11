@@ -52,6 +52,7 @@ private:
     Texture* m_pTex;
     bool     m_bLeft;  
     bool     m_bIsJump;
+    bool     m_bIsUp;
     bool     m_bIsGround;
     bool     m_bCanMove;
     float    m_fTimer = 0.0f;
