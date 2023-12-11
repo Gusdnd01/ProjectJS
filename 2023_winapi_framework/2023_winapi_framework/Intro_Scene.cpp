@@ -11,24 +11,32 @@
 
 void Intro_Scene::Init()
 {
-	moveY = 0;
-	yIncrease = 50;
-	arrowY = 0;
+	#pragma region reset
 
-	TexSizeX = 150;
-	TexSizeY = 27;
+		moveY = 0;
+		yIncrease = 50;
+		arrowY = 0;
 
-	start = 1;
-	setting = 1;
-	exiT = 1;
+		TexSizeX = 150;
+		TexSizeY = 27;
 
-	introTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
-	GameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
-	Setting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
-	Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
+		start = 1;
+		setting = 1;
+		exiT = 1;
+	#pragma endregion
+
+	#pragma region TexLoad
+
+		introTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
+		GameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
+		Setting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
+		Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
+	#pragma endregion
 
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
 }
 
 void Intro_Scene::Render(HDC _dc)

@@ -18,9 +18,6 @@ void ShowSetting::Init()
 	escMoveY = -100;
 	escYIncrease = 65;
 
-	bgmVolume = 10;
-	effectVolume = 10;
-
 	#pragma region Texture Load
 
 	m_pTex_SettingPannel = ResMgr::GetInst()->TexLoad(L"Setting", L"Texture\\GameP_Setting.bmp");

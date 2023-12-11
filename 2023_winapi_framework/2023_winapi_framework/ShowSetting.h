@@ -1,6 +1,7 @@
 #pragma once
 class Texture;
 class Object;
+class ResMgr;
 class ShowSetting
 {
 	SINGLE(ShowSetting);
@@ -15,6 +16,7 @@ public:
 	void Update();
 public:
 	const float GetBGM() { return bgmVolume; }
+	const float GetSFX() { return effectVolume; }
 private:
 	int settingMoveY;
 	int settingYIncrease;
