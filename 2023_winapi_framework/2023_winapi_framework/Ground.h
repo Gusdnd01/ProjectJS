@@ -16,10 +16,10 @@ public:
     void ExitCollision(Collider* _other);
 
 public:
-    void SetTiles(int _first, int _middle, int _last);
+    void SetTiles(int _middle);
 
 private:
     Texture* m_pTex;
-    vector< tTileSlice> m_tileSlices;
+    tTileSlice m_tileSlices;
 };
 

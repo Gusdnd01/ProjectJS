@@ -206,7 +206,10 @@
     <ClInclude Include="Tile.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
-    <ClInclude Include="TileManager.h" />
+    <ClInclude Include="TileManager.h">
+      <Filter>Engine\03. Manager\TileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEndVolume.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -319,6 +322,9 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
-    <ClCompile Include="TileManager.cpp" />
+    <ClCompile Include="TileManager.cpp">
+      <Filter>Engine\03. Manager\TileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEndVolume.cpp" />
   </ItemGroup>
 </Project>
