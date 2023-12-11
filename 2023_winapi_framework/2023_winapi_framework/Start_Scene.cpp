@@ -89,7 +89,7 @@ void Start_Scene::Render(HDC _dc)
 	Scene::Render(_dc);
 }
 
-void Start_Scene::Release()
+void Start_Scene::Release() 
 {
 	CollisionMgr::GetInst()->CheckReset();
 	
