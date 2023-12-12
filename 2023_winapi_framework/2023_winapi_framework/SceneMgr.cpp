@@ -5,6 +5,7 @@
 #include "Intro_Scene.h"
 #include "TestScene.h"
 #include "IntroStoryScene.h"
+#include "OutStoryScene.h"
 
 void SceneMgr::Init()
 {
@@ -15,6 +16,7 @@ void SceneMgr::Init()
 	RegisterScene(L"Intro_Scene", std::make_shared<Intro_Scene>());
 	RegisterScene(L"TestScene", std::make_shared<TestScene>());
 	RegisterScene(L"IntroStoryScene", std::make_shared<IntroStoryScene>());
+	RegisterScene(L"OutStoryScene", std::make_shared< OutStoryScene>());
 
 	// Ã¹ ¾À ÁöÁ¤
 	LoadScene(L"Intro_Scene");

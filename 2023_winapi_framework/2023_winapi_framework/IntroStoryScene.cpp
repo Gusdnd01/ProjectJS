@@ -73,7 +73,7 @@ void IntroStoryScene::Render(HDC _dc)
 	}
 	if (m_ImgCnt == 7)
 	{
-		SceneMgr::GetInst()->LoadScene(L"Start_Scene");
+		SceneMgr::GetInst()->LoadScene(L"OutStoryScene");
 	}
 }
 
