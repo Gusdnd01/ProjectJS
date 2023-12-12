@@ -212,6 +212,9 @@
     <ClInclude Include="GameEndVolume.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
+    <ClInclude Include="LowVelocitySpace.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="WaterItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -223,6 +226,15 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="2023_winapi_framework.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="icon1.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\Output\bin\Res\Texture\IntroStory\ICON.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\Output\bin\Res\Texture\ICON.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
@@ -330,5 +342,8 @@
     <ClCompile Include="GameEndVolume.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
+    <ClCompile Include="LowVelocitySpace.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="WaterItem.cpp" />
   </ItemGroup>
 </Project>

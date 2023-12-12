@@ -14,6 +14,8 @@
 #include "Collider.h"
 #include "Texture.h"
 #include "GameEndVolume.h"
+#include "WaterItem.h"
+#include "LowVelocitySpace.h"
 
 void Start_Scene::Init()
 {
@@ -48,6 +50,16 @@ void Start_Scene::Init()
 		CreateObj(ground, centerPos+ m_vStagePlatforms[i].pos, m_vStagePlatforms[i].scale, m_vStagePlatforms[i].scale, OBJECT_GROUP::GROUND);
 	}
 
+	WaterItem* item = new WaterItem;
+	item->SetPos(centerPos + Vec2(-200.0f, 250.0f));
+	item->SetScale(Vec2(3.0f,3.0f));
+	AddObject(item, OBJECT_GROUP::ITEM);
+
+	LowVelocitySpace* lvs = new LowVelocitySpace;
+	lvs->SetPos(centerPos + Vec2(200.0f, -200.0f));
+	lvs->SetScale(Vec2(100.0f, 100.0f));
+	AddObject(lvs, OBJECT_GROUP::ITEM);
+	
 	//Object인데 위치 정보만 갖고 있는 오브젝트이다.
 	Object* camRig = new Object;
 	camRig->SetName(L"camRig");
@@ -68,6 +80,7 @@ void Start_Scene::Init()
 
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::GROUND);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::VOLUME);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::ITEM);
 
 	CameraManager::GetInst()->SetTarget(camRig);
 }
