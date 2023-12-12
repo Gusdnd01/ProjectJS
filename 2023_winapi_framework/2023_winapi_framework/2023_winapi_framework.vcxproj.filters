@@ -212,6 +212,7 @@
     <ClInclude Include="GameEndVolume.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
+    <ClInclude Include="OutStoryScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -330,5 +331,6 @@
     <ClCompile Include="GameEndVolume.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
+    <ClCompile Include="OutStoryScene.cpp" />
   </ItemGroup>
 </Project>
