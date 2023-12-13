@@ -17,6 +17,7 @@
 #include "WaterItem.h"
 #include "LowVelocitySpace.h"
 #include "PlayerItemUI.h"
+#include "ItemFactory.h"
 
 void Start_Scene::Init()
 {
@@ -51,14 +52,10 @@ void Start_Scene::Init()
 		CreateObj(ground, centerPos+ m_vStagePlatforms[i].pos, m_vStagePlatforms[i].scale, m_vStagePlatforms[i].scale, OBJECT_GROUP::GROUND);
 	}
 
-	Object* waterItemFactory_01 = new Object;
-	waterItemFactory_01->SetPos(centerPos + Vec2(500.0f, -250.0f));
+	ItemFactory* waterItemFactory_01 = new ItemFactory;
+	waterItemFactory_01->SetPos(centerPos + Vec2(600.0f, 60.0f));
+	waterItemFactory_01->SetDuration(3.0f);
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
-
-	WaterItem* item = new WaterItem;
-	item->SetPos(centerPos + Vec2(-200.0f, 250.0f));
-	item->SetScale(Vec2(3.0f,3.0f));
-	AddObject(item, OBJECT_GROUP::ITEM);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
 	lvs->SetPos(centerPos + Vec2(400.0f, -50.0f));
