@@ -16,7 +16,7 @@ GameEndVolume::~GameEndVolume()
 
 void GameEndVolume::EnterCollision(Collider* other)
 {
-	SceneMgr::GetInst()->LoadScene(L"Intro_Scene");
+	SceneMgr::GetInst()->LoadScene(L"OutStoryScene");
 }
 
 void GameEndVolume::Render(HDC _dc)

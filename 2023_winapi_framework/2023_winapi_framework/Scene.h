@@ -23,6 +23,17 @@ public:
 	{
 		m_vecObj[(UINT)_eType].push_back(_pObj);
 	}
+	void Destroy(Object* _pObj, OBJECT_GROUP _eType) {
+		auto iter = m_vecObj[(UINT)_eType].begin();
+
+		for (; iter != m_vecObj[(UINT)_eType].end(); ++iter) {
+			if (*iter == _pObj) {
+				m_vecObj[(UINT)_eType].erase(iter);
+				delete _pObj;
+				break;
+			}
+		}
+	}
 protected:
 //	Object*  m_obj;
 	vector<Object*> m_vecObj[(UINT)OBJECT_GROUP::END];

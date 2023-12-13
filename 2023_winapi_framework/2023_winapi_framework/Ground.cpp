@@ -27,6 +27,12 @@ void Ground::Render(HDC _dc)
 	// 이거 내가 그리려는 크기가 화면을 넘어가서 문제였던거.
 	//Object::Render(_dc);
 
+	Vec2 checkPos = GetPos();
+	Vec2 checkScale = GetScale();
+	Vec2 resolution = Core::GetInst()->GetResolution();
+
+	if (checkPos.y - checkScale.y/2.f > CameraManager::GetInst()->GetLookPos().y + resolution.y/2.f || 
+		checkPos.y + checkScale.y/2.f < CameraManager::GetInst()->GetLookPos().y - resolution.y/2.f) return;
 	if (m_pTex) {
 		Vec2 originScale = GetScale();//본래 크기!
 		Vec2 originPos = GetPos();//원점!

@@ -12,6 +12,7 @@
 #include "Animation.h"
 #include "RigidBody.h"
 #include "Gravity.h"
+#include "Ground.h"
 #include "Core.h"
 
 Player::Player()
@@ -130,24 +131,27 @@ void Player::Render(HDC _dc)
 
 void Player::EnterCollision(Collider* other)
 {
-	if (GetCollider()->CheckBottom(other) && (!GetCollider()->CheckLeft(other) || !GetCollider()->CheckRight(other))) {
-		GetRigidBody()->StopImmediatelyX();
-		m_bIsJump = false;
-	}
-	else if (GetCollider()->CheckLeft(other) && !m_bIsGround) {
-		GetRigidBody()->StopImmediatelyX();
-		GetRigidBody()->AddForce(Vec2(200.0f, -200.0f),FORCE_MODE::IMPULSE);
-		GetGravity()->OnGround(false);
-	}
-	else if (GetCollider()->CheckRight(other) && !m_bIsGround) {
-		GetRigidBody()->StopImmediatelyX();
-		GetRigidBody()->AddForce(Vec2(-200.0f, -200.0f), FORCE_MODE::IMPULSE);
-		GetGravity()->OnGround(false);
-	}
-	if (GetCollider()->CheckTop(other)) {
-		GetRigidBody()->StopImmediatelyY();
-		GetGravity()->OnGround(false);
-		//GetRigidBody()->AddForce(Vec2(0.0f, 1000.0f), FORCE_MODE::IMPULSE);
+	Ground* ground = dynamic_cast<Ground*>(other->GetObj());
+	if (ground) {
+		if (GetCollider()->CheckBottom(other) && (!GetCollider()->CheckLeft(other) || !GetCollider()->CheckRight(other))) {
+			GetRigidBody()->StopImmediatelyX();
+			m_bIsJump = false;
+		}
+		else if (GetCollider()->CheckLeft(other) && !m_bIsGround) {
+			GetRigidBody()->StopImmediatelyX();
+			GetRigidBody()->AddForce(Vec2(200.0f, -200.0f), FORCE_MODE::IMPULSE);
+			GetGravity()->OnGround(false);
+		}
+		else if (GetCollider()->CheckRight(other) && !m_bIsGround) {
+			GetRigidBody()->StopImmediatelyX();
+			GetRigidBody()->AddForce(Vec2(-200.0f, -200.0f), FORCE_MODE::IMPULSE);
+			GetGravity()->OnGround(false);
+		}
+		if (GetCollider()->CheckTop(other)) {
+			GetRigidBody()->StopImmediatelyY();
+			GetGravity()->OnGround(false);
+			//GetRigidBody()->AddForce(Vec2(0.0f, 1000.0f), FORCE_MODE::IMPULSE);
+		}
 	}
 }
 
