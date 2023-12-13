@@ -218,6 +218,9 @@
     <ClInclude Include="OutStoryScene.h" />
     <ClInclude Include="PlayerItemUI.h" />
     <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="JumpEffect.h">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -351,5 +354,8 @@
     <ClCompile Include="OutStoryScene.cpp" />
     <ClCompile Include="PlayerItemUI.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="JumpEffect.cpp">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

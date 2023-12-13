@@ -190,6 +190,7 @@
     <ClInclude Include="Intro_Scene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="JumpEffect.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="LowVelocitySpace.h" />
     <ClInclude Include="Monster.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Intro_Scene.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="JumpEffect.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="LowVelocitySpace.cpp" />
     <ClCompile Include="main.cpp" />
