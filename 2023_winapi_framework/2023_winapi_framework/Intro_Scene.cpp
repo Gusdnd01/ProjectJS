@@ -9,6 +9,7 @@
 #include "ResMgr.h"
 #include "Texture.h"
 #include "JumpEffect.h"
+#include "HitEffect.h"
 
 void Intro_Scene::Init()
 {
@@ -96,15 +97,6 @@ void Intro_Scene::Render(HDC _dc)
 void Intro_Scene::Update()
 {
 	Scene::Update();
-
-	if (KEY_DOWN(KEY_TYPE::P))
-	{
-		Object* effect = new JumpEffect;
-		effect->SetName(L"JumpEffect");
-		effect->SetScale(Vec2(3, 3));
-		effect->SetPos(Vec2(50, 50));
-		AddObject(effect, OBJECT_GROUP::DEFAULT);
-	}
 
 	if (ShowSetting::GetInst()->IsActive == false && KEY_DOWN(KEY_TYPE::SPACE))
 	{

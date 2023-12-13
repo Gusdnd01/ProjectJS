@@ -184,16 +184,21 @@
     <ClInclude Include="Game_Scene.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HitEffect.h" />
     <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Intro_Scene.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="JumpEffect.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="LowVelocitySpace.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OutStoryScene.h" />
     <ClInclude Include="PathMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerItemUI.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="ResMgr.h" />
     <ClInclude Include="Resource.h" />
@@ -210,6 +215,7 @@
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="Vec2.h" />
+    <ClInclude Include="WaterItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -225,16 +231,21 @@
     <ClCompile Include="Game_Scene.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HitEffect.cpp" />
     <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Intro_Scene.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="JumpEffect.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="LowVelocitySpace.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OutStoryScene.cpp" />
     <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerItemUI.cpp" />
     <ClCompile Include="Res.cpp" />
     <ClCompile Include="ResMgr.cpp" />
     <ClCompile Include="RigidBody.cpp" />
@@ -249,6 +260,7 @@
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="Vec2.cpp" />
+    <ClCompile Include="WaterItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc" />
