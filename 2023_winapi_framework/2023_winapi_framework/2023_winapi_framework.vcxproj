@@ -186,6 +186,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Intro_Scene.h" />
+    <ClInclude Include="JumpEffect.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Object.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Intro_Scene.cpp" />
+    <ClCompile Include="JumpEffect.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />

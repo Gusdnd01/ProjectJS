@@ -50,7 +50,6 @@ void OutStoryScene::Render(HDC _dc)
 
 	if (m_ImgCnt == 4)
 	{
-		m_Clear = true;
 		TransparentBlt(_dc, 0, 0, 1280, 720, m_Story4->GetDC(), 0, 0, m_Story4->GetWidth(), m_Story4->GetHeight(), RGB(255, 0, 255));
 	}
 	if (m_ImgCnt == 6)
