@@ -10,6 +10,7 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "JumpEffect.h"
 #include "RigidBody.h"
 #include "Gravity.h"
 #include "Ground.h"
@@ -303,6 +304,14 @@ void Player::JumpState()
 	//점프 차지에서 올려준 점프 파워만큼 힘을 더해준다.
 	GetRigidBody()->AddForce(Vec2(xForce, -m_fJumpPower), FORCE_MODE::IMPULSE);
 	m_fJumpPower = 10.0f;
+
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+
+	JumpEffect* jumpEffect = new JumpEffect;
+	jumpEffect->SetPos(vPos- vScale / 2.0f);
+	jumpEffect->SetScale(Vec2(2.0f));
+	SceneMgr::GetInst()->GetCurScene()->AddObject(jumpEffect,OBJECT_GROUP::EFFECT);
 	m_bIsUp = false;
 }
 

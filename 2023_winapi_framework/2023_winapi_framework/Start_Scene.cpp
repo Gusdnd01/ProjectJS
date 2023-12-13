@@ -58,8 +58,8 @@ void Start_Scene::Init()
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(400.0f, -50.0f));
-	lvs->SetScale(Vec2(1.0f, 1.0f));
+	lvs->SetPos(centerPos + Vec2(350.0f, -50.0f));
+	lvs->SetScale(Vec2(2.0f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	
 	//Object인데 위치 정보만 갖고 있는 오브젝트이다.
