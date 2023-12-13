@@ -4,9 +4,10 @@
 #include "Collider.h"
 #include "ResMgr.h"
 #include "Animator.h"
-#include "SceneMgr.h"
-#include "Scene.h"
 #include "Texture.h"
+#include "EventMgr.h"
+#include "ItemFactory.h"
+
 
 WaterItem::WaterItem()
 {
@@ -41,6 +42,7 @@ void WaterItem::EnterCollision(Collider* other)
 
 	if (player) {
 		player->SetMode(PLAYER_MODE::WATER);
-		SceneMgr::GetInst()->GetCurScene()->Destroy(this, OBJECT_GROUP::ITEM);
+		m_pOwner->ResetObj();
+		EventMgr::GetInst()->DeleteObject(this);
 	}
 }
