@@ -8,30 +8,32 @@
 #include "ShowSetting.h"
 #include "ResMgr.h"
 #include "Texture.h"
+#include "JumpEffect.h"
 
 void Intro_Scene::Init()
 {
 	#pragma region reset
 
-		moveY = 0;
-		yIncrease = 50;
-		arrowY = 0;
+	moveY = 0;
+	yIncrease = 50;
+	arrowY = 0;
 
-		TexSizeX = 150;
-		TexSizeY = 27;
+	TexSizeX = 150;
+	TexSizeY = 27;
 
-		start = 1;
-		setting = 1;
-		exiT = 1;
+	start = 1;
+	setting = 1;
+	exiT = 1;
 	#pragma endregion
 
 	#pragma region TexLoad
 
-		introTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
-		GameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
-		Setting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
-		Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
+	introTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
+	GameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
+	Setting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
+	Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
 	#pragma endregion
+
 
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
@@ -41,7 +43,6 @@ void Intro_Scene::Init()
 
 void Intro_Scene::Render(HDC _dc)
 {
-	Scene::Render(_dc);
 
 	int x = 10;//Core::GetInst()->GetResolution().x / 2 - 75 ;
 	int y = Core::GetInst()->GetResolution().y / 2 + 150;
@@ -89,11 +90,21 @@ void Intro_Scene::Render(HDC _dc)
 	}
 	break;
 	}
+	Scene::Render(_dc);
 }
 
 void Intro_Scene::Update()
 {
 	Scene::Update();
+
+	if (KEY_DOWN(KEY_TYPE::P))
+	{
+		Object* effect = new JumpEffect;
+		effect->SetName(L"JumpEffect");
+		effect->SetScale(Vec2(3, 3));
+		effect->SetPos(Vec2(50, 50));
+		AddObject(effect, OBJECT_GROUP::DEFAULT);
+	}
 
 	if (ShowSetting::GetInst()->IsActive == false && KEY_DOWN(KEY_TYPE::SPACE))
 	{
