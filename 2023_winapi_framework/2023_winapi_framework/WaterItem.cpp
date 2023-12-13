@@ -25,6 +25,11 @@ WaterItem::~WaterItem()
 {
 }
 
+void WaterItem::Update()
+{
+	GetAnimator()->Update();
+}
+
 void WaterItem::Render(HDC _dc)
 {
 	Component_Render(_dc);

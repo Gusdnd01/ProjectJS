@@ -10,6 +10,10 @@ Item::~Item()
 {
 }
 
+void Item::Update()
+{
+}
+
 void Item::Render(HDC _dc)
 {
 

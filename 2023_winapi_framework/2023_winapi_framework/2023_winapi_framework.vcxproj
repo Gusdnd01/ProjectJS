@@ -189,6 +189,7 @@
     <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Intro_Scene.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="LowVelocitySpace.h" />
     <ClInclude Include="Monster.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="PathMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerItemUI.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="ResMgr.h" />
     <ClInclude Include="Resource.h" />
@@ -232,6 +234,7 @@
     <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Intro_Scene.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="LowVelocitySpace.cpp" />
     <ClCompile Include="main.cpp" />
@@ -240,6 +243,7 @@
     <ClCompile Include="OutStoryScene.cpp" />
     <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerItemUI.cpp" />
     <ClCompile Include="Res.cpp" />
     <ClCompile Include="ResMgr.cpp" />
     <ClCompile Include="RigidBody.cpp" />

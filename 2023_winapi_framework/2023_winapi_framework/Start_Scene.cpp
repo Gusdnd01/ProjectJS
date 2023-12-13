@@ -16,6 +16,7 @@
 #include "GameEndVolume.h"
 #include "WaterItem.h"
 #include "LowVelocitySpace.h"
+#include "PlayerItemUI.h"
 
 void Start_Scene::Init()
 {
@@ -28,17 +29,17 @@ void Start_Scene::Init()
 	back->SetName(L"Background");
 	AddObject(back, OBJECT_GROUP::DEFAULT);
 
-	/*Object* gameEnd = new GameEndVolume;
-	gameEnd->SetPos(Vec2(100.0f, 340.0f));
+	Object* gameEnd = new GameEndVolume;
+	gameEnd->SetPos(centerPos + Vec2(-250.0f, -1970.0f));
 	gameEnd->SetScale(Vec2(100.0f, 100.0f));
-	AddObject(gameEnd, OBJECT_GROUP::VOLUME);*/
+	AddObject(gameEnd, OBJECT_GROUP::VOLUME);
 
 	Object* pObj= new Player;
 	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
 	pObj->SetScale(Vec2(3.0f,3.0f));
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 	m_pPlayer = pObj;
-
+	
 	//땅 충돌체.
 	Ground* ground = new Ground;
 	ground->SetTiles(277);
@@ -50,14 +51,18 @@ void Start_Scene::Init()
 		CreateObj(ground, centerPos+ m_vStagePlatforms[i].pos, m_vStagePlatforms[i].scale, m_vStagePlatforms[i].scale, OBJECT_GROUP::GROUND);
 	}
 
+	Object* waterItemFactory_01 = new Object;
+	waterItemFactory_01->SetPos(centerPos + Vec2(500.0f, -250.0f));
+	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
+
 	WaterItem* item = new WaterItem;
 	item->SetPos(centerPos + Vec2(-200.0f, 250.0f));
 	item->SetScale(Vec2(3.0f,3.0f));
 	AddObject(item, OBJECT_GROUP::ITEM);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(200.0f, -200.0f));
-	lvs->SetScale(Vec2(100.0f, 100.0f));
+	lvs->SetPos(centerPos + Vec2(400.0f, -50.0f));
+	lvs->SetScale(Vec2(1.0f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	
 	//Object인데 위치 정보만 갖고 있는 오브젝트이다.
@@ -66,6 +71,14 @@ void Start_Scene::Init()
 	camRig->SetPos(centerPos);
 	AddObject(camRig, OBJECT_GROUP::DEFAULT);
 	m_pCamRig = camRig;
+
+	PlayerItemUI* piu = new PlayerItemUI;
+	piu->SetOwner(camRig);
+	piu->SetPlayer(dynamic_cast<Player*>(pObj));
+	piu->SetOffsetPos(Vec2(1200, -300));
+	piu->SetActive(true);
+	piu->SetScale(Vec2(2.0f));
+	AddObject(piu, OBJECT_GROUP::DEFAULT);
 
 	// 사운드 세팅
 	//ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);

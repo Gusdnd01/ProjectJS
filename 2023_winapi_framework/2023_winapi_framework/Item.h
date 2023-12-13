@@ -10,6 +10,7 @@ public:
     ~Item();
 
 public:
+    virtual void Update();
     virtual void Render(HDC _dc);
 
 public:

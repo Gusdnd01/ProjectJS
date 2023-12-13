@@ -215,6 +215,9 @@
     <ClInclude Include="LowVelocitySpace.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="WaterItem.h" />
+    <ClInclude Include="OutStoryScene.h" />
+    <ClInclude Include="PlayerItemUI.h" />
+    <ClInclude Include="ItemFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -345,5 +348,8 @@
     <ClCompile Include="LowVelocitySpace.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="WaterItem.cpp" />
+    <ClCompile Include="OutStoryScene.cpp" />
+    <ClCompile Include="PlayerItemUI.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
   </ItemGroup>
 </Project>
