@@ -33,10 +33,10 @@ void Start_Scene::Init()
 	back->SetName(L"Background");
 	AddObject(back, OBJECT_GROUP::DEFAULT);
 
-	Object* gameEnd = new GameEndVolume;
+	/*Object* gameEnd = new GameEndVolume;
 	gameEnd->SetPos(centerPos + Vec2(350.0f, -2000.0f));
 	gameEnd->SetScale(Vec2(100.0f, 100.0f));
-	AddObject(gameEnd, OBJECT_GROUP::VOLUME);
+	AddObject(gameEnd, OBJECT_GROUP::VOLUME);*///게임 엔딩
 
 	Object* pObj= new Player;
 	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
@@ -61,18 +61,23 @@ void Start_Scene::Init()
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
 	WaterItemFactory* waterItemFactory_02 = new WaterItemFactory;
-	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1250.0f));
+	waterItemFactory_02->SetPos(centerPos + Vec2(-350.0f, -1210.0f));
 	waterItemFactory_02->SetDuration(3.0f);
 	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
 
 	FireItemFactory* fireItemFactory_01 = new FireItemFactory;
-	fireItemFactory_01->SetPos(centerPos + Vec2(-100.0f, 300.0f));
+	fireItemFactory_01->SetPos(centerPos + Vec2(600.0f, -2150.0f));
 	fireItemFactory_01->SetDuration(3.0f);
 	AddObject(fireItemFactory_01, OBJECT_GROUP::DEFAULT);
+	
+	FireItemFactory* fireItemFactory_02 = new FireItemFactory;
+	fireItemFactory_02->SetPos(centerPos + Vec2(-600.0f, -2800.0f));
+	fireItemFactory_02->SetDuration(3.0f);
+	AddObject(fireItemFactory_02, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(0.0f, -1200.0f));
-	lvs->SetScale(Vec2(2.0f, 1.0f));
+	lvs->SetPos(centerPos + Vec2(-30.0f, -1150.0f));
+	lvs->SetScale(Vec2(2.8f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	
 	//Object인데 위치 정보만 갖고 있는 오브젝트이다.
