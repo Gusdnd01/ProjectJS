@@ -92,6 +92,12 @@
     <Filter Include="Engine\04. Object\Effect">
       <UniqueIdentifier>{c943d39b-dd7a-49ab-bc04-b8f6bb2e5d63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Items">
+      <UniqueIdentifier>{c32d3f4e-f872-4539-b3bd-8694f61524a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\ItemFactory">
+      <UniqueIdentifier>{afa55ae4-0cc3-49ac-b62b-e2c575f22ccb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -220,16 +226,38 @@
     <ClInclude Include="OutStoryScene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="JumpEffect.h" />
-    <ClInclude Include="HitEffect.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemFactory.h" />
-    <ClInclude Include="LowVelocitySpace.h" />
-    <ClInclude Include="PlayerItemUI.h" />
-    <ClInclude Include="WaterItem.h" />
-    <ClInclude Include="FireItem.h" />
-    <ClInclude Include="WaterItemFactory.h" />
-    <ClInclude Include="FireItemFactory.h" />
+    <ClInclude Include="FireItem.h">
+      <Filter>Engine\04. Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Engine\04. Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterItem.h">
+      <Filter>Engine\04. Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="FireItemFactory.h">
+      <Filter>Engine\04. Object\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>Engine\04. Object\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterItemFactory.h">
+      <Filter>Engine\04. Object\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="HitEffect.h">
+      <Filter>Engine\04. Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpEffect.h">
+      <Filter>Engine\04. Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="LowVelocitySpace.h">
+      <Filter>Engine\04. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerItemUI.h">
+      <Filter>Engine\09.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowFlake.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -362,15 +390,37 @@
     <ClCompile Include="OutStoryScene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="JumpEffect.cpp" />
-    <ClCompile Include="HitEffect.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="ItemFactory.cpp" />
-    <ClCompile Include="LowVelocitySpace.cpp" />
-    <ClCompile Include="PlayerItemUI.cpp" />
-    <ClCompile Include="WaterItem.cpp" />
-    <ClCompile Include="FireItem.cpp" />
-    <ClCompile Include="WaterItemFactory.cpp" />
-    <ClCompile Include="FireItemFactory.cpp" />
+    <ClCompile Include="FireItem.cpp">
+      <Filter>Engine\04. Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Engine\04. Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterItem.cpp">
+      <Filter>Engine\04. Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FireItemFactory.cpp">
+      <Filter>Engine\04. Object\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFactory.cpp">
+      <Filter>Engine\04. Object\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterItemFactory.cpp">
+      <Filter>Engine\04. Object\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="HitEffect.cpp">
+      <Filter>Engine\04. Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpEffect.cpp">
+      <Filter>Engine\04. Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="LowVelocitySpace.cpp">
+      <Filter>Engine\04. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerItemUI.cpp">
+      <Filter>Engine\09.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowFlake.cpp" />
+    <ClCompile Include="Tree.cpp" />
   </ItemGroup>
 </Project>

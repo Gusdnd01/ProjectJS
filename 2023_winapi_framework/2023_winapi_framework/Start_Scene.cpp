@@ -5,6 +5,7 @@
 #include "CameraManager.h"
 #include "CollisionMgr.h"
 #include "TileManager.h"
+#include "TimeMgr.h"
 #include "ResMgr.h"
 #include "ShowSetting.h"
 #include "Object.h"
@@ -21,6 +22,8 @@
 #include "PlayerItemUI.h"
 #include "WaterItemFactory.h"
 #include "FireItemFactory.h"
+#include "SnowFlake.h"
+#include "Tree.h"
 
 void Start_Scene::Init()
 {
@@ -32,11 +35,22 @@ void Start_Scene::Init()
 	back->SetScale(centerPos * 2);
 	back->SetName(L"Background");
 	AddObject(back, OBJECT_GROUP::DEFAULT);
-
+	
 	Object* gameEnd = new GameEndVolume;
 	gameEnd->SetPos(centerPos + Vec2(350.0f, -2000.0f));
 	gameEnd->SetScale(Vec2(100.0f, 100.0f));
 	AddObject(gameEnd, OBJECT_GROUP::VOLUME);
+
+	SnowFlake* snow = new SnowFlake;
+	snow->SetPos(centerPos);
+	snow->SetScale(Vec2(16.0f, 16.0f));
+	snow->SetName(L"Snow");
+	AddObject(snow, OBJECT_GROUP::SCREEN);
+	
+	Tree* tree = new Tree;
+	tree->SetPos(centerPos + Vec2(-300.0f, 170.0f));
+	tree->SetScale(Vec2(9));
+	AddObject(tree, OBJECT_GROUP::DEFAULT);
 
 	Object* pObj= new Player;
 	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
@@ -103,6 +117,7 @@ void Start_Scene::Init()
 		m_vStage.push_back(yPos);
 	}
 
+
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::GROUND);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::VOLUME);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::ITEM);
@@ -123,6 +138,7 @@ void Start_Scene::Update()
 
 	ModifyPos(Vec2(0.0f, m_vStage[CheckStage(pPos.y)]), L"camRig");
 	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Background");
+	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Snow");
 	
 	Scene::Update();
 }
