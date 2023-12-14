@@ -9,7 +9,7 @@ public:
     ~ItemFactory();
 
 public:
-    void Update();
+    void Update() override;
 
 public:
     void SetDuration(float _value) { m_fDuration = _value; }

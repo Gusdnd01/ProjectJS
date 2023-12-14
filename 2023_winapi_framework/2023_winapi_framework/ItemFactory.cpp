@@ -4,9 +4,10 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "WaterItem.h"
-
+#include "Collider.h"
 void ItemFactory::Update()
 {
+	if (m_pCurObject) return;
 	if (!m_pCurObject) {
 		m_fTimer += fDT;
 		if (m_fTimer >= m_fDuration) {
