@@ -7,6 +7,7 @@
 #include "EventMgr.h"
 
 JumpEffect::JumpEffect()
+	: per(0)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Effect", L"Texture\\JumpEffect.bmp");
 

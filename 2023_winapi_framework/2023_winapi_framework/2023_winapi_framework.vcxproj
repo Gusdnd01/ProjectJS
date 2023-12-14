@@ -186,6 +186,7 @@
     <ClInclude Include="Game_Scene.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HitEffect.h" />
     <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Intro_Scene.h" />
     <ClInclude Include="Item.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="Game_Scene.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HitEffect.cpp" />
     <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Intro_Scene.cpp" />
     <ClCompile Include="Item.cpp" />

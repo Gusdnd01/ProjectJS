@@ -9,6 +9,7 @@
 #include "ResMgr.h"
 #include "Texture.h"
 #include "JumpEffect.h"
+#include "HitEffect.h"
 
 void Intro_Scene::Init()
 {
@@ -34,7 +35,6 @@ void Intro_Scene::Init()
 	Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
 	#pragma endregion
 
-
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
 	
@@ -43,7 +43,7 @@ void Intro_Scene::Init()
 void Intro_Scene::Render(HDC _dc)
 {
 
-	int x = 10;//Core::GetInst()->GetResolution().x / 2 - 75 ;
+	int x = 10;
 	int y = Core::GetInst()->GetResolution().y / 2 + 150;
 
 	TransparentBlt(_dc, 0, 0, 1280, 750, introTex->GetDC(), 0, 0, introTex->GetWidth(), introTex->GetHeight(), RGB(255, 0, 255));
@@ -67,21 +67,21 @@ void Intro_Scene::Render(HDC _dc)
 
 	switch (arrowY)
 	{
-	case 510: //°ÔÀÓ ½ÃÀÛ ¹öÆ°
+	case 510: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	{
 		start = 1.25f;
 		setting = 1;
 		exiT = 1;
 	}
 	break;
-	case 560: //¼¼ÆÃ ¹öÆ°
+	case 560: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	{
 		start = 1;
 		setting = 1.25f;
 		exiT = 1;
 	}
 	break;
-	default: //°ÔÀÓ ³ª°¡±â ¹öÆ°
+	default: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	{
 		start = 1;
 		setting = 1;
@@ -89,7 +89,7 @@ void Intro_Scene::Render(HDC _dc)
 	}
 	break;
 	}
-	Scene::Render(_dc);
+	//Scene::Render(_dc);
 }
 
 void Intro_Scene::Update()
@@ -110,17 +110,17 @@ void Intro_Scene::Update()
 	{
 		switch (arrowY)
 		{
-		case 510: //°ÔÀÓ ½ÃÀÛ ¹öÆ°(360)
+		case 510: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°(360)
 		{
 			SceneMgr::GetInst()->LoadScene(L"IntroStoryScene");
 		}
 		break;
-		case 560: //¼¼ÆÃ ¹öÆ°(410)
+		case 560: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°(410)
 		{
 			ShowSetting::GetInst()->IsActive = true;
 		}
 		break;
-		default: //°ÔÀÓ ³ª°¡±â ¹öÆ°
+		default: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 		{
 			exit(0);
 		}
@@ -132,4 +132,5 @@ void Intro_Scene::Update()
 void Intro_Scene::Release()
 {
 	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
+	Scene::Release();
 }

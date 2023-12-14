@@ -10,7 +10,7 @@
 
 void TestScene::Init()
 {
-	ShowSetting::GetInst()->IsEscActive == false;
+	ShowSetting::GetInst()->IsEscActive = false;
 	ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
 	ResMgr::GetInst()->Play(L"BGM");
 }

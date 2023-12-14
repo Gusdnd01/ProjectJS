@@ -65,7 +65,7 @@ void Start_Scene::Init()
 	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(-80.0f, -1200.0f));
+	lvs->SetPos(centerPos + Vec2(0.0f, -1200.0f));
 	lvs->SetScale(Vec2(2.0f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	

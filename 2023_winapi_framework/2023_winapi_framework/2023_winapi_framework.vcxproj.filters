@@ -89,6 +89,9 @@
     <Filter Include="Engine\03. Manager\TileManager">
       <UniqueIdentifier>{14631702-54c6-43c5-affa-935e04128553}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Effect">
+      <UniqueIdentifier>{c943d39b-dd7a-49ab-bc04-b8f6bb2e5d63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -202,7 +205,6 @@
     <ClInclude Include="TestScene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="IntroStoryScene.h" />
     <ClInclude Include="Tile.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
@@ -212,15 +214,13 @@
     <ClInclude Include="GameEndVolume.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
-    <ClInclude Include="LowVelocitySpace.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="WaterItem.h" />
-    <ClInclude Include="OutStoryScene.h" />
-    <ClInclude Include="PlayerItemUI.h" />
-    <ClInclude Include="ItemFactory.h" />
-    <ClInclude Include="JumpEffect.h">
-      <Filter>Engine\04. Object\MainObject</Filter>
+    <ClInclude Include="IntroStoryScene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
+    <ClInclude Include="OutStoryScene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -232,15 +232,6 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="2023_winapi_framework.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="icon1.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\Output\bin\Res\Texture\IntroStory\ICON.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\Output\bin\Res\Texture\ICON.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
@@ -338,7 +329,6 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="IntroStoryScene.cpp" />
     <ClCompile Include="Tile.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
@@ -348,14 +338,12 @@
     <ClCompile Include="GameEndVolume.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
-    <ClCompile Include="LowVelocitySpace.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="WaterItem.cpp" />
-    <ClCompile Include="OutStoryScene.cpp" />
-    <ClCompile Include="PlayerItemUI.cpp" />
-    <ClCompile Include="ItemFactory.cpp" />
-    <ClCompile Include="JumpEffect.cpp">
-      <Filter>Engine\04. Object\MainObject</Filter>
+    <ClCompile Include="IntroStoryScene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
+    <ClCompile Include="OutStoryScene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpEffect.cpp" />
   </ItemGroup>
 </Project>

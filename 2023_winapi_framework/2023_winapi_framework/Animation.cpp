@@ -42,6 +42,8 @@ void Animation::Update()
 
 void Animation::Render(HDC _dc)
 {
+	
+
 	Object* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetPos();
 	Vec2 vScale = pObj->GetScale();
