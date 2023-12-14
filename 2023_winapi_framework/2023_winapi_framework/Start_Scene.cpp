@@ -106,9 +106,7 @@ void Start_Scene::Init()
 
 void Start_Scene::Update()
 {
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
-	Vec2 resolution = Vec2((int)Core::GetInst()->GetResolution().x, (int)Core::GetInst()->GetResolution().y );
+	Vec2 resolution = Core::GetInst()->GetResolution();
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
 

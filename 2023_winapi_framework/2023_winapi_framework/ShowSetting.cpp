@@ -32,7 +32,7 @@ void ShowSetting::Render(HDC _dc)
 {
 	int x = Core::GetInst()->GetResolution().x / 2;
 	int y = Core::GetInst()->GetResolution().y / 2;
-
+	if (!IsActive && !IsEscActive) return;
 	if (IsActive)
 	{
 		TransparentBlt(_dc, x - 430, y - 250, 850, 500, m_pTex_SettingPannel->GetDC(), 0, 0, 
@@ -108,6 +108,7 @@ void ShowSetting::Render(HDC _dc)
 
 void ShowSetting::Update()
 {
+	if (!IsActive && !IsEscActive) return;
 	if (IsActive) //볼륨 세팅창
 	{
 		if (m_pSettingArrowY == 260)
