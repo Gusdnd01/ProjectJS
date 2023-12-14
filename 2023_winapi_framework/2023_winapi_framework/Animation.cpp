@@ -20,6 +20,14 @@ Animation::~Animation()
 
 void Animation::Update()
 {
+	Object* pObj = m_pAnimator->GetObj();
+	Vec2 vPos = pObj->GetPos();
+	Vec2 vScale = pObj->GetScale();
+	Vec2 resolution = Core::GetInst()->GetResolution();
+
+	if (vPos.y - vScale.y / 2.f > CameraManager::GetInst()->GetLookPos().y + resolution.y / 2.f ||
+		vPos.y + vScale.y / 2.f < CameraManager::GetInst()->GetLookPos().y - resolution.y / 2.f) return;
+
 	if (m_pAnimator->GetRepeatcnt() <= 0)
 		return;
 	m_fAccTime += fDT;
@@ -42,8 +50,6 @@ void Animation::Update()
 
 void Animation::Render(HDC _dc)
 {
-	
-
 	Object* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetPos();
 	Vec2 vScale = pObj->GetScale();
@@ -51,6 +57,7 @@ void Animation::Render(HDC _dc)
 
 	if (vPos.y - vScale.y / 2.f > CameraManager::GetInst()->GetLookPos().y + resolution.y / 2.f ||
 		vPos.y + vScale.y / 2.f < CameraManager::GetInst()->GetLookPos().y - resolution.y / 2.f) return;
+
 	Vec2 renderPos = CameraManager::GetInst()->GetRenderPos(vPos);
 
 	// 오프셋 적용

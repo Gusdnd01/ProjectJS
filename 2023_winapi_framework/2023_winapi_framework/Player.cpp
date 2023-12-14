@@ -26,6 +26,8 @@ Player::Player()
 	, m_bIsGround(false)
 	, m_fTimer(0.0f)
 	, m_fJumpPower(5.0f)
+	, m_nLevel(0)
+	, m_sMode(PLAYER_MODE::NORMAL)
 	, m_sState(STATE::IDLE)
 {
 	this->SetName(L"Player");
@@ -46,6 +48,7 @@ Player::Player()
 
 	//Animator and animation setting 
 	CreateAnimator();
+
 	//Right Animation
 	GetAnimator()->CreateAnim(L"frog_idleR", m_pTex, Vec2(0.0f, 0.0f), Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f), 8, 0.2f);
 	GetAnimator()->CreateAnim(L"frog_hopR", m_pTex, Vec2(0.f, 48.f), Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
@@ -53,7 +56,7 @@ Player::Player()
 	GetAnimator()->CreateAnim(L"frog_jumpR", m_pTex, Vec2(48.f * 3.0f, 48.0f), Vec2(48.0f), Vec2(48.f, 0.f), 1, 0.1f);
 	GetAnimator()->CreateAnim(L"frog_fallR", m_pTex, Vec2(48.0f * 6.0f, 48.0f), Vec2(48.0f), Vec2(48.0f, 0.0f), 1, 0.1f);
 
-	////Left Animation
+	//Left Animation
 	GetAnimator()->CreateAnim(L"frog_idleL", m_pTex, Vec2(0.0f, 240.0f), Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f), 8, 0.2f);
 	GetAnimator()->CreateAnim(L"frog_hopL", m_pTex, Vec2(0.f, 288.f), Vec2(48.f, 48.f), Vec2(48.f, 0.f), 7, 0.1f);
 	GetAnimator()->CreateAnim(L"frog_jump_chargeL", m_pTex, Vec2(48.0f * 2.0f, 288.0f), Vec2(48.0f, 48.0f), Vec2(48.0f, 0.f), 1, 0.2f);
@@ -63,25 +66,11 @@ Player::Player()
 	//Right Idle Play
 	GetAnimator()->PlayAnim(L"frog_idleR", true);
 
-	//animation offset change
-	//Animation* pAnim = GetAnimator()->FindAnim(L"Jiwoo_Front");
-	// only one 
-	//pAnim->SetFrameOffset(0, Vec2(0.f, 20.f));
-
 	ResMgr::GetInst()->LoadSound(L"JumpSound",L"Sound\\Jump.wav",false);
 	ResMgr::GetInst()->LoadSound(L"FallHitSound",L"Sound\\HitDam.wav",false);
-
-	//all frames
-	/*for (auto pAnim : GetAnimator()->GetAnimationMap()) {
-		Animation* tempAnim = pAnim.second;
-		for (size_t i = 0; i < tempAnim->GetMaxFrame(); ++i)
-			tempAnim->SetFrameOffset(i, Vec2(-48.0f));
-	}*/
 }
 Player::~Player()
 {
-	//if (nullptr != m_pTex)
-	//	delete m_pTex;
 }
 void Player::Update()
 {
@@ -96,6 +85,16 @@ void Player::Update()
 
 	//fsm loop
 	StateUpdate();
+
+	if (m_sMode == PLAYER_MODE::FIRE) {
+		float velo = m_bLeft ? 500.0f : -500.0f;
+		GetRigidBody()->AddForce(Vec2(velo, 0.0f), FORCE_MODE::IMPULSE);
+		GetRigidBody()->StopImmediatelyY();
+
+		if (GetPos().x >= Core::GetInst()->GetResolution().x-10.0f || GetPos().x <= 0 + 10.0f) {
+			m_sMode = PLAYER_MODE::NORMAL;
+		}
+	}
 
 	GetAnimator()->Update();
 }
@@ -134,6 +133,7 @@ void Player::Render(HDC _dc)
 	//	, (int)(vPos.y - vScale.y / 2)
 	//	, Width, Height, m_pTex->GetDC()
 	//	, 0, 0, Width, Height, RGB(255, 0, 255));
+
 	Component_Render(_dc);
 }
 
@@ -318,7 +318,7 @@ void Player::JumpState()
 
 	JumpEffect* jumpEffect = new JumpEffect;
 	jumpEffect->SetPos(vPos- vScale / 2.0f);
-	jumpEffect->SetScale(Vec2(2.0f));
+	jumpEffect->SetScale(Vec2(3.5f));
 	SceneMgr::GetInst()->GetCurScene()->AddObject(jumpEffect,OBJECT_GROUP::EFFECT);
 
 	ResMgr::GetInst()->Play(L"JumpSound");

@@ -221,6 +221,15 @@
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
     <ClInclude Include="JumpEffect.h" />
+    <ClInclude Include="HitEffect.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="LowVelocitySpace.h" />
+    <ClInclude Include="PlayerItemUI.h" />
+    <ClInclude Include="WaterItem.h" />
+    <ClInclude Include="FireItem.h" />
+    <ClInclude Include="WaterItemFactory.h" />
+    <ClInclude Include="FireItemFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -232,6 +241,15 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="2023_winapi_framework.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\Output\bin\Res\Texture\ICON.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\Output\bin\Res\Texture\IntroStory\ICON.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="icon1.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
@@ -345,5 +363,14 @@
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
     <ClCompile Include="JumpEffect.cpp" />
+    <ClCompile Include="HitEffect.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="LowVelocitySpace.cpp" />
+    <ClCompile Include="PlayerItemUI.cpp" />
+    <ClCompile Include="WaterItem.cpp" />
+    <ClCompile Include="FireItem.cpp" />
+    <ClCompile Include="WaterItemFactory.cpp" />
+    <ClCompile Include="FireItemFactory.cpp" />
   </ItemGroup>
 </Project>

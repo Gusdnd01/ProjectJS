@@ -19,7 +19,8 @@
 #include "WaterItem.h"
 #include "LowVelocitySpace.h"
 #include "PlayerItemUI.h"
-#include "ItemFactory.h"
+#include "WaterItemFactory.h"
+#include "FireItemFactory.h"
 
 void Start_Scene::Init()
 {
@@ -33,7 +34,7 @@ void Start_Scene::Init()
 	AddObject(back, OBJECT_GROUP::DEFAULT);
 
 	Object* gameEnd = new GameEndVolume;
-	gameEnd->SetPos(centerPos + Vec2(-250.0f, -1970.0f));
+	gameEnd->SetPos(centerPos + Vec2(350.0f, -2000.0f));
 	gameEnd->SetScale(Vec2(100.0f, 100.0f));
 	AddObject(gameEnd, OBJECT_GROUP::VOLUME);
 
@@ -54,15 +55,20 @@ void Start_Scene::Init()
 		CreateObj(ground, centerPos+ m_vStagePlatforms[i].pos, m_vStagePlatforms[i].scale, m_vStagePlatforms[i].scale, OBJECT_GROUP::GROUND);
 	}
 
-	ItemFactory* waterItemFactory_01 = new ItemFactory;
+	WaterItemFactory* waterItemFactory_01 = new WaterItemFactory;
 	waterItemFactory_01->SetPos(centerPos + Vec2(-500.0f, -905.0f));
 	waterItemFactory_01->SetDuration(3.0f);
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
-	ItemFactory* waterItemFactory_02 = new ItemFactory;
+	WaterItemFactory* waterItemFactory_02 = new WaterItemFactory;
 	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1250.0f));
 	waterItemFactory_02->SetDuration(3.0f);
 	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
+
+	FireItemFactory* fireItemFactory_01 = new FireItemFactory;
+	fireItemFactory_01->SetPos(centerPos + Vec2(-100.0f, 300.0f));
+	fireItemFactory_01->SetDuration(3.0f);
+	AddObject(fireItemFactory_01, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
 	lvs->SetPos(centerPos + Vec2(0.0f, -1200.0f));

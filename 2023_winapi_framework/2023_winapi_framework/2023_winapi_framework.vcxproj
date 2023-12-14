@@ -181,6 +181,8 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="EventMgr.h" />
+    <ClInclude Include="FireItem.h" />
+    <ClInclude Include="FireItemFactory.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEndVolume.h" />
     <ClInclude Include="Game_Scene.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="WaterItem.h" />
+    <ClInclude Include="WaterItemFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -229,6 +232,8 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="EventMgr.cpp" />
+    <ClCompile Include="FireItem.cpp" />
+    <ClCompile Include="FireItemFactory.cpp" />
     <ClCompile Include="GameEndVolume.cpp" />
     <ClCompile Include="Game_Scene.cpp" />
     <ClCompile Include="Gravity.cpp" />
@@ -263,6 +268,7 @@
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="Vec2.cpp" />
     <ClCompile Include="WaterItem.cpp" />
+    <ClCompile Include="WaterItemFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc" />

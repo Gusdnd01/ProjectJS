@@ -16,6 +16,7 @@ Gravity::~Gravity()
 void Gravity::FinalUpdate()
 {
 	RigidBody* rb = m_pOwner->GetRigidBody();
+	if (!rb) return;
 	float alpha = m_bOnGround ? 0 : 100.0f;
 
 	if (rb) {
