@@ -53,12 +53,18 @@ void Start_Scene::Init()
 	}
 
 	ItemFactory* waterItemFactory_01 = new ItemFactory;
-	waterItemFactory_01->SetPos(centerPos + Vec2(600.0f, 60.0f));
+	waterItemFactory_01->SetPos(centerPos + Vec2(-500.0f, -905.0f));
 	waterItemFactory_01->SetDuration(3.0f);
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
+	
+	ItemFactory* waterItemFactory_02 = new ItemFactory;
+	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1300.0f));
+	waterItemFactory_02->SetDuration(3.0f);
+	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
+
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(350.0f, -50.0f));
+	lvs->SetPos(centerPos + Vec2(-80.0f, -1200.0f));
 	lvs->SetScale(Vec2(2.0f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	
