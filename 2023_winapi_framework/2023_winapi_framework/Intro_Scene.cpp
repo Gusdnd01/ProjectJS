@@ -37,8 +37,7 @@ void Intro_Scene::Init()
 
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
+	
 }
 
 void Intro_Scene::Render(HDC _dc)
@@ -68,21 +67,21 @@ void Intro_Scene::Render(HDC _dc)
 
 	switch (arrowY)
 	{
-	case 510: //°ÔÀÓ ½ÃÀÛ ¹öÆ°
+	case 510: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	{
 		start = 1.25f;
 		setting = 1;
 		exiT = 1;
 	}
 	break;
-	case 560: //¼¼ÆÃ ¹öÆ°
+	case 560: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	{
 		start = 1;
 		setting = 1.25f;
 		exiT = 1;
 	}
 	break;
-	default: //°ÔÀÓ ³ª°¡±â ¹öÆ°
+	default: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	{
 		start = 1;
 		setting = 1;
@@ -96,22 +95,32 @@ void Intro_Scene::Render(HDC _dc)
 void Intro_Scene::Update()
 {
 	Scene::Update();
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
+	if (KEY_DOWN(KEY_TYPE::P))
+	{
+		Object* effect = new JumpEffect;
+		effect->SetName(L"JumpEffect");
+		effect->SetScale(Vec2(3, 3));
+		effect->SetPos(Vec2(50, 50));
+		AddObject(effect, OBJECT_GROUP::DEFAULT);
+	}
 
 	if (ShowSetting::GetInst()->IsActive == false && KEY_DOWN(KEY_TYPE::SPACE))
 	{
 		switch (arrowY)
 		{
-		case 510: //°ÔÀÓ ½ÃÀÛ ¹öÆ°(360)
+		case 510: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°(360)
 		{
 			SceneMgr::GetInst()->LoadScene(L"IntroStoryScene");
 		}
 		break;
-		case 560: //¼¼ÆÃ ¹öÆ°(410)
+		case 560: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°(410)
 		{
 			ShowSetting::GetInst()->IsActive = true;
 		}
 		break;
-		default: //°ÔÀÓ ³ª°¡±â ¹öÆ°
+		default: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 		{
 			exit(0);
 		}

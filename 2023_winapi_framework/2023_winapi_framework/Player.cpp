@@ -5,6 +5,7 @@
 #include "SceneMgr.h"
 #include "PathMgr.h"
 #include "ResMgr.h"
+#include "ShowSetting.h"
 #include "Scene.h"
 #include "Texture.h"
 #include "Collider.h"
@@ -67,6 +68,8 @@ Player::Player()
 	// only one 
 	//pAnim->SetFrameOffset(0, Vec2(0.f, 20.f));
 
+	ResMgr::GetInst()->LoadSound(L"JumpSound",L"Sound\\Jump.wav",false);
+	ResMgr::GetInst()->LoadSound(L"FallHitSound",L"Sound\\HitDam.wav",false);
 
 	//all frames
 	/*for (auto pAnim : GetAnimator()->GetAnimationMap()) {
@@ -82,6 +85,7 @@ Player::~Player()
 }
 void Player::Update()
 {
+	if (ShowSetting::GetInst()->IsEscActive) return;
 	Object::Update(); 
 
 	//get input
@@ -153,6 +157,7 @@ void Player::EnterCollision(Collider* other)
 			GetGravity()->OnGround(false);
 			//GetRigidBody()->AddForce(Vec2(0.0f, 1000.0f), FORCE_MODE::IMPULSE);
 		}
+		//ResMgr::GetInst()->Play(L"FallHitSound");
 	}
 }
 
@@ -312,6 +317,8 @@ void Player::JumpState()
 	jumpEffect->SetPos(vPos- vScale / 2.0f);
 	jumpEffect->SetScale(Vec2(2.0f));
 	SceneMgr::GetInst()->GetCurScene()->AddObject(jumpEffect,OBJECT_GROUP::EFFECT);
+
+	ResMgr::GetInst()->Play(L"JumpSound");
 	m_bIsUp = false;
 }
 
@@ -338,7 +345,7 @@ void Player::JumpChargeState()
 	m_fJumpPower += 500.0f * fDT;
 
 	//최대값 지정
-	m_fJumpPower = clamp(m_fJumpPower, 500.0f, 2000.0f);
+	m_fJumpPower = clamp(m_fJumpPower, 500.0f, 1450.0f);
 }
 
 void Player::HurtState()

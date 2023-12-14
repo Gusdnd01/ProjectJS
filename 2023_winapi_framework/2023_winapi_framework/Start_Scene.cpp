@@ -1,18 +1,20 @@
 #include "pch.h"
 #include "Start_Scene.h"
-#include "Object.h"
 #include "Core.h"
-#include "Player.h"
-#include "Monster.h"
 #include "KeyMgr.h"
-#include "CollisionMgr.h"
 #include "CameraManager.h"
-#include "ResMgr.h"
+#include "CollisionMgr.h"
 #include "TileManager.h"
+#include "ResMgr.h"
+#include "ShowSetting.h"
+#include "Object.h"
+#include "Player.h"
 #include "Ground.h"
-#include "Tile.h"
 #include "Collider.h"
 #include "Texture.h"
+#include "Tile.h"
+
+/*Items*/
 #include "GameEndVolume.h"
 #include "WaterItem.h"
 #include "LowVelocitySpace.h"
@@ -43,7 +45,7 @@ void Start_Scene::Init()
 	
 	//¶¥ Ãæµ¹Ã¼.
 	Ground* ground = new Ground;
-	ground->SetTiles(277);
+	ground->SetTiles(112);
 	CreateObj(ground, Vec2(centerPos.x, centerPos.y * 2), Vec2(1200, 100), Vec2(3000.0f, 100.0f), OBJECT_GROUP::GROUND);
 
 	for (int i = 0; i < m_vStagePlatforms.size(); ++i) {
@@ -57,9 +59,8 @@ void Start_Scene::Init()
 	waterItemFactory_01->SetDuration(3.0f);
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
-	
 	ItemFactory* waterItemFactory_02 = new ItemFactory;
-	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1300.0f));
+	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1250.0f));
 	waterItemFactory_02->SetDuration(3.0f);
 	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
 
@@ -88,6 +89,8 @@ void Start_Scene::Init()
 	//ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
 	//ResMgr::GetInst()->Play(L"BGM");
 
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX()); 
 	m_vStage.push_back(360.0f);
 	for (int i = 1; i < 100; i+=2) {
 		float yPos = i * -centerPos.y;
@@ -103,12 +106,18 @@ void Start_Scene::Init()
 
 void Start_Scene::Update()
 {
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
 	Vec2 resolution = Vec2((int)Core::GetInst()->GetResolution().x, (int)Core::GetInst()->GetResolution().y );
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
-	
+
 	ModifyPos(Vec2(0.0f, m_vStage[CheckStage(pPos.y)]), L"camRig");
 	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Background");
+	
+	if (KEY_DOWN(KEY_TYPE::ESC)) {
+		ShowSetting::GetInst()->IsEscActive = !ShowSetting::GetInst()->IsEscActive;
+	}
 
 	Scene::Update();
 }

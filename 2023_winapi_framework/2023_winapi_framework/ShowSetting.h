@@ -15,8 +15,8 @@ public:
 	void Render(HDC _dc);
 	void Update();
 public:
-	const float GetBGM() { return m_pBgmVolume * 0.1f; }
-	const float GetSFX() { return m_pEffectVolume * 0.1f; }
+	const float GetBGM() { return bgmVolume * .1f; }
+	const float GetSFX() { return effectVolume * .1f; }
 private:
 	void SoundBoxUI(int x, int y, int volume, HDC _dc);
 private:

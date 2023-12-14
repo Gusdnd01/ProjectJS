@@ -14,10 +14,11 @@ void ItemFactory::Update()
 			m_fTimer = 0;
 
 			m_pCurObject = new WaterItem;
-			dynamic_cast<Object*>(m_pCurObject)->SetPos(GetPos());
-			dynamic_cast<Object*>(m_pCurObject)->SetScale(Vec2(3.0f));
-			dynamic_cast<WaterItem*>(m_pCurObject)->SetOwner(this);
-			SceneMgr::GetInst()->GetCurScene()->AddObject(m_pCurObject, OBJECT_GROUP::ITEM);
+			WaterItem* item = dynamic_cast<WaterItem*>(m_pCurObject);
+			item->SetPos(GetPos());
+			item->SetScale(Vec2(3.0f));
+			item->SetOwner(this);
+			SceneMgr::GetInst()->GetCurScene()->AddObject(item, OBJECT_GROUP::ITEM);
 		}
 	}
 	else {
