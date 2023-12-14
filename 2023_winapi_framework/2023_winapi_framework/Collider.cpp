@@ -107,6 +107,7 @@ bool Collider::CheckRight(Collider* _pOther)
 
 void Collider::FinalUpdate()
 {
+	if (!m_pOwner) return;
 	Vec2 vObjPos = m_pOwner->GetPos();
 	m_vFinalPos = vObjPos + m_vOffsetPos;
 }

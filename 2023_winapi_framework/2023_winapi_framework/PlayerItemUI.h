@@ -7,7 +7,6 @@ class PlayerItemUI :
 {
     //플레이어 우측 상단에 있어야한다.
     //먹었을 때 켜지고 아이템 사용 시 꺼진다.
-
 public:
     PlayerItemUI();
     ~PlayerItemUI();

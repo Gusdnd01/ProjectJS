@@ -28,11 +28,13 @@ void PlayerItemUI::Update()
 		Vec2 vOwnerPos = m_pOwner->GetPos();
 		SetPos(vOwnerPos + m_vOffsetPos);
 	}
+	else {
+		return;
+	}
 }
 
 void PlayerItemUI::Render(HDC _dc) 
 {
 	if (!m_bIsActive) return;
-
 	Component_Render(_dc);
 }

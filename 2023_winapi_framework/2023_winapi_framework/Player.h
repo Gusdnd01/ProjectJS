@@ -13,6 +13,7 @@ enum class STATE {
 enum class PLAYER_MODE {
     NORMAL,
     WATER,
+    FIRE,
     END = 10,
 };
 
