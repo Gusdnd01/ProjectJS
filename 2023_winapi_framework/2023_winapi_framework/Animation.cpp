@@ -53,11 +53,6 @@ void Animation::Render(HDC _dc)
 	if (vPos.y - vScale.y / 2.f > CameraManager::GetInst()->GetLookPos().y + resolution.y / 2.f ||
 		vPos.y + vScale.y / 2.f < CameraManager::GetInst()->GetLookPos().y - resolution.y / 2.f) return;
 
-	Vec2 resolution = Core::GetInst()->GetResolution();
-
-	if (vPos.y - vScale.y / 2.f > CameraManager::GetInst()->GetLookPos().y + resolution.y / 2.f ||
-		vPos.y + vScale.y / 2.f < CameraManager::GetInst()->GetLookPos().y - resolution.y / 2.f) return;
-
 	// 오프셋 적용
 	renderPos = renderPos + m_vecAnimFrame[m_CurFrame].vOffset;
 	HBITMAP _backbit = CreateCompatibleBitmap(_dc, Core::GetInst()->GetResolution().x, Core::GetInst()->GetResolution().y);

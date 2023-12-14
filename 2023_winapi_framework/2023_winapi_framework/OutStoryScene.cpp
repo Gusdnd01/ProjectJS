@@ -9,7 +9,7 @@
 void OutStoryScene::Init()
 {
 	m_ImgCnt = 0;
-	ShowSetting::GetInst()->IsEscActive == false;
+	ShowSetting::GetInst()->IsEscActive = false;
 	ShowSetting::GetInst()->CurSceneName = L"OutStoryScene";
 
 	m_BK = ResMgr::GetInst()->TexLoad(L"BK", L"Texture\\BLACKBK.bmp");

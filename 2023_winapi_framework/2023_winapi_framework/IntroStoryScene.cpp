@@ -11,7 +11,7 @@ void IntroStoryScene::Init()
 	m_ImgCnt = 0;
 	m_Clear = false;
 
-	ShowSetting::GetInst()->IsEscActive == false;
+	ShowSetting::GetInst()->IsEscActive = false;
 	ShowSetting::GetInst()->GetBGM();
 	ShowSetting::GetInst()->CurSceneName = L"IntroStoryScene";
 
