@@ -37,8 +37,7 @@ void Intro_Scene::Init()
 
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
+	
 }
 
 void Intro_Scene::Render(HDC _dc)
@@ -96,7 +95,8 @@ void Intro_Scene::Render(HDC _dc)
 void Intro_Scene::Update()
 {
 	Scene::Update();
-
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
 	if (KEY_DOWN(KEY_TYPE::P))
 	{
 		Object* effect = new JumpEffect;

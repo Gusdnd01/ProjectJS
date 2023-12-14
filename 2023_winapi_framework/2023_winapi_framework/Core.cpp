@@ -13,19 +13,15 @@
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
-	// === ���� �ʱ�ȭ === 
 	m_hWnd = _hWnd;
 	m_ptResolution = _ptResolution;
 	m_hbackDC = 0;
 	m_hbackbit = 0;
 
-	// �������۸�
 	m_hDC = GetDC(m_hWnd);	
-	// 1. ����
 	m_hbackbit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y);
 	m_hbackDC = CreateCompatibleDC(m_hDC);
 
-	// 2. ����
 	SelectObject(m_hbackDC, m_hbackbit);
 
 	CreateGDI();
@@ -37,8 +33,8 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	SceneMgr::GetInst()->Init();
 	TileManager::GetInst()->Init();
 	ShowSetting::GetInst()->Init();
-
 	SetWindowText(m_hWnd, L"GAEGURIDA!");
+
 
 	return true;
 }
@@ -58,6 +54,7 @@ void Core::Update()
 	SceneMgr::GetInst()->Update();
 	CollisionMgr::GetInst()->Update();
 	ShowSetting::GetInst()->Update();
+
 //	Vec2 vPos = m_obj.GetPos();
 //
 ////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)

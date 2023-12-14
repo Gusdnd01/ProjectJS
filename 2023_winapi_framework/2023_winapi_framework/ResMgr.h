@@ -3,7 +3,7 @@
 #pragma comment(lib, "fmod_vc")
 enum class SOUND_CHANNEL
 {
-	BGM, EFFECT, END
+	BGM, EFFECT, END = 2
 };
 struct tSoundInfo
 {

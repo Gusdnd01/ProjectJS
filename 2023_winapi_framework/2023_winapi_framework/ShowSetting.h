@@ -15,8 +15,8 @@ public:
 	void Render(HDC _dc);
 	void Update();
 public:
-	const float GetBGM() { return bgmVolume; }
-	const float GetSFX() { return effectVolume; }
+	const float GetBGM() { return bgmVolume * .1f; }
+	const float GetSFX() { return effectVolume * .1f; }
 private:
 	int settingMoveY;
 	int settingYIncrease;
