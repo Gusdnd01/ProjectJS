@@ -19,6 +19,9 @@ void ItemFactory::Update()
 			SceneMgr::GetInst()->GetCurScene()->AddObject(m_pCurObject, OBJECT_GROUP::ITEM);
 		}
 	}
+	else {
+		return;
+	}
 }
 
 ItemFactory::ItemFactory()

@@ -91,7 +91,7 @@ void Intro_Scene::Render(HDC _dc)
 	}
 	break;
 	}
-	Scene::Render(_dc);
+	//Scene::Render(_dc);
 }
 
 void Intro_Scene::Update()
@@ -124,4 +124,5 @@ void Intro_Scene::Update()
 void Intro_Scene::Release()
 {
 	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
+	Scene::Release();
 }

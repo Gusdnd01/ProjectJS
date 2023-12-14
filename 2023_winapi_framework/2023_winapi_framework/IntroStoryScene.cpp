@@ -80,4 +80,5 @@ void IntroStoryScene::Render(HDC _dc)
 void IntroStoryScene::Release()
 {
 	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
+	Scene::Release();
 }
