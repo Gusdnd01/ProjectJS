@@ -106,6 +106,11 @@ void Start_Scene::Init()
 
 void Start_Scene::Update()
 {
+	if (KEY_DOWN(KEY_TYPE::ESC)) {
+		ShowSetting::GetInst()->IsEscActive = !ShowSetting::GetInst()->IsEscActive;
+	}
+
+	if (ShowSetting::GetInst()->IsEscActive || ShowSetting::GetInst()->IsActive) return;
 	Vec2 resolution = Core::GetInst()->GetResolution();
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
@@ -113,10 +118,6 @@ void Start_Scene::Update()
 	ModifyPos(Vec2(0.0f, m_vStage[CheckStage(pPos.y)]), L"camRig");
 	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Background");
 	
-	if (KEY_DOWN(KEY_TYPE::ESC)) {
-		ShowSetting::GetInst()->IsEscActive = !ShowSetting::GetInst()->IsEscActive;
-	}
-
 	Scene::Update();
 }
 
