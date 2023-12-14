@@ -35,7 +35,6 @@ void Intro_Scene::Init()
 	Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
 	#pragma endregion
 
-
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
@@ -45,7 +44,7 @@ void Intro_Scene::Init()
 void Intro_Scene::Render(HDC _dc)
 {
 
-	int x = 10;//Core::GetInst()->GetResolution().x / 2 - 75 ;
+	int x = 10;
 	int y = Core::GetInst()->GetResolution().y / 2 + 150;
 
 	TransparentBlt(_dc, 0, 0, 1280, 750, introTex->GetDC(), 0, 0, introTex->GetWidth(), introTex->GetHeight(), RGB(255, 0, 255));

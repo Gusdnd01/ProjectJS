@@ -15,19 +15,21 @@ public:
 	void Render(HDC _dc);
 	void Update();
 public:
-	const float GetBGM() { return bgmVolume; }
-	const float GetSFX() { return effectVolume; }
+	const float GetBGM() { return m_pBgmVolume * 0.1f; }
+	const float GetSFX() { return m_pEffectVolume * 0.1f; }
 private:
-	int settingMoveY;
-	int settingYIncrease;
-	int settingArrowY;
+	void SoundBoxUI(int x, int y, int volume, HDC _dc);
+private:
+	int m_pSettingMoveY;
+	int m_pSettingYIncrease;
+	int m_pSettingArrowY;
 
-	int escMoveY;
-	int escYIncrease;
-	int escArrowY;
+	int m_pEscMoveY;
+	int m_pEscYIncrease;
+	int m_pEscArrowY;
 private:
-	float bgmVolume;
-	float effectVolume;
+	float m_pBgmVolume;
+	float m_pEffectVolume;
 private:
 	Texture* m_pTex_SettingPannel;
 	Texture* m_pTex_arrow;

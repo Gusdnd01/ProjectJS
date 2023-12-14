@@ -12,7 +12,6 @@ void IntroStoryScene::Init()
 	m_Clear = false;
 
 	ShowSetting::GetInst()->IsEscActive = false;
-	ShowSetting::GetInst()->GetBGM();
 	ShowSetting::GetInst()->CurSceneName = L"IntroStoryScene";
 
 	m_Story1 = ResMgr::GetInst()->TexLoad(L"Story1", L"Texture\\IntroStory\\Story1.bmp");
@@ -23,10 +22,10 @@ void IntroStoryScene::Init()
 	m_BK = ResMgr::GetInst()->TexLoad(L"BK", L"Texture\\BLACKBK.bmp");
 
 	ResMgr::GetInst()->LoadSound(L"IntroStoryBGM", L"Sound\\IntroStoryBGM.wav", true);
+	ResMgr::GetInst()->Play(L"IntroStoryBGM");
 
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
-	ResMgr::GetInst()->Play(L"IntroStoryBGM");
 }
 
 void IntroStoryScene::Render(HDC _dc)
