@@ -11,29 +11,23 @@
 #include "JumpEffect.h"
 #include "HitEffect.h"
 
+Intro_Scene::Intro_Scene()
+	: m_MoveY(0), m_YIncrease(50), m_ArrowY(0), m_TexSizeX(150), m_TexSizeY(27)
+	, m_fSstart(1), m_fSetting(1), m_fExiT(1)
+	, m_pIntroTex(nullptr), m_pGameStart(nullptr), m_pSetting(nullptr), m_pExit(nullptr)
+{
+}
+
+Intro_Scene::~Intro_Scene()
+{
+}
+
 void Intro_Scene::Init()
 {
-	#pragma region reset
-
-	moveY = 0;
-	yIncrease = 50;
-	arrowY = 0;
-
-	TexSizeX = 150;
-	TexSizeY = 27;
-
-	start = 1;
-	setting = 1;
-	exiT = 1;
-	#pragma endregion
-
-	#pragma region TexLoad
-
-	introTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
-	GameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
-	Setting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
-	Exit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
-	#pragma endregion
+	m_pIntroTex = ResMgr::GetInst()->TexLoad(L"IntroBK", L"Texture\\Intro\\Game_Intro.bmp");
+	m_pGameStart = ResMgr::GetInst()->TexLoad(L"GameStartTex", L"Texture\\Intro\\GameStart.bmp");
+	m_pSetting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
+	m_pExit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
 
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
@@ -46,50 +40,49 @@ void Intro_Scene::Render(HDC _dc)
 	int x = 10;
 	int y = Core::GetInst()->GetResolution().y / 2 + 150;
 
-	TransparentBlt(_dc, 0, 0, 1280, 750, introTex->GetDC(), 0, 0, introTex->GetWidth(), introTex->GetHeight(), RGB(255, 0, 255));
-	TransparentBlt(_dc, x + 40, y, TexSizeX * start, TexSizeY * start, GameStart->GetDC(), 0, 0, GameStart->GetWidth(), GameStart->GetHeight(), RGB(255, 0, 255));
-	TransparentBlt(_dc, x, y + yIncrease, TexSizeX * setting, TexSizeY * setting, Setting->GetDC(), 0, 0, Setting->GetWidth(), Setting->GetHeight(), RGB(255, 0, 255));
-	TransparentBlt(_dc, x, y + yIncrease * 2, TexSizeX * exiT, TexSizeY * exiT, Exit->GetDC(), 0, 0, Exit->GetWidth(), Exit->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, 0, 0, 1280, 750, m_pIntroTex->GetDC(), 0, 0, m_pIntroTex->GetWidth(), m_pIntroTex->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, x + 40, y, m_TexSizeX * m_fSstart, m_TexSizeY * m_fSstart, m_pGameStart->GetDC(), 0, 0, m_pGameStart->GetWidth(), m_pGameStart->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, x, y + m_YIncrease, m_TexSizeX * m_fSetting, m_TexSizeY * m_fSetting, m_pSetting->GetDC(), 0, 0, m_pSetting->GetWidth(), m_pSetting->GetHeight(), RGB(255, 0, 255));
+	TransparentBlt(_dc, x, y + m_YIncrease * 2, m_TexSizeX * m_fExiT, m_TexSizeY * m_fExiT, m_pExit->GetDC(), 0, 0, m_pExit->GetWidth(), m_pExit->GetHeight(), RGB(255, 0, 255));
 
 	if (ShowSetting::GetInst()->IsActive == false)
 	{
-		if (moveY < 100 && KEY_DOWN(KEY_TYPE::DOWN))
+		if (m_MoveY < 100 && KEY_DOWN(KEY_TYPE::DOWN))
 		{
-			moveY += yIncrease;
+			m_MoveY += m_YIncrease;
 		}
-		if (moveY > 0 && KEY_DOWN(KEY_TYPE::UP))
+		if (m_MoveY > 0 && KEY_DOWN(KEY_TYPE::UP))
 		{
-			moveY -= yIncrease;
+			m_MoveY -= m_YIncrease;
 		}
 	}
 
-	arrowY = y + moveY;
+	m_ArrowY = y + m_MoveY;
 
-	switch (arrowY)
+	switch (m_ArrowY)
 	{
-	case 510: //���� ���� ��ư
+	case 510:
 	{
-		start = 1.25f;
-		setting = 1;
-		exiT = 1;
+		m_fSstart = 1.25f;
+		m_fSetting = 1;
+		m_fExiT = 1;
 	}
 	break;
-	case 560: //���� ��ư
+	case 560:
 	{
-		start = 1;
-		setting = 1.25f;
-		exiT = 1;
+		m_fSstart = 1;
+		m_fSetting = 1.25f;
+		m_fExiT = 1;
 	}
 	break;
-	default: //���� ������ ��ư
+	default:
 	{
-		start = 1;
-		setting = 1;
-		exiT = 1.25f;
+		m_fSstart = 1;
+		m_fSetting = 1;
+		m_fExiT = 1.25f;
 	}
 	break;
 	}
-	//Scene::Render(_dc);
 }
 
 void Intro_Scene::Update()
@@ -108,19 +101,19 @@ void Intro_Scene::Update()
 
 	if (ShowSetting::GetInst()->IsActive == false && KEY_DOWN(KEY_TYPE::SPACE))
 	{
-		switch (arrowY)
+		switch (m_ArrowY)
 		{
-		case 510: //���� ���� ��ư(360)
+		case 510:
 		{
 			SceneMgr::GetInst()->LoadScene(L"IntroStoryScene");
 		}
 		break;
-		case 560: //���� ��ư(410)
+		case 560:
 		{
 			ShowSetting::GetInst()->IsActive = true;
 		}
 		break;
-		default: //���� ������ ��ư
+		default:
 		{
 			exit(0);
 		}

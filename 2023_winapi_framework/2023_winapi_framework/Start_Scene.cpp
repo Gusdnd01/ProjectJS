@@ -39,7 +39,7 @@ void Start_Scene::Init()
 	AddObject(gameEnd, OBJECT_GROUP::VOLUME);*///게임 엔딩
 
 	Object* pObj= new Player;
-	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
+	pObj->SetPos(centerPos + Vec2{ -300.0, -3800.0f });
 	pObj->SetScale(Vec2(3.0f,3.0f));
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 	m_pPlayer = pObj;
@@ -74,6 +74,11 @@ void Start_Scene::Init()
 	fireItemFactory_02->SetPos(centerPos + Vec2(-600.0f, -2800.0f));
 	fireItemFactory_02->SetDuration(3.0f);
 	AddObject(fireItemFactory_02, OBJECT_GROUP::DEFAULT);
+	
+	FireItemFactory* fireItemFactory_03 = new FireItemFactory;
+	fireItemFactory_03->SetPos(centerPos + Vec2{ 600.0, -3620.0f });
+	fireItemFactory_03->SetDuration(3.0f);
+	AddObject(fireItemFactory_03, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
 	lvs->SetPos(centerPos + Vec2(-30.0f, -1150.0f));
@@ -100,6 +105,7 @@ void Start_Scene::Init()
 	//ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
 	//ResMgr::GetInst()->Play(L"BGM");
 
+	ShowSetting::GetInst()->CurSceneName = L"Start_Scene";
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX()); 
 	m_vStage.push_back(360.0f);
