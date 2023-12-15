@@ -42,7 +42,7 @@ void WaterItem::EnterCollision(Collider* other)
 	Player* player = dynamic_cast<Player*>(other->GetObj());
 
 	if (player) {
-		player->SetMode(PLAYER_MODE::WATER);
+		player->SetMode(L"water", true);
 		m_pOwner->ResetObj();
 		EventMgr::GetInst()->DeleteObject(this);
 	}

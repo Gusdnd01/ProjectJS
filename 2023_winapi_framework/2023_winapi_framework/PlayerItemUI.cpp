@@ -23,7 +23,7 @@ PlayerItemUI::~PlayerItemUI()
 
 void PlayerItemUI::Update()
 {
-	m_bIsActive = m_pPlayer->GetPlayerMode() == PLAYER_MODE::WATER;
+	m_bIsActive = m_pPlayer->GetPlayerMode(L"water");
 
 	if (!m_bIsActive) return;
 	
