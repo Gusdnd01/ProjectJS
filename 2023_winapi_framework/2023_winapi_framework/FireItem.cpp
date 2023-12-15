@@ -40,7 +40,7 @@ void FireItem::EnterCollision(Collider* other)
 	Player* player = dynamic_cast<Player*>(other->GetObj());
 
 	if (player) {
-		player->SetMode(PLAYER_MODE::FIRE);
+		player->SetMode(L"fire", true);
 		m_pOwner->ResetObj();
 		EventMgr::GetInst()->DeleteObject(this);
 	}

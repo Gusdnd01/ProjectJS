@@ -10,13 +10,6 @@ enum class STATE {
     END = 10,
 };
 
-enum class PLAYER_MODE {
-    NORMAL,
-    WATER,
-    FIRE,
-    END = 10,
-};
-
 class Texture;
 class RigidBody;
 
@@ -56,23 +49,27 @@ public:
 public:
     const bool& GetIsJump() const { return m_bIsJump; }
 
-    const PLAYER_MODE GetPlayerMode() const { return m_sMode; }
+    const bool& GetPlayerMode(const wstring& _key) { return m_sMode[_key]; }
 
 public:
-    void SetMode(PLAYER_MODE _value) { m_sMode = _value; }
+    void SetMode(const wstring& _key, bool _value) { m_sMode[_key] = _value; }
 
 private:
     Texture*    m_pTex;
+    
     bool        m_bLeft;  
     bool        m_bIsJump;
     bool        m_bIsUp;
     bool        m_bIsGround;
     bool        m_bCanMove;
+    
     float       m_fTimer = 0.0f;
     float       m_fJumpPower;
+    
     STATE       m_sState;
-    PLAYER_MODE m_sMode;
     string      m_LR;
     UINT        m_nLevel;
+
+    map<wstring, bool> m_sMode;
 };
 

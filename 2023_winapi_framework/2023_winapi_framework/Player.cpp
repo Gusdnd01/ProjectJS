@@ -27,7 +27,6 @@ Player::Player()
 	, m_fTimer(0.0f)
 	, m_fJumpPower(5.0f)
 	, m_nLevel(0)
-	, m_sMode(PLAYER_MODE::NORMAL)
 	, m_sState(STATE::IDLE)
 {
 	this->SetName(L"Player");
@@ -68,6 +67,9 @@ Player::Player()
 
 	ResMgr::GetInst()->LoadSound(L"JumpSound",L"Sound\\Jump.wav",false);
 	ResMgr::GetInst()->LoadSound(L"FallHitSound",L"Sound\\HitDam.wav",false);
+
+	m_sMode.insert(make_pair(L"fire", false));
+	m_sMode.insert(make_pair(L"water", false));
 }
 Player::~Player()
 {
@@ -83,13 +85,15 @@ void Player::Update()
 	//fsm loop
 	StateUpdate();
 
-	if (m_sMode == PLAYER_MODE::FIRE) {
+	if (GetPlayerMode(L"fire") == true) {
+		m_bCanMove = false;
 		float velo = m_bLeft ? 500.0f : -500.0f;
 		GetRigidBody()->AddForce(Vec2(velo, 0.0f), FORCE_MODE::IMPULSE);
 		GetRigidBody()->StopImmediatelyY();
 
 		if (GetPos().x >= Core::GetInst()->GetResolution().x-10.0f || GetPos().x <= 0 + 10.0f) {
-			m_sMode = PLAYER_MODE::NORMAL;
+			SetMode(L"fire", false);
+			m_bCanMove = true;
 		}
 	}
 
@@ -144,11 +148,15 @@ void Player::EnterCollision(Collider* other)
 		}
 		else if (GetCollider()->CheckLeft(other) && !m_bIsGround) {
 			GetRigidBody()->StopImmediatelyX();
+			m_bCanMove = true;
+			SetMode(L"fire", false);
 			GetRigidBody()->AddForce(Vec2(200.0f, -200.0f), FORCE_MODE::IMPULSE);
 			GetGravity()->OnGround(false);
 		}
 		else if (GetCollider()->CheckRight(other) && !m_bIsGround) {
 			GetRigidBody()->StopImmediatelyX();
+			m_bCanMove = true;
+			SetMode(L"fire", false);
 			GetRigidBody()->AddForce(Vec2(-200.0f, -200.0f), FORCE_MODE::IMPULSE);
 			GetGravity()->OnGround(false);
 		}

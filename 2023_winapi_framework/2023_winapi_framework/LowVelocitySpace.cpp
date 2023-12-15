@@ -38,7 +38,7 @@ void LowVelocitySpace::EnterCollision(Collider* other)
 	Player* player = dynamic_cast<Player*>(other->GetObj());
 
 	if (player) {
-		if(player->GetPlayerMode() == PLAYER_MODE::NORMAL)
+		if(!player->GetPlayerMode(L"water"))
 			player->GetRigidBody()->AddForce(m_vAddVelo, FORCE_MODE::IMPULSE);
 		else {
 			return;
@@ -50,10 +50,12 @@ void LowVelocitySpace::ExitCollision(Collider* other)
 {
 	Player* player = dynamic_cast<Player*>(other->GetObj());
 	if (player) {
-		if (player->GetPlayerMode() == PLAYER_MODE::WATER) {
-			player->SetMode(PLAYER_MODE::NORMAL);
+		if (player->GetPlayerMode(L"water")) {
+			player->SetMode(L"water", false);
 		}
-
+		else if (player->GetPlayerMode(L"fire")) {
+			player->SetMode(L"fire", false);
+		}
 	}
 	else {
 		return;
