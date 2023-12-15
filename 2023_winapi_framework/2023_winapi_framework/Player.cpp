@@ -74,10 +74,7 @@ Player::~Player()
 }
 void Player::Update()
 {
-	if (ShowSetting::GetInst()->IsEscActive || ShowSetting::GetInst()->IsActive) {
-		GetRigidBody()->StopImmediatelyX();
-		return; 
-	}
+	if (ShowSetting::GetInst()->IsEscActive) return;
 	Object::Update(); 
 
 	//get input

@@ -35,11 +35,11 @@ void Start_Scene::Init()
 	back->SetScale(centerPos * 2);
 	back->SetName(L"Background");
 	AddObject(back, OBJECT_GROUP::DEFAULT);
-	
-	Object* gameEnd = new GameEndVolume;
+
+	/*Object* gameEnd = new GameEndVolume;
 	gameEnd->SetPos(centerPos + Vec2(350.0f, -2000.0f));
 	gameEnd->SetScale(Vec2(100.0f, 100.0f));
-	AddObject(gameEnd, OBJECT_GROUP::VOLUME);
+	AddObject(gameEnd, OBJECT_GROUP::VOLUME);*///ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	SnowFlake* snow = new SnowFlake;
 	snow->SetPos(centerPos);
@@ -53,12 +53,12 @@ void Start_Scene::Init()
 	//AddObject(tree, OBJECT_GROUP::DEFAULT);
 
 	Object* pObj= new Player;
-	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
+	pObj->SetPos(centerPos + Vec2{ -300.0, -3800.0f });
 	pObj->SetScale(Vec2(3.0f,3.0f));
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 	m_pPlayer = pObj;
 	
-	//¶¥ Ãæµ¹Ã¼.
+	//ï¿½ï¿½ ï¿½æµ¹Ã¼.
 	Ground* ground = new Ground;
 	ground->SetTiles(112);
 	CreateObj(ground, Vec2(centerPos.x, centerPos.y * 2), Vec2(1200, 100), Vec2(3000.0f, 100.0f), OBJECT_GROUP::GROUND);
@@ -75,21 +75,31 @@ void Start_Scene::Init()
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
 	WaterItemFactory* waterItemFactory_02 = new WaterItemFactory;
-	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1250.0f));
+	waterItemFactory_02->SetPos(centerPos + Vec2(-350.0f, -1210.0f));
 	waterItemFactory_02->SetDuration(3.0f);
 	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
 
 	FireItemFactory* fireItemFactory_01 = new FireItemFactory;
-	fireItemFactory_01->SetPos(centerPos + Vec2(-100.0f, 300.0f));
+	fireItemFactory_01->SetPos(centerPos + Vec2(600.0f, -2150.0f));
 	fireItemFactory_01->SetDuration(3.0f);
 	AddObject(fireItemFactory_01, OBJECT_GROUP::DEFAULT);
+	
+	FireItemFactory* fireItemFactory_02 = new FireItemFactory;
+	fireItemFactory_02->SetPos(centerPos + Vec2(-600.0f, -2800.0f));
+	fireItemFactory_02->SetDuration(3.0f);
+	AddObject(fireItemFactory_02, OBJECT_GROUP::DEFAULT);
+	
+	FireItemFactory* fireItemFactory_03 = new FireItemFactory;
+	fireItemFactory_03->SetPos(centerPos + Vec2{ 600.0, -3620.0f });
+	fireItemFactory_03->SetDuration(3.0f);
+	AddObject(fireItemFactory_03, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(0.0f, -1200.0f));
-	lvs->SetScale(Vec2(2.0f, 1.0f));
+	lvs->SetPos(centerPos + Vec2(-30.0f, -1150.0f));
+	lvs->SetScale(Vec2(2.8f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	
-	//ObjectÀÎµ¥ À§Ä¡ Á¤º¸¸¸ °®°í ÀÖ´Â ¿ÀºêÁ§Æ®ÀÌ´Ù.
+	//Objectï¿½Îµï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ì´ï¿½.
 	Object* camRig = new Object;
 	camRig->SetName(L"camRig");
 	camRig->SetPos(centerPos);
@@ -104,11 +114,12 @@ void Start_Scene::Init()
 	piu->SetScale(Vec2(2.0f));
 	AddObject(piu, OBJECT_GROUP::DEFAULT);
 
-	// »ç¿îµå ¼¼ÆÃ
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	//ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
 	//ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
 	//ResMgr::GetInst()->Play(L"BGM");
 
+	ShowSetting::GetInst()->CurSceneName = L"Start_Scene";
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX()); 
 	m_vStage.push_back(360.0f);
@@ -137,7 +148,9 @@ void Start_Scene::Update()
 
 	if (ShowSetting::GetInst()->IsEscActive || ShowSetting::GetInst()->IsActive) return;
 
-	Vec2 resolution = Core::GetInst()->GetResolution();
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
+	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
+	Vec2 resolution = Vec2((int)Core::GetInst()->GetResolution().x, (int)Core::GetInst()->GetResolution().y );
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
 
@@ -145,6 +158,10 @@ void Start_Scene::Update()
 	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Background");
 	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Snow");
 	
+	if (KEY_DOWN(KEY_TYPE::ESC)) {
+		ShowSetting::GetInst()->IsEscActive = !ShowSetting::GetInst()->IsEscActive;
+	}
+
 	Scene::Update();
 }
 

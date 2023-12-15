@@ -5,16 +5,20 @@ class Texture;
 class Intro_Scene
 	: public Scene
 {
-private:
-	int moveY;
-	int yIncrease;
-	int arrowY;
-	int TexSizeX;
-	int TexSizeY;
+public:
+	Intro_Scene();
+	~Intro_Scene();
 
-	float start;
-	float setting;
-	float exiT;
+private:
+	int m_MoveY;
+	int m_YIncrease;
+	int m_ArrowY;
+	int m_TexSizeX;
+	int m_TexSizeY;
+
+	float m_fSstart;
+	float m_fSetting;
+	float m_fExiT;
 
 public:
 	virtual void Init() override;
@@ -22,8 +26,8 @@ public:
 	virtual void Update() override;
 	virtual void Release() override;
 private:
-	Texture* introTex;
-	Texture* GameStart;
-	Texture* Setting;
-	Texture* Exit;
+	Texture* m_pIntroTex;
+	Texture* m_pGameStart;
+	Texture* m_pSetting;
+	Texture* m_pExit;
 };

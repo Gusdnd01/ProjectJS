@@ -33,7 +33,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	SceneMgr::GetInst()->Init();
 	TileManager::GetInst()->Init();
 	ShowSetting::GetInst()->Init();
-	//SetWindowText(m_hWnd, L"GAEGURIDA!");
+	SetWindowText(m_hWnd, L"GAEGURIDA!");
 
 
 	return true;
