@@ -158,7 +158,6 @@ void Start_Scene::Init()
 	//ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
 	//ResMgr::GetInst()->Play(L"BGM");
 
-	ShowSetting::GetInst()->CurSceneName = L"Start_Scene";
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX()); 
 	m_vStage.push_back(360.0f);
