@@ -9,10 +9,10 @@
 SnowFlake::SnowFlake()
 	: m_fTimer(0.0f)
 {
-	m_pTex = ResMgr::GetInst()->TexLoad(L"snow", L"Texture\\Snow.bmp");
+	m_pTex = ResMgr::GetInst()->TexLoad(L"snow", L"Texture\\snow_sheet_01.bmp");
 	CreateAnimator();
 
-	GetAnimator()->CreateAnim(L"idle", m_pTex, Vec2(0), Vec2(80, 45),Vec2(80, 0),37, .1f);
+	GetAnimator()->CreateAnim(L"idle", m_pTex, Vec2(0), Vec2(160, 90),Vec2(160, 0),82, .1f);
 	GetAnimator()->PlayAnim(L"idle",true);
 }
 

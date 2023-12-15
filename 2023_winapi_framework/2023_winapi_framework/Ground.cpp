@@ -33,6 +33,7 @@ void Ground::Render(HDC _dc)
 
 	if (checkPos.y - checkScale.y/2.f > CameraManager::GetInst()->GetLookPos().y + resolution.y/2.f || 
 		checkPos.y + checkScale.y/2.f < CameraManager::GetInst()->GetLookPos().y - resolution.y/2.f) return;
+
 	if (m_pTex) {
 		Vec2 originScale = GetScale();//본래 크기!
 		Vec2 originPos = GetPos();//원점!

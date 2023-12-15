@@ -24,13 +24,11 @@ PlayerItemUI::~PlayerItemUI()
 void PlayerItemUI::Update()
 {
 	m_bIsActive = m_pPlayer->GetPlayerMode() == PLAYER_MODE::WATER;
-	if (m_bIsActive) {
-		Vec2 vOwnerPos = m_pOwner->GetPos();
-		SetPos(vOwnerPos + m_vOffsetPos);
-	}
-	else {
-		return;
-	}
+
+	if (!m_bIsActive) return;
+	
+	Vec2 vOwnerPos = m_pOwner->GetPos();
+	SetPos(vOwnerPos + m_vOffsetPos);
 }
 
 void PlayerItemUI::Render(HDC _dc) 

@@ -43,14 +43,14 @@ void Start_Scene::Init()
 
 	SnowFlake* snow = new SnowFlake;
 	snow->SetPos(centerPos);
-	snow->SetScale(Vec2(16.0f, 16.0f));
+	snow->SetScale(Vec2(7.5f));
 	snow->SetName(L"Snow");
-	AddObject(snow, OBJECT_GROUP::SCREEN);
+	AddObject(snow, OBJECT_GROUP::DEFAULT);
 	
-	Tree* tree = new Tree;
-	tree->SetPos(centerPos + Vec2(-300.0f, 170.0f));
-	tree->SetScale(Vec2(9));
-	AddObject(tree, OBJECT_GROUP::DEFAULT);
+	//Tree* tree = new Tree;
+	//tree->SetPos(centerPos + Vec2(-300.0f, 170.0f));
+	//tree->SetScale(Vec2(10));
+	//AddObject(tree, OBJECT_GROUP::DEFAULT);
 
 	Object* pObj= new Player;
 	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
@@ -117,6 +117,10 @@ void Start_Scene::Init()
 		m_vStage.push_back(yPos);
 	}
 
+	m_mModifiers.insert(make_pair(L"camRig", camRig));
+	m_mModifiers.insert(make_pair(L"Background", back));
+	m_mModifiers.insert(make_pair(L"Snow", snow));
+
 
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::GROUND);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::VOLUME);
@@ -132,6 +136,7 @@ void Start_Scene::Update()
 	}
 
 	if (ShowSetting::GetInst()->IsEscActive || ShowSetting::GetInst()->IsActive) return;
+
 	Vec2 resolution = Core::GetInst()->GetResolution();
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
