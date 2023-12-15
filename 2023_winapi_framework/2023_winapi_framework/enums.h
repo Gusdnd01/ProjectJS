@@ -28,6 +28,7 @@ enum class OBJECT_GROUP
 	EFFECT,
 	GROUND,
 	VOLUME,
+	SCREEN,
 	END = 30
 };
 

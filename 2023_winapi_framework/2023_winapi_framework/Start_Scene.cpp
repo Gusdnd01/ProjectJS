@@ -5,6 +5,7 @@
 #include "CameraManager.h"
 #include "CollisionMgr.h"
 #include "TileManager.h"
+#include "TimeMgr.h"
 #include "ResMgr.h"
 #include "ShowSetting.h"
 #include "Object.h"
@@ -21,6 +22,8 @@
 #include "PlayerItemUI.h"
 #include "WaterItemFactory.h"
 #include "FireItemFactory.h"
+#include "SnowFlake.h"
+#include "Tree.h"
 
 void Start_Scene::Init()
 {
@@ -32,14 +35,25 @@ void Start_Scene::Init()
 	back->SetScale(centerPos * 2);
 	back->SetName(L"Background");
 	AddObject(back, OBJECT_GROUP::DEFAULT);
-
-	/*Object* gameEnd = new GameEndVolume;
+	
+	Object* gameEnd = new GameEndVolume;
 	gameEnd->SetPos(centerPos + Vec2(350.0f, -2000.0f));
 	gameEnd->SetScale(Vec2(100.0f, 100.0f));
-	AddObject(gameEnd, OBJECT_GROUP::VOLUME);*///게임 엔딩
+	AddObject(gameEnd, OBJECT_GROUP::VOLUME);
+
+	SnowFlake* snow = new SnowFlake;
+	snow->SetPos(centerPos);
+	snow->SetScale(Vec2(7.5f));
+	snow->SetName(L"Snow");
+	AddObject(snow, OBJECT_GROUP::DEFAULT);
+	
+	//Tree* tree = new Tree;
+	//tree->SetPos(centerPos + Vec2(-300.0f, 170.0f));
+	//tree->SetScale(Vec2(10));
+	//AddObject(tree, OBJECT_GROUP::DEFAULT);
 
 	Object* pObj= new Player;
-	pObj->SetPos(centerPos + Vec2{ -300.0, -3800.0f });
+	pObj->SetPos(centerPos + Vec2(0.0f, centerPos.y - 100.0f));
 	pObj->SetScale(Vec2(3.0f,3.0f));
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 	m_pPlayer = pObj;
@@ -61,28 +75,18 @@ void Start_Scene::Init()
 	AddObject(waterItemFactory_01, OBJECT_GROUP::DEFAULT);
 
 	WaterItemFactory* waterItemFactory_02 = new WaterItemFactory;
-	waterItemFactory_02->SetPos(centerPos + Vec2(-350.0f, -1210.0f));
+	waterItemFactory_02->SetPos(centerPos + Vec2(-390.0f, -1250.0f));
 	waterItemFactory_02->SetDuration(3.0f);
 	AddObject(waterItemFactory_02, OBJECT_GROUP::DEFAULT);
 
 	FireItemFactory* fireItemFactory_01 = new FireItemFactory;
-	fireItemFactory_01->SetPos(centerPos + Vec2(600.0f, -2150.0f));
+	fireItemFactory_01->SetPos(centerPos + Vec2(-100.0f, 300.0f));
 	fireItemFactory_01->SetDuration(3.0f);
 	AddObject(fireItemFactory_01, OBJECT_GROUP::DEFAULT);
-	
-	FireItemFactory* fireItemFactory_02 = new FireItemFactory;
-	fireItemFactory_02->SetPos(centerPos + Vec2(-600.0f, -2800.0f));
-	fireItemFactory_02->SetDuration(3.0f);
-	AddObject(fireItemFactory_02, OBJECT_GROUP::DEFAULT);
-	
-	FireItemFactory* fireItemFactory_03 = new FireItemFactory;
-	fireItemFactory_03->SetPos(centerPos + Vec2{ 600.0, -3620.0f });
-	fireItemFactory_03->SetDuration(3.0f);
-	AddObject(fireItemFactory_03, OBJECT_GROUP::DEFAULT);
 
 	LowVelocitySpace* lvs = new LowVelocitySpace;
-	lvs->SetPos(centerPos + Vec2(-30.0f, -1150.0f));
-	lvs->SetScale(Vec2(2.8f, 1.0f));
+	lvs->SetPos(centerPos + Vec2(0.0f, -1200.0f));
+	lvs->SetScale(Vec2(2.0f, 1.0f));
 	AddObject(lvs, OBJECT_GROUP::ITEM);
 	
 	//Object인데 위치 정보만 갖고 있는 오브젝트이다.
@@ -105,7 +109,6 @@ void Start_Scene::Init()
 	//ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
 	//ResMgr::GetInst()->Play(L"BGM");
 
-	ShowSetting::GetInst()->CurSceneName = L"Start_Scene";
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX()); 
 	m_vStage.push_back(360.0f);
@@ -113,6 +116,11 @@ void Start_Scene::Init()
 		float yPos = i * -centerPos.y;
 		m_vStage.push_back(yPos);
 	}
+
+	m_mModifiers.insert(make_pair(L"camRig", camRig));
+	m_mModifiers.insert(make_pair(L"Background", back));
+	m_mModifiers.insert(make_pair(L"Snow", snow));
+
 
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::GROUND);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::VOLUME);
@@ -123,19 +131,20 @@ void Start_Scene::Init()
 
 void Start_Scene::Update()
 {
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
-	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
-	Vec2 resolution = Vec2((int)Core::GetInst()->GetResolution().x, (int)Core::GetInst()->GetResolution().y );
+	if (KEY_DOWN(KEY_TYPE::ESC)) {
+		ShowSetting::GetInst()->IsEscActive = !ShowSetting::GetInst()->IsEscActive;
+	}
+
+	if (ShowSetting::GetInst()->IsEscActive || ShowSetting::GetInst()->IsActive) return;
+
+	Vec2 resolution = Core::GetInst()->GetResolution();
 	Vec2 camPos = m_pCamRig->GetPos();
 	Vec2 pPos = m_pPlayer->GetPos();
 
 	ModifyPos(Vec2(0.0f, m_vStage[CheckStage(pPos.y)]), L"camRig");
 	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Background");
+	ModifyPos(Vec2(resolution.x / 2, m_vStage[CheckStage(pPos.y)]), L"Snow");
 	
-	if (KEY_DOWN(KEY_TYPE::ESC)) {
-		ShowSetting::GetInst()->IsEscActive = !ShowSetting::GetInst()->IsEscActive;
-	}
-
 	Scene::Update();
 }
 

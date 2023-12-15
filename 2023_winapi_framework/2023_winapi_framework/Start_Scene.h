@@ -20,15 +20,7 @@ public:
 
 public:
 	void ModifyPos(const Vec2& _pos, const wstring& _name) {
-		for (UINT i = 0; i < 30; i++) {
-			for (UINT j = 0; j < m_vecObj[i].size(); j++)
-			{
-				if (m_vecObj[i][j] != nullptr && m_vecObj[i][j]->GetName() == _name) {
-					m_vecObj[i][j]->SetPos(_pos);
-					return;
-				}
-			}
-		}
+		m_mModifiers[_name]->SetPos(_pos);
 	}
 
 	int CheckStage(float _yValue);
@@ -71,5 +63,7 @@ private:
 		{177, Vec2{-300.0, -3800.0f}, Vec2(200.0f, 70.f)},
 		{177, Vec2{-300.0, -3800.0f}, Vec2(200.0f, 70.f)},
 	};
+
+	map<wstring, Object*> m_mModifiers;
 };
 
