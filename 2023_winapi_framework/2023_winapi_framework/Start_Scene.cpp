@@ -32,6 +32,7 @@ void Start_Scene::Init()
 
 	ResMgr::GetInst()->LoadSound(L"InGameBGM", L"Sound\\InGameBGM.wav", true);
 	ResMgr::GetInst()->Play(L"InGameBGM");
+	ShowSetting::GetInst()->SetSceneName(L"Start_Scene");
 
 	Object* back = new Tile;
 	back->SetPos(centerPos);
