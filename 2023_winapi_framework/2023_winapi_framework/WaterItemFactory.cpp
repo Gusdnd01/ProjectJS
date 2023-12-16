@@ -24,6 +24,7 @@ void WaterItemFactory::Update()
 
 			SetFactory(new WaterItem);
 			WaterItem* item = dynamic_cast<WaterItem*>(GetFactory());
+			item->SetType(L"water");
 			item->SetPos(GetPos());
 			item->SetScale(Vec2(3.0f));
 			item->SetOwner(this);

@@ -24,6 +24,7 @@ void FireItemFactory::Update()
 
 			SetFactory(new FireItem);
 			FireItem* item = dynamic_cast<FireItem*>(GetFactory());
+			item->SetType(L"fire");
 			item->SetPos(GetPos());
 			item->SetScale(Vec2(3.0f));
 			item->SetOwner(this);
