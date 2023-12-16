@@ -47,34 +47,10 @@ void ShowSetting::Render(HDC _dc)
 			m_pSettingMoveY -= m_pSettingYIncrease;
 		}
 
-		#pragma region BGM SOUND
+		DrawSoundBars(_dc, x, y - 102, 10, 25, 10, m_pBgmVolume);
 
-			for (int i = 0; i < 10; i++)
-			{
-				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 
-					m_pTex_SoundBar_null->GetWidth(), m_pTex_SoundBar_null->GetHeight(), RGB(255, 255, 255));
-			}
-			for (int i = 0; i < m_pBgmVolume; i++)
-			{
-				TransparentBlt(_dc, x + i * 13, y - 102, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 
-					m_pTex_SoundBar->GetWidth(), m_pTex_SoundBar->GetHeight(), RGB(255, 255, 255));
-			}
+		DrawSoundBars(_dc, x, y - 5, 10, 25, 10, m_pEffectVolume);
 
-		#pragma endregion
-		#pragma region SFX SOUND
-
-			for (int i = 0; i < 10; i++)
-			{
-				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar_null->GetDC(), 0, 0, 
-					m_pTex_SoundBar_null->GetWidth(), m_pTex_SoundBar_null->GetHeight(), RGB(255, 255, 255));
-			}
-			for (int i = 0; i < m_pEffectVolume; i++)
-			{
-				TransparentBlt(_dc, x + i * 13, y - 5, 10, 25, m_pTex_SoundBar->GetDC(), 0, 0, 
-					m_pTex_SoundBar->GetWidth(), m_pTex_SoundBar->GetHeight(), RGB(255, 255, 255));
-			}
-
-		#pragma endregion
 
 		m_pSettingArrowY = y + m_pSettingMoveY;
 		
@@ -106,33 +82,33 @@ void ShowSetting::Render(HDC _dc)
 	}
 }
 
+void ShowSetting::DrawSoundBars(HDC _dc, int x, int y, int width, int height, int totalBars, int volume)
+{
+	for (int i = 0; i < totalBars; i++)
+	{
+		TransparentBlt(_dc, x + i * 13, y, width, height, m_pTex_SoundBar_null->GetDC(), 0, 0,
+			m_pTex_SoundBar_null->GetWidth(), m_pTex_SoundBar_null->GetHeight(), RGB(255, 255, 255));
+	}
+
+	for (int i = 0; i < volume; i++)
+	{
+		TransparentBlt(_dc, x + i * 13, y, width, height, m_pTex_SoundBar->GetDC(), 0, 0,
+			m_pTex_SoundBar->GetWidth(), m_pTex_SoundBar->GetHeight(), RGB(255, 255, 255));
+	}
+}
+
+
 void ShowSetting::Update()
 {
 	if (IsActive) //볼륨 세팅창
 	{
 		if (m_pSettingArrowY == 260)
 		{
-			if (m_pBgmVolume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
-			{
-				m_pBgmVolume -= 1;
-			}
-			if (m_pBgmVolume < 10 && KEY_DOWN(KEY_TYPE::RIGHT))
-			{
-				m_pBgmVolume += 1;
-			}
-			ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, m_pBgmVolume * 0.1f);
+			AdjustVolume(SOUND_CHANNEL::BGM, m_pBgmVolume);
 		}
 		else if (m_pSettingArrowY == 360)
 		{
-			if (m_pEffectVolume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
-			{
-				m_pEffectVolume -= 1;
-			}
-			if (m_pEffectVolume < 10 && KEY_DOWN(KEY_TYPE::RIGHT))
-			{
-				m_pEffectVolume += 1;
-			}
-			ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, m_pEffectVolume * 0.1f);
+			AdjustVolume(SOUND_CHANNEL::EFFECT, m_pEffectVolume);
 		}
 	}
 	else //볼륨 세팅창 초기화
@@ -150,7 +126,7 @@ void ShowSetting::Update()
 		}
 		if (m_pEscArrowY == 325) //게임 다시하기
 		{
-			SceneMgr::GetInst()->LoadScene(CurSceneName);
+			SceneMgr::GetInst()->LoadScene(m_wCurSceneName);
 			IsEscActive = false;
 		}
 		if (m_pEscArrowY == 390) //게임 설정
@@ -169,4 +145,17 @@ void ShowSetting::Update()
 		m_pEscMoveY = -100;
 		m_pEscYIncrease = 65;
 	}
+}
+
+void ShowSetting::AdjustVolume(SOUND_CHANNEL channel, float& volume)
+{
+	if (volume > 0 && KEY_DOWN(KEY_TYPE::LEFT))
+	{
+		volume -= 1;
+	}
+	if (volume < 10 && KEY_DOWN(KEY_TYPE::RIGHT))
+	{
+		volume += 1;
+	}
+	ResMgr::GetInst()->Volume(channel, volume * 0.1f);
 }

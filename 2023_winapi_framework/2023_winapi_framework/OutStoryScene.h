@@ -13,10 +13,7 @@ public:
 private:
 	int m_ImgCnt;
 private:
-	Texture* m_Story1;
-	Texture* m_Story2;
-	Texture* m_Story3;
-	Texture* m_Story4;
+	vector<Texture*> m_vStoryTexture;
 	Texture* m_BK;
 };
 

@@ -12,7 +12,7 @@
 #include "HitEffect.h"
 
 Intro_Scene::Intro_Scene()
-	: m_MoveY(0), m_YIncrease(50), m_ArrowY(0), m_TexSizeX(150), m_TexSizeY(27)
+	: m_MoveY(0), m_YIncrease(50), m_ArrowY(0), m_TexSizeX(150), m_TexSizeY(27), m_BtnScale(10)
 	, m_fSstart(1), m_fSetting(1), m_fExiT(1)
 	, m_pIntroTex(nullptr), m_pGameStart(nullptr), m_pSetting(nullptr), m_pExit(nullptr)
 {
@@ -29,60 +29,86 @@ void Intro_Scene::Init()
 	m_pSetting = ResMgr::GetInst()->TexLoad(L"SettingTex", L"Texture\\Intro\\Setting.bmp");
 	m_pExit = ResMgr::GetInst()->TexLoad(L"ExitTex", L"Texture\\Intro\\Exit.bmp");
 
+	ShowSetting::GetInst()->SetSceneName(L"Intro_Scene");
 	ResMgr::GetInst()->LoadSound(L"IntroBGM", L"Sound\\IntroBGM.wav", true);
 	ResMgr::GetInst()->Play(L"IntroBGM");
-	
+
 }
 
 void Intro_Scene::Render(HDC _dc)
 {
 
-	int x = 10;
+	int x = m_BtnScale;
 	int y = Core::GetInst()->GetResolution().y / 2 + 150;
 
 	TransparentBlt(_dc, 0, 0, 1280, 750, m_pIntroTex->GetDC(), 0, 0, m_pIntroTex->GetWidth(), m_pIntroTex->GetHeight(), RGB(255, 0, 255));
-	TransparentBlt(_dc, x + 40, y, m_TexSizeX * m_fSstart, m_TexSizeY * m_fSstart, m_pGameStart->GetDC(), 0, 0, m_pGameStart->GetWidth(), m_pGameStart->GetHeight(), RGB(255, 0, 255));
-	TransparentBlt(_dc, x, y + m_YIncrease, m_TexSizeX * m_fSetting, m_TexSizeY * m_fSetting, m_pSetting->GetDC(), 0, 0, m_pSetting->GetWidth(), m_pSetting->GetHeight(), RGB(255, 0, 255));
-	TransparentBlt(_dc, x, y + m_YIncrease * 2, m_TexSizeX * m_fExiT, m_TexSizeY * m_fExiT, m_pExit->GetDC(), 0, 0, m_pExit->GetWidth(), m_pExit->GetHeight(), RGB(255, 0, 255));
 
-	if (ShowSetting::GetInst()->IsActive == false)
+	Texture* textures[] = { m_pGameStart, m_pSetting, m_pExit };
+
+	for (int i = 0; i < 3; ++i)
 	{
-		if (m_MoveY < 100 && KEY_DOWN(KEY_TYPE::DOWN))
-		{
-			m_MoveY += m_YIncrease;
-		}
-		if (m_MoveY > 0 && KEY_DOWN(KEY_TYPE::UP))
-		{
-			m_MoveY -= m_YIncrease;
-		}
+		int onlyScaleForStartBtn = 43;
+		if (i == 0) x = x + onlyScaleForStartBtn;
+		else x = m_BtnScale;
+
+		TransparentBlt(_dc, x, y + m_YIncrease * i, m_TexSizeX * GetTexScale(i), m_TexSizeY * GetTexScale(i),
+			textures[i]->GetDC(), 0, 0, textures[i]->GetWidth(), textures[i]->GetHeight(), RGB(255, 0, 255));
 	}
 
-	m_ArrowY = y + m_MoveY;
-
-	switch (m_ArrowY)
+	if (!ShowSetting::GetInst()->IsActive)
 	{
-	case 510:
+		m_MoveY = MoveScalePos(y);
+	}
+}
+
+float Intro_Scene::GetTexScale(int value) const
+{
+	if (value == m_MoveY / m_YIncrease)
+	{
+		return 1.25f;
+	}
+	else
+	{
+		return 1.0f;
+	}
+}
+
+int Intro_Scene::MoveScalePos(int y)
+{
+	int newMoveY = m_MoveY;
+
+	if (newMoveY < 100 && KEY_DOWN(KEY_TYPE::DOWN))
+	{
+		newMoveY += m_YIncrease;
+	}
+
+	if (newMoveY > 0 && KEY_DOWN(KEY_TYPE::UP))
+	{
+		newMoveY -= m_YIncrease;
+	}
+
+	m_ArrowY = y + newMoveY;
+
+	if (m_ArrowY == 510)
 	{
 		m_fSstart = 1.25f;
-		m_fSetting = 1;
-		m_fExiT = 1;
+		m_fSetting = 1.0f;
+		m_fExiT = 1.0f;
 	}
-	break;
-	case 560:
+	else if (m_ArrowY == 560)
 	{
-		m_fSstart = 1;
+		m_fSstart = 1.0f;
 		m_fSetting = 1.25f;
-		m_fExiT = 1;
+		m_fExiT = 1.0f;
 	}
-	break;
-	default:
+	else
 	{
-		m_fSstart = 1;
-		m_fSetting = 1;
+		m_fSstart = 1.0f;
+		m_fSetting = 1.0f;
 		m_fExiT = 1.25f;
 	}
-	break;
-	}
+
+	return newMoveY;
 }
 
 void Intro_Scene::Update()
@@ -90,34 +116,28 @@ void Intro_Scene::Update()
 	Scene::Update();
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::BGM, ShowSetting::GetInst()->GetBGM());
 	ResMgr::GetInst()->Volume(SOUND_CHANNEL::EFFECT, ShowSetting::GetInst()->GetSFX());
-	if (KEY_DOWN(KEY_TYPE::P))
-	{
-		Object* effect = new JumpEffect;
-		effect->SetName(L"JumpEffect");
-		effect->SetScale(Vec2(3, 3));
-		effect->SetPos(Vec2(50, 50));
-		AddObject(effect, OBJECT_GROUP::DEFAULT);
-	}
 
-	if (ShowSetting::GetInst()->IsActive == false && KEY_DOWN(KEY_TYPE::SPACE))
+	if (!ShowSetting::GetInst()->IsActive && KEY_DOWN(KEY_TYPE::SPACE))
+	{
+		InputSpaceKey();
+	}
+}
+
+void Intro_Scene::InputSpaceKey()
+{
+	if (ShowSetting::GetInst()->IsActive == false)
 	{
 		switch (m_ArrowY)
 		{
 		case 510:
-		{
 			SceneMgr::GetInst()->LoadScene(L"IntroStoryScene");
-		}
-		break;
+			break;
 		case 560:
-		{
 			ShowSetting::GetInst()->IsActive = true;
-		}
-		break;
+			break;
 		default:
-		{
 			exit(0);
-		}
-		break;
+			break;
 		}
 	}
 }

@@ -10,13 +10,15 @@ void OutStoryScene::Init()
 {
 	m_ImgCnt = 0;
 	ShowSetting::GetInst()->IsEscActive = false;
-	ShowSetting::GetInst()->CurSceneName = L"OutStoryScene";
+	ShowSetting::GetInst()->SetSceneName(L"OutStoryScene");
 
 	m_BK = ResMgr::GetInst()->TexLoad(L"BK", L"Texture\\BLACKBK.bmp");
-	m_Story1 = ResMgr::GetInst()->TexLoad(L"OutStory1", L"Texture\\OutStory\\OutStory1.bmp");
-	m_Story2 = ResMgr::GetInst()->TexLoad(L"OutStory2", L"Texture\\OutStory\\OutStory2.bmp");
-	m_Story3 = ResMgr::GetInst()->TexLoad(L"OutStory3", L"Texture\\OutStory\\OutStory3.bmp");
-	m_Story4 = ResMgr::GetInst()->TexLoad(L"OutStory4", L"Texture\\OutStory\\OutStory4.bmp");
+	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"OutStory1", L"Texture\\OutStory\\OutStory1.bmp"));
+	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"OutStory2", L"Texture\\OutStory\\OutStory2.bmp"));
+	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"OutStory3", L"Texture\\OutStory\\OutStory3.bmp"));
+	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"OutStory4", L"Texture\\OutStory\\OutStory4.bmp"));
+	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"Cradit1", L"Texture\\OutStory\\Cradit1.bmp"));
+	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"Cradit", L"Texture\\OutStory\\Cradit.bmp"));
 }
 
 void OutStoryScene::Render(HDC _dc)
@@ -26,33 +28,22 @@ void OutStoryScene::Render(HDC _dc)
 		ShowSetting::GetInst()->IsEscActive = true;
 	}
 
-	if (KEY_DOWN(KEY_TYPE::SPACE) && ShowSetting::GetInst()->IsEscActive == false)
+	if (KEY_DOWN(KEY_TYPE::SPACE) && ShowSetting::GetInst()->ShowSetting::GetInst()->IsEscActive==false)
 	{
 		m_ImgCnt++;
 	}
 
 	TransparentBlt(_dc, 0, 0, 1280, 720, m_BK->GetDC(), 0, 0, m_BK->GetWidth(), m_BK->GetHeight(), RGB(255, 255, 255));
 
-	if (m_ImgCnt == 1)
+	TransparentBlt(_dc, 0, 0, 1280, 720, m_BK->GetDC(), 0, 0, m_BK->GetWidth(), m_BK->GetHeight(), RGB(255, 255, 255));
+
+	if (m_ImgCnt >= 1 && m_ImgCnt <= m_vStoryTexture.size())
 	{
-		TransparentBlt(_dc, 0, 0, 1280, 720, m_Story1->GetDC(), 0, 0, m_Story1->GetWidth(), m_Story1->GetHeight(), RGB(255, 0, 255));
+		Texture* currentStory = m_vStoryTexture[m_ImgCnt - 1];
+		TransparentBlt(_dc, 0, 0, 1280, 720, currentStory->GetDC(), 0, 0, currentStory->GetWidth(), currentStory->GetHeight(), RGB(255, 0, 255));
 	}
 
-	if (m_ImgCnt == 2)
-	{
-		TransparentBlt(_dc, 0, 0, 1280, 720, m_Story2->GetDC(), 0, 0, m_Story2->GetWidth(), m_Story2->GetHeight(), RGB(255, 0, 255));
-	}
-
-	if (m_ImgCnt == 3)
-	{
-		TransparentBlt(_dc, 0, 0, 1280, 720, m_Story3->GetDC(), 0, 0, m_Story3->GetWidth(), m_Story3->GetHeight(), RGB(255, 0, 255));
-	}
-
-	if (m_ImgCnt == 4)
-	{
-		TransparentBlt(_dc, 0, 0, 1280, 720, m_Story4->GetDC(), 0, 0, m_Story4->GetWidth(), m_Story4->GetHeight(), RGB(255, 0, 255));
-	}
-	if (m_ImgCnt == 6)
+	if (m_ImgCnt == 8)
 	{
 		SceneMgr::GetInst()->LoadScene(L"Intro_Scene");
 	}
@@ -60,5 +51,7 @@ void OutStoryScene::Render(HDC _dc)
 
 void OutStoryScene::Release()
 {
-
+	m_ImgCnt = 0;
+	m_vStoryTexture.clear();
+	m_BK = nullptr;
 }
