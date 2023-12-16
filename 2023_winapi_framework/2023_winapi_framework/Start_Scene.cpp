@@ -38,7 +38,7 @@ void Start_Scene::Init()
 
 	Object* gameEnd = new GameEndVolume;
 	gameEnd->SetPos(centerPos + Vec2(0.0f, -6350.0f));
-	gameEnd->SetScale(Vec2(50.0f));
+	gameEnd->SetScale(Vec2(5));
 	AddObject(gameEnd, OBJECT_GROUP::VOLUME);//���� ����
 
 	SnowFlake* snow = new SnowFlake;
@@ -53,7 +53,7 @@ void Start_Scene::Init()
 	//AddObject(tree, OBJECT_GROUP::DEFAULT);
 
 	Object* pObj= new Player;
-	pObj->SetPos(centerPos + Vec2{ 300.0f, -4800.0f });
+	pObj->SetPos(centerPos + Vec2{ 0.0f, 300.0f});
 	pObj->SetScale(Vec2(3.0f,3.0f));
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 	m_pPlayer = pObj;
@@ -138,7 +138,6 @@ void Start_Scene::Init()
 	AddObject(lvs_03, OBJECT_GROUP::ITEM);
 #pragma endregion
 
-	//Object�ε� ��ġ ������ ���� �ִ� ������Ʈ�̴�.
 	Object* camRig = new Object;
 	camRig->SetName(L"camRig");
 	camRig->SetPos(centerPos);
