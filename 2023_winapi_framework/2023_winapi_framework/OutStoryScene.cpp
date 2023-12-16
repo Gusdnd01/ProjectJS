@@ -19,6 +19,9 @@ void OutStoryScene::Init()
 	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"OutStory4", L"Texture\\OutStory\\OutStory4.bmp"));
 	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"Cradit1", L"Texture\\OutStory\\Cradit1.bmp"));
 	m_vStoryTexture.push_back(ResMgr::GetInst()->TexLoad(L"Cradit", L"Texture\\OutStory\\Cradit.bmp"));
+
+	ResMgr::GetInst()->LoadSound(L"OutStoryBGM", L"Sound\\OutStoryBGM.wav", true);
+	ResMgr::GetInst()->Play(L"OutStoryBGM");
 }
 
 void OutStoryScene::Render(HDC _dc)
@@ -54,4 +57,7 @@ void OutStoryScene::Release()
 	m_ImgCnt = 0;
 	m_vStoryTexture.clear();
 	m_BK = nullptr;
+
+	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
+	Scene::Release();
 }

@@ -30,6 +30,9 @@ void Start_Scene::Init()
 	Vec2 centerPos = Vec2((int)Core::GetInst()->GetResolution().x/2,
 		Core::GetInst()->GetResolution().y/2);
 
+	ResMgr::GetInst()->LoadSound(L"InGameBGM", L"Sound\\InGameBGM.wav", true);
+	ResMgr::GetInst()->Play(L"InGameBGM");
+
 	Object* back = new Tile;
 	back->SetPos(centerPos);
 	back->SetScale(centerPos * 2);
@@ -212,6 +215,7 @@ void Start_Scene::Release()
 	CollisionMgr::GetInst()->CheckReset();
 	
 	m_vStage.clear();
+	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
 
 	Scene::Release();
 }
