@@ -39,11 +39,4 @@ void WaterItem::Render(HDC _dc)
 void WaterItem::EnterCollision(Collider* other)
 {
 	Item::EnterCollision(other);
-	Player* player = dynamic_cast<Player*>(other->GetObj());
-
-	if (player) {
-		player->SetMode(L"water", true);
-		m_pOwner->ResetObj();
-		EventMgr::GetInst()->DeleteObject(this);
-	}
 }

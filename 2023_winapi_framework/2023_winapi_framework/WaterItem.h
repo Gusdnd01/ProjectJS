@@ -13,12 +13,7 @@ public:
     void Render(HDC _dc) override;
 
 public:
-    void SetOwner(ItemFactory* _value) { m_pOwner = _value; }
-
-public:
     void EnterCollision(Collider* other) override;
 
-private:
-    ItemFactory* m_pOwner;
 };
 

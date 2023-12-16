@@ -37,11 +37,4 @@ void FireItem::Render(HDC _dc)
 void FireItem::EnterCollision(Collider* other)
 {
 	Item::EnterCollision(other);
-	Player* player = dynamic_cast<Player*>(other->GetObj());
-
-	if (player) {
-		player->SetMode(L"fire", true);
-		m_pOwner->ResetObj();
-		EventMgr::GetInst()->DeleteObject(this);
-	}
 }
