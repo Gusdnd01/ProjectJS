@@ -7,8 +7,9 @@
 | 개발 기간  | 약 5주  |
 | 개발 인원  | 2명  |
 
-다운로드 링크 -> https://drive.google.com/file/d/1092W9-KTMsiHUyyKdT-qqF_dtCw8M0PV/view?usp=sharing  
+### 다운로드 링크 -> https://drive.google.com/file/d/1092W9-KTMsiHUyyKdT-qqF_dtCw8M0PV/view?usp=sharing  
 <br>
-상세한 포트폴리오 링크 -> https://sunset-fire-20c.notion.site/GAEGURIDA-c4a3a0c8bc9746058c47c2e0e71ea6e8?pvs=4
+
+### 상세한 포트폴리오 링크 -> https://sunset-fire-20c.notion.site/GAEGURIDA-c4a3a0c8bc9746058c47c2e0e71ea6e8?pvs=4
 
 ![GaeGuriDa](https://github.com/Gusdnd01/ProjectJS/assets/98932107/3939a08b-1492-423e-b31a-d9d98ce8a9cb)
